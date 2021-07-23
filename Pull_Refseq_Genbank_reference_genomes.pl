@@ -7,29 +7,29 @@
 # Also list species not available on refseq in a seperate text file.
 # Download all available refseq genomes
 
-######################################################################################################################
-## Description filter assembly:											 ##
+###########################################################################################################################
+## Description filter assembly:										         	 ##
 ## Use this sript to search the assembly_summary_refseq.txt file for specific genomes. Output a filtered  		 ##
 ## version of the assembly_summary file containing just your query species. Input is species text file    		 ##
 ## where each species is listed on a new line in the text file. Output is filtered assembly text file.    		 ##
 ##															 ##
-## Description search genomes:									     		 ##
+## Description search genomes:									     		         ##
 ## Use this sript to search the assembly_summary_refseq.txt file for specific genomes. If the genome in   		 ##
 ## your list gets a hit, it will be listed in an output file. If the genome in your list is not on refseq 		 ##
 ## it will be listed in a seperate output file. Input species file must be a text file with each query    		 ##
 ## species listed on a new line in the text file. This script also retrives the refseq accession number   		 ##
 ##for each genome and adds this to the ref_seq present text files.					      		 ##
 ##													      		 ##
-## NOTE: Canis lupus will match with both 'Canis lupis' and Canis lupis familiaris'. 		      		 ##
+## NOTE: Canis lupus will match with both 'Canis lupis' and Canis lupis familiaris'. 		      	        	 ##
 ## Hence three canis lupus matches will be found, where canis lupis familiaris is repeated twice	      		 ##
-## Wasn't sure how to fix this.											 ##
+## Wasn't sure how to fix this.											         ##
 ##													      		 ##
 ## Descripion pull genomes:												 ##
-## This script searches the assembly_summary_refseq.txt file for genomes that are present on ref_seq.		 ##
+## This script searches the assembly_summary_refseq.txt file for genomes that are present on ref_seq.		         ##
 ## Input is a text file containing a list of query species, with each query species on a new line in the txt file	 ##
-## Once query species is found, script will use wget to download this refseq genome to the working directory.	 ##
+## Once query species is found, script will use wget to download this refseq genome to the working directory.	         ##
 ## Hence, script searches for and downloads all query species that are available on refseq.				 ##
-#######################################################################################################################
+###########################################################################################################################
 
 #ask for text file with species names and store the string as species_file_name 
 print "Enter title of text file containing target species names:";
@@ -402,19 +402,18 @@ if ($Total_genbank_species_input == $Total_genbank_genomes) {
 
 ##############################################################################################################################################################################################		
 
-#!/usr/bin/perl -w
 
 ############################################################################################################
-## Description:											      ##
+## Description:											          ##
 ## Use this sript to search the assembly_summary_refseq.txt file for specific genomes. If the genome in   ##
 ## your list gets a hit, it will be listed in an output file. If the genome in your list is not on refseq ##
 ## it will be listed in a seperate output file. Input species file must be a text file with each query    ##
 ## species listed on a new line in the text file. This script also retrives the refseq accession number   ##
-##for each genome and adds this to the ref_seq present text files.					      ##
-##													      ##
-## NOTE: Canis lupus will match with both 'Canis lupis' and Canis lupis familiaris'. 		      ##
-## Hence three canis lupus matches will be found, where canis lupis familiaris is repeated twice	      ##
-## Wasn't sure how to fix this.									      ##
+##for each genome and adds this to the ref_seq present text files.					  ##
+##													  ##
+## NOTE: Canis lupus will match with both 'Canis lupis' and Canis lupis familiaris'. 		          ##
+## Hence three canis lupus matches will be found, where canis lupis familiaris is repeated twice	  ##
+## Wasn't sure how to fix this.									          ##
 ############################################################################################################
 
 
