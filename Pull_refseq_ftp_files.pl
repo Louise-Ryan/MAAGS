@@ -14,6 +14,7 @@
 ################################################################################################################################
 
 
+
 #1.1 import the species target array from text file:
 
 #ask for text file with species names and store the string as species_file_name 
@@ -358,7 +359,8 @@ chomp $Refseq_absent_genomes; # remove empty line from species_file_name
 open my $FILE3, ">", $Refseq_absent_genomes or die("Can't open file. $!");
 print $FILE3 $Genomes_not_found;
 close $FILE3;
-		
+
+exit;
 
 
 
