@@ -24,4 +24,13 @@ git revert <commit hash> #if you want to revert to an earlier commit permenantly
 git remote add origin  <REMOTE_URL> #to set the remote. URL from github repository. Can change origin to name remote anything you like.
 git remote -v #to list the remotes set up
 git push -u origin master #origin must match name of remote. -u is only required for first push.
+git pull origin master #to pull changes. Useful if collabortor updates repository and you need to pull changes to local.
+git push origin <mybranch> #can push a branch to github also
 
+
+#Cloning
+#Note. Do NOT clone a repository within a local git repository. Hence change directory if your using git in the current wd.
+git clone <url from githuib> #to pull and clone project from github.
+
+#Forking on github
+#If you fork the repository on github, then you can make changes to your version of the repository. You can clone the forked repository to make changes. You can create a pull request with a message and send to developers. 
