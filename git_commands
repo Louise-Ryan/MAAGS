@@ -1,0 +1,27 @@
+## after git config and git init, each round of commits involves: 1)git add file 2)git commit -m 3)git status 4)git log. Git status and log are optional but ##useful to track changes. After each commit, git add is required before next commit.
+git config --global user.name Louise #detail my name for log
+git config --global user.email Louise.ryan1@ucdconnect.ie #detail email for log
+git init #start git in directory
+git status #check status of comits/versions
+git add file.pl #to add single file
+git add file1.pl file2.pl file3.pl #to add multiple files
+git add . #to add all files in directory
+git commit -m "My comit message in quotes" #comit new version and provide a message for the log.
+git log # to track changes
+
+
+#Branches
+git checkout <commit-hash> #enter the hash of the commit to 'check out' a previous version of the code
+git branch #to list branches. Note master is the main branch. If *(Head detached at xxxx, you are not on master since I used git checkout)
+git checkout master # to return to the master (i.e the most recent verison of code)
+git branch <new-branch-name> #to create a new branch
+git checkout <branch> #to checkout new branch. Any changes comitted on this branch won't affect the main branch until merged with master.
+git merge <branch name> #to merge the branch with the master. Must be in master using checkout to merge.
+git revert <commit hash> #if you want to revert to an earlier commit permenantly. Will detatch head. Must be followed by git checkout master or git checkout branch.
+
+
+#Git to GitHub
+git remote add origin  <REMOTE_URL> #to set the remote. URL from github repository. Can change origin to name remote anything you like.
+git remote -v #to list the remotes set up
+git push -u origin master #origin must match name of remote. -u is only required for first push.
+
