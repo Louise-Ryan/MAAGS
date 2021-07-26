@@ -1,0 +1,11 @@
+#Vocalisation Larynx:
+system("perl MINE_CDS_Split_by_Gene_auto_inputs.pl Vocalisation_Larynx_RefSeq_primates_inc_LOC_June11 Vocalisation_larynx_genelist.txt genome_list_primates.txt Genome_species_name_list.txt");
+system("perl MINE_NO_LOCS_CDS_Split_by_gene_auto_inputs.pl Vocalisation_Larynx_RefSeq_primates_Golden_NO_LOC_June11 Vocalisation_larynx_genelist.txt genome_list_primates.txt Genome_species_name_list.txt");
+
+#Vocalisation ALL:
+system("perl MINE_CDS_Split_by_Gene_auto_inputs.pl Vocalisation_all_RefSeq_primates_inc_LOC_June11 Vocalisation_all_genelist.txt genome_list_primates.txt Genome_species_name_list.txt");
+system("perl MINE_NO_LOCS_CDS_Split_by_gene_auto_inputs.pl Vocalisation_all_RefSeq_primates_Golden_NO_LOC_June11 Vocalisation_all_genelist.txt genome_list_primates.txt Genome_species_name_list.txt");
+
+#Vomeronasal:
+system("perl MINE_CDS_Split_by_Gene_auto_inputs.pl Vomeronasal_RefSeq_primates_inc_LOC_June11 Vomeronasal_gene_list.txt genome_list_primates.txt Genome_species_name_list.txt");
+system("perl MINE_NO_LOCS_CDS_Split_by_gene_auto_inputs.pl Vomeronasal_RefSeq_primates_Golden_NO_LOC_June11 Vomeronasal_gene_list.txt genome_list_primates.txt Genome_species_name_list.txt");
