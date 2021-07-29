@@ -395,7 +395,7 @@ close $FILE8;
 
 
 #Output final sequence file
-#print "\nEnter output file name for isoform discarProtein transcription factor SOXded printout log file:";
+#print "\nEnter output file name for isoform discarded printout log file:";
 #my $final_seq_file = <STDIN>;
 #chomp $final_seq_file; # remove empty line from species_file_name
 open my $FILE9, ">", $final_seq_file or die("Can't open file. $!");
@@ -406,25 +406,5 @@ my $directoryname= $FILE_PREFIX."_output_files";
 
 system("mkdir $directoryname");
 system("mv $FILE_PREFIX* $directoryname");
-
-
-######################################################################################################################################################################
-#4. Optional: Remove non-specific unwanted hits.                                                                                                                     #
-######################################################################################################################################################################
-# MOST mis-hits can be removed by filtering anything where: [gene=XXX] does not equal [gene=target]/[gene=LOC]                                                       #
-# We don't want LOCs to be removed hence above statement [gene=target] OR [gene=LOC].                                                                                #
-#                                                                                                                                                                    #
-# For the LOC genes, we have to include specific statements to remove unwanted hits. For example:                                                                    #
-# Target= Huntingtin. --> Huntingtin + interacting/assosiated will be removed                                                                                        #
-# Target = Epidermal growth factor --> Epidermal growth factor receptor + substrate will be removed                                                                  #
-# Target = Protein transcription factor SOX2 --> Protein transcription factor SOX21 will be removed                                                                  #
-#                                                                                                                                                                    #
-# Specify these specific statements in script below.                                                                                                                 #
-#                                                                                                                                                                    #
-#######################################################################################################################################################################
-
-
-
-
 
 exit;
