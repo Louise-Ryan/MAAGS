@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 my $Cluster_file =$ARGV[0];
 chomp $Cluster_file; #This is the .clustl file from CD-hit output
 

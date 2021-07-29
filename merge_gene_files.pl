@@ -1,4 +1,5 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
+
 my $file_extension = "\.fa";
 my @filename_array = (<*$file_extension>);
 

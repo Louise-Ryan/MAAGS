@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 #Input arguments:
 
 $retained_isoform_file_name = $ARGV[0];#retained_isoform_list from MINE_CDS_annotations.pl output 

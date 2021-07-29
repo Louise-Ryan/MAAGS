@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 my $filename=$ARGV[0];
 chomp $filename;
 my @array=(<*$filename>);
