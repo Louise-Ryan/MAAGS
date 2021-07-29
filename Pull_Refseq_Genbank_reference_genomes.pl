@@ -1,5 +1,19 @@
 #!/usr/bin/perl -w
 
+
+
+##Downlaod genomes:
+# Required files in working directory:
+# Refseq_assembly_summary text file
+# Genbank_assembly_summary text file
+# List of query species names as a text file seperated by a new line
+#
+#The script will download RefSeq genomes for your species where available. If not available, it will then search for representative genbank genomes.
+# If no representative genomes on Genbank, all genbank genomes for that species will be downloaded. 
+
+#OPutput summary files will be generated for each stage
+
+
 #1. REFSEQ GENOMES
 #######################################################################################################################
 # Search the refseq assembly file for target genomes. Output the refseq assembly summary details for target species with genomes on refseq.
@@ -7,29 +21,29 @@
 # Also list species not available on refseq in a seperate text file.
 # Download all available refseq genomes
 
-###########################################################################################################################
-## Description filter assembly:										         	 ##
+######################################################################################################################
+## Description filter assembly:											 ##
 ## Use this sript to search the assembly_summary_refseq.txt file for specific genomes. Output a filtered  		 ##
 ## version of the assembly_summary file containing just your query species. Input is species text file    		 ##
 ## where each species is listed on a new line in the text file. Output is filtered assembly text file.    		 ##
 ##															 ##
-## Description search genomes:									     		         ##
+## Description search genomes:									     		 ##
 ## Use this sript to search the assembly_summary_refseq.txt file for specific genomes. If the genome in   		 ##
 ## your list gets a hit, it will be listed in an output file. If the genome in your list is not on refseq 		 ##
 ## it will be listed in a seperate output file. Input species file must be a text file with each query    		 ##
 ## species listed on a new line in the text file. This script also retrives the refseq accession number   		 ##
 ##for each genome and adds this to the ref_seq present text files.					      		 ##
 ##													      		 ##
-## NOTE: Canis lupus will match with both 'Canis lupis' and Canis lupis familiaris'. 		      	        	 ##
+## NOTE: Canis lupus will match with both 'Canis lupis' and Canis lupis familiaris'. 		      		 ##
 ## Hence three canis lupus matches will be found, where canis lupis familiaris is repeated twice	      		 ##
-## Wasn't sure how to fix this.											         ##
+## Wasn't sure how to fix this.											 ##
 ##													      		 ##
 ## Descripion pull genomes:												 ##
-## This script searches the assembly_summary_refseq.txt file for genomes that are present on ref_seq.		         ##
+## This script searches the assembly_summary_refseq.txt file for genomes that are present on ref_seq.		 ##
 ## Input is a text file containing a list of query species, with each query species on a new line in the txt file	 ##
-## Once query species is found, script will use wget to download this refseq genome to the working directory.	         ##
+## Once query species is found, script will use wget to download this refseq genome to the working directory.	 ##
 ## Hence, script searches for and downloads all query species that are available on refseq.				 ##
-###########################################################################################################################
+#######################################################################################################################
 
 #ask for text file with species names and store the string as species_file_name 
 print "Enter title of text file containing target species names:";
@@ -217,6 +231,7 @@ if ($Total_species_input == $Total_genomes) {
 ##############################################################################################################################################################################################	
 
 #2. GENBANK GENOMES:
+# Needs the genbank assembly summary text file to be stored in working directory (similar to the Refseq assembly file but for Genbank)
 
 unless ( open(SPECIESFILE2, $Refseq_absent_genomes) ) {  #open the file. If it doesnt exist, exit and print an error
      print "Filename entered does not exist \n ";
@@ -248,7 +263,7 @@ foreach my $target2(@target_genbank_species_array){  #Loop over each element, $t
    		if ($line2 =~m/genome[\s]+[0-9]+[\s]+[0-9]+[\s]+$target2/){ #if $line2 matches "genome +space + numbers + space +target2
    		$Filtered_genbank_rep_assembly = $Filtered_genbank_rep_assembly.$line2."\n"; #store line in filtered assembly
 			if($line2=~m/(ftp[\S]+)/){ #if this line has ftp followed by anything (FTP://...link) take this and store it as link
-	    		my $link2=$1;#create variable link and store the FTP link										###$2 or $1? try 2 and fix if needed
+	    		my $link2=$1;#create variable link and store the FTP link									
 	    			if($link2=~m/(GCA_+[0-9]+\.[0-9])/){ #we want to take the GCA accession from the link and store it as accession 
 				my $genbank_accession =$1." "; #save the accession which matched the regex above
 				$genbank_rep_genomes_found = $genbank_rep_genomes_found.$target2." ".$genbank_accession."\n"; #append the target2 match to genomes found along with the refseq accession number
@@ -402,18 +417,19 @@ if ($Total_genbank_species_input == $Total_genbank_genomes) {
 
 ##############################################################################################################################################################################################		
 
+#!/usr/bin/perl -w
 
 ############################################################################################################
-## Description:											          ##
+## Description:											      ##
 ## Use this sript to search the assembly_summary_refseq.txt file for specific genomes. If the genome in   ##
 ## your list gets a hit, it will be listed in an output file. If the genome in your list is not on refseq ##
 ## it will be listed in a seperate output file. Input species file must be a text file with each query    ##
 ## species listed on a new line in the text file. This script also retrives the refseq accession number   ##
-##for each genome and adds this to the ref_seq present text files.					  ##
-##													  ##
-## NOTE: Canis lupus will match with both 'Canis lupis' and Canis lupis familiaris'. 		          ##
-## Hence three canis lupus matches will be found, where canis lupis familiaris is repeated twice	  ##
-## Wasn't sure how to fix this.									          ##
+##for each genome and adds this to the ref_seq present text files.					      ##
+##													      ##
+## NOTE: Canis lupus will match with both 'Canis lupis' and Canis lupis familiaris'. 		      ##
+## Hence three canis lupus matches will be found, where canis lupis familiaris is repeated twice	      ##
+## Wasn't sure how to fix this.									      ##
 ############################################################################################################
 
 
