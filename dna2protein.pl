@@ -54,3 +54,15 @@ sub codontoaa{
 	return "X";
     }
 }
+
+
+
+####Directory output
+$Directory_name = <STDIN>;
+chomp $Directory_name;
+
+system("mkdir $Directory_name");
+system("mv *.protein $directoryname");
+
+
+
