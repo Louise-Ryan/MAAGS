@@ -12,9 +12,8 @@
 ## The script will download RefSeq genomes for your species where available. If not available, it will then search for representative genbank genomes.
 ## If no representative genomes on Genbank, all genbank genomes for that species will be downloaded.
 
-## NOTE: Canis lupus will match with both 'Canis lupis' and Canis lupis familiaris'. 		      		
-## Hence three canis lupus matches will be found, where canis lupis familiaris is repeated twice	      		 
-## Wasn't sure how to fix this.
+## NOTE: Species names must match EXACTLY what is in the assembly_summary.txt files. If the match isn't exact, the query species will be reported in the
+## Genomes_Not_Detected.txt output file.
 
 ## Output summary files will be generated for each stage and stored in the LOG_file sub directories
 
@@ -73,13 +72,13 @@ foreach my $target(@target_species_array){
     open(IN2, "assembly_summary_refseq.txt"); 
     while(<IN2>) {
 	my $line=$_; 
-	if ($line =~m/genome[\s]+[0-9]+[\s]+[0-9]+[\s]+$target/){ #if $line matches "genome +space + numbers + space +target
+	if ($line =~m/genome[\s]+[0-9]+[\s]+[0-9]+[\s]+$target+[\t]/){ #if $line matches "genome +space + numbers + space +target
 	    $Filtered_assembly = $Filtered_assembly.$line."\n"; #Store line for filtered assembly
 	    if($line=~m/(ftp[\S]+)/){ #Store FTP link (FTP://...link) 
 		my $link=$1; 
 		if($link=~m/(GCF_+[0-9]+\.[0-9])/){ #Match and store genome acession number for summary files
 		    my $accession =$1." "; 
-		    $Genomes_found = $Genomes_found.$target." ".$accession."\n"; #append the target match to genomes found along with the refseq accession number
+		    $Genomes_found = $Genomes_found.$target."\t".$accession."\n"; #append the target match to genomes found along with the refseq accession number
 		    if($link=~m/\/(GCF\_[\S]+)/){ 
 			my $file =$1."_genomic.fna.gz"; #Append file extension
 			my $final_link = $link."/".$file; #Append file extension and link to ftp link
@@ -88,7 +87,7 @@ foreach my $target(@target_species_array){
 		}
 	    }
 	}
-    }if ($Genomes_found !~ m/$target/){ #if after looping through all lines, there is no match stored in genomes found
+    }if ($Genomes_found !~ m/$target+[\t]/){ #if after looping through all lines, there is no match stored in genomes found
 	$Genomes_not_found = $Genomes_not_found.$target."\n"; #append the missed species to the genomes_not_found variable
     }
 }
@@ -114,7 +113,13 @@ close $FILE3;
 #Store RefSeq Genomes in RefSeq_Genomes Directory 
 my $RefSeq_Directory = $Prefix."_RefSeq_Genomes";
 system("mkdir $RefSeq_Directory");
-system("mv GCF* $RefSeq_Directory");
+
+#Unless there are no GCA files in directory, move all GCA files to GenBank_NonRep_Directory
+my @array=(<GCF*>);
+unless (@array == 0) {
+    system("mv GCF* $RefSeq_Directory");
+}
+
 
 
 ##################################################################################################################################################
@@ -190,7 +195,7 @@ print "Total query species:", "\n", $Total_species_input, "\n";
 if ($Total_species_input != $Total_genomes) {
     print $bell;
     print "Total genomes searched ", "(", $Total_genomes, ")",  " is not equal to total query species ", "(", $Total_species_input, ")", "\n";
-    print "Duplicated matches (e.g where Canis lupus and Canis lupus familiaris both yeild a match) may have occured, Do you still want to continue to downloading genbank genomes? (Yes/No):";
+    print "Somthing may have gone wrong, Do you still want to continue to downloading genbank genomes? (Yes/No):";
     my $Yes_No = <STDIN>;
     chomp($Yes_No);
     unless ($Yes_No =~ /^[Yes|yes|Y|y]$/) {
@@ -250,13 +255,13 @@ foreach my $target2(@target_genbank_species_array){
 	#unless($line2 =~m/strain/) {
 	unless ($line2 =~m/virus/) { #don't download viral or isolate genomes. This avoids download of microorganism genomes sampled from the target species.
 	    unless ($line2 =~m/isolate/){
-		if ($line2 =~m/genome[\s]+[0-9]+[\s]+[0-9]+[\s]+$target2/){ #if $line2 matches genome +space + numbers + space +target2
+		if ($line2 =~m/genome[\s]+[0-9]+[\s]+[0-9]+[\s]+$target2+[\t]/){ #if $line2 matches genome +space + numbers + space +target2
 		    $Filtered_genbank_rep_assembly = $Filtered_genbank_rep_assembly.$line2."\n"; #store line in filtered assembly
 		    if($line2=~m/(ftp[\S]+)/){ #Match and and store FTP link
 			my $link2=$1;
 			if($link2=~m/(GCA_+[0-9]+\.[0-9])/){ #Store GCA accession
 			    my $genbank_accession =$1." "; 
-			    $genbank_rep_genomes_found = $genbank_rep_genomes_found.$target2." ".$genbank_accession."\n"; #append the target match to genomes found along with the refseq accession number
+			    $genbank_rep_genomes_found = $genbank_rep_genomes_found.$target2."\t".$genbank_accession."\n"; #append the target match to genomes found along with the refseq accession number
 			    if($link2=~m/\/(GCA\_[\S]+)/){ 
 				my $file2 =$1. "_genomic.fna.gz"; #Append genome file extension
 				my $final_link2 = $link2."/".$file2; #Append genome file link to ftp link
@@ -267,7 +272,7 @@ foreach my $target2(@target_genbank_species_array){
 		}
 	    }
 	}
-    }if ($genbank_rep_genomes_found !~ m/$target2/){ #if after looping through all lines, there is no match stored in genomes found
+    }if ($genbank_rep_genomes_found !~ m/$target2+[\t]/){ #if after looping through all lines, there is no match stored in genomes found
 	$genbank_rep_genomes_absent = $genbank_rep_genomes_absent.$target2."\n"; #append the miss species to the genomes_not_found variable
     }
 }
@@ -294,7 +299,12 @@ close $FILE6;
 #Store RefSeq Genomes in RefSeq_Genomes Directory 
 my $GenBank_Rep_Directory = $Prefix."_GenBank_Rep_Genomes";
 system("mkdir $GenBank_Rep_Directory");
-system("mv GCA* $GenBank_Rep_Directory");
+
+#Unless no GCA files in directory, move al GCA files to GenBank_Rep_Directory
+my @array=(<GCA*>);
+unless (@array == 0) {
+    system("mv GCA* $GenBank_Rep_Directory");
+}
 
 
 
@@ -363,7 +373,7 @@ print "Total query species:", "\n", $Total_genbank_species_input, "\n";
 if ($Total_genbank_species_input != $Total_genbank_genomes) {
     print $bell;
     print "Total genomes searched ", "(", $Total_genbank_genomes, ")",  " is not equal to total query species ", "(", $Total_genbank_species_input, ")", "\n";
-    print "Duplicated matches (e.g where Canis lupus and Canis lupus familiaris both yeild a match) may have occured, Do you still want to continue to downloading genbank genomes? (Yes/No):";
+    print "Somthing may have gone wrong, Do you still want to continue to downloading genbank genomes? (Yes/No):";
     my $Yes_No2 = <STDIN>;
     chomp($Yes_No2);
     unless ($Yes_No2 =~ /^[Yes|yes|Y|y]$/) {
@@ -421,13 +431,13 @@ foreach my $target3(@genbank_na_array){  #Loop over each element, $target, in @a
 	#unless($line3 =~m/strain/) {
 	unless ($line3 =~m/virus/) {
 	    unless ($line3 =~m/isolate/){
-		if ($line3 =~m/[na|genome]+[\s]+[0-9]+[\s]+[0-9]+[\s]+$target3/){ #if $line3 matches "genome +space + numbers + space +target
+		if ($line3 =~m/[na|genome]+[\s]+[0-9]+[\s]+[0-9]+[\s]+$target3+[\t]/){ #if $line3 matches "genome +space + numbers + space +target
 		    $Filtered_genbank_na_assembly = $Filtered_genbank_na_assembly.$line3."\n"; 
 		    if($line3=~m/(ftp[\S]+)/){ #Match and store FTP link
 			my $link3=$1;
 			if($link3=~m/(GCA_+[0-9]+\.[0-9])/){ #Pull and store genome acession
 			    my $accession3 =$1." "; 
-			    $genbank_na_genomes_found = $genbank_na_genomes_found.$target3." ".$accession3."\n"; #append the target match to genomes found along with the refseq accession number
+			    $genbank_na_genomes_found = $genbank_na_genomes_found.$target3."\t".$accession3."\n"; #append the target match to genomes found along with the refseq accession number
 			    if($link3=~m/\/(GCA\_[\S]+)/){ 
 				my $file3 =$1. "_genomic.fna.gz"; #Genome file extension
 				my $final_link3 = $link3."/".$file3; #Append genome file extension and link to FTP link
@@ -439,7 +449,7 @@ foreach my $target3(@genbank_na_array){  #Loop over each element, $target, in @a
 	    }
 	}
 	#} only needed if the unless strain statement is uncommented above.
-    }if ($genbank_na_genomes_found !~ m/$target3/){ #if after looping through all lines, there is no match stored in genomes found
+    }if ($genbank_na_genomes_found !~ m/$target3+[\t]/){ #if after looping through all lines, there is no match stored in genomes found
 	$genbank_na_genomes_absent = $genbank_na_genomes_absent.$target3."\n"; #append the miss species to the genomes_not_found variable
     }
 }
@@ -465,7 +475,12 @@ close $FILE8;
 #Store RefSeq Genomes in RefSeq_Genomes Directory 
 my $GenBank_NonRep_Directory = $Prefix."_GenBank_non_rep_Genomes";
 system("mkdir $GenBank_NonRep_Directory");
-system("mv GCA* $GenBank_NonRep_Directory");
+
+#Unless there are no GCA files in directory, move all GCA files to GenBank_NonRep_Directory
+my @array=(<GCA*>);
+unless (@array == 0) {
+    system("mv GCA* $GenBank_NonRep_Directory");
+}
 
 
 #########################################################################################################################################	
@@ -479,7 +494,6 @@ my $RefSeq_log_sub_Directory = $RefSeq_Directory."/LOG_files";
 system("mkdir $RefSeq_log_sub_Directory");
 system("mv $filtered_refseq_assembly_filename $refseq_genomes_filename $Refseq_absent_genomes $RefSeq_log_sub_Directory");
 
-
 #GenBank Representative Genomes Sub Directory for LOG files
 my $GenBank_rep_log_sub_Directory = $GenBank_Rep_Directory."/LOG_files";
 system("mkdir $GenBank_rep_log_sub_Directory");
@@ -488,19 +502,16 @@ system("mv $filtered_genbank_rep_assembly_filename $genbank_rep_genomes_filename
 #GenBank Non Representative Genomes Sub Directory for LOG files
 my $GenBank_NonRep_log_sub_Directory= $GenBank_NonRep_Directory."/LOG_files";
 system("mkdir $GenBank_NonRep_log_sub_Directory");
-my $Absent_from_NCBI_filename = $Prefix."_absent_from_NCBI.txt";
+my $Absent_from_NCBI_filename = $Prefix."_Genomes_Not_Detected.txt";
 system("cp $genbank_absent_filename $Absent_from_NCBI_filename");
 system("mv $Filtered_genbank_na_assembly_filename $genbank_na_present_filename $genbank_absent_filename $GenBank_NonRep_log_sub_Directory");
 
 #Directory for all output files
 my $OutDirectory = $Prefix."_Output_Genome_files";
 system("mkdir $OutDirectory");
-system("mv $Prefix* $OutDirectory");
+system("mv $RefSeq_Directory $GenBank_Rep_Directory $GenBank_NonRep_Directory $Absent_from_NCBI_filename $OutDirectory");
 
 exit;  
-
-
-
 
 
 
