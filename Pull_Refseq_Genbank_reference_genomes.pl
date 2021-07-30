@@ -11,7 +11,7 @@
 #The script will download RefSeq genomes for your species where available. If not available, it will then search for representative genbank genomes.
 # If no representative genomes on Genbank, all genbank genomes for that species will be downloaded. 
 
-#OPutput summary files will be generated for each stage
+#Output summary files will be generated for each stage
 
 
 #1. REFSEQ GENOMES
@@ -46,12 +46,36 @@
 #######################################################################################################################
 
 #ask for text file with species names and store the string as species_file_name 
-print "Enter title of text file containing target species names:";
-$species_file_name = <STDIN>;
+#print "Enter title of text file containing target species names:";
+#$species_file_name = <STDIN>;
+#chomp $species_file_name;
 
-chomp $species_file_name; # remove empty line from species_file_name
+#Species file input is first argument 
+$species_file_name = $ARGV[0];
 
-unless ( open(SPECIESFILE, $species_file_name) ) {  #open the file. If it doesnt exist, exit and print an error
+
+##ask for text file with species names and store the string as species_file_name 
+print "Enter prefix for naming all output directories and files:";
+my $Prefix = <STDIN>;
+chomp $Prefix;
+
+
+#Automatically name output files using prefix
+my $filtered_refseq_assembly_filename = $Prefix."_filtered_RefSeq_assembly_summary.txt"; #FILE1
+my $refseq_genomes_filename = $Prefix."_RefSeq_genomes_summary.txt"; #FILE2
+my $Refseq_absent_genomes = $Prefix."_genomes_absent_from_RefSeq.txt"; #FILE3
+
+my $filtered_genbank_rep_assembly_filename = $Prefix."_filtered_rep_GenBank_assembly_summary.txt"; #FILE4
+my $genbank_rep_genomes_filename = $Prefix."_GenBank_rep_genomes_summary.txt";  #FILE5
+my $Genbank_absent_rep_genomes = $Prefix."_absent_from_genbank_as_representaive_genomes.txt"; #FILE6
+
+my $Filtered_genbank_na_assembly_filename = $Prefix."_filtered_NonRep_Genbank_assembly_summary.txt"; #FILE7
+my $genbank_na_present_filename = $Prefix."_GenBank_NonRep_genomes_summary.txt"; #FILE8
+my $genbank_absent_filename = $Prefix."_absent_from_GenBank.txt"; #FILE9
+
+		
+#open the file. If it doesnt exist, exit and print an error
+unless ( open(SPECIESFILE, $species_file_name) ) {  
      print "Filename entered does not exist \n ";
 	exit;
 }
@@ -103,30 +127,25 @@ close IN2;
 my $bell = chr(7);
 print $bell;
 
-#Output filtered_assembly as a text file, allow user to specify text file name
-print "\n","\n","Enter filtered refseq assembly output file name:";
-my $filtered_refseq_assembly_filename = <STDIN>;
-chomp $filtered_refseq_assembly_filename; # remove empty line from species_file_name
+#Output filtered_assembly as a text file
 open my $FILE, ">", $filtered_refseq_assembly_filename or die("Can't open file. $!");
 print $FILE $Filtered_assembly;
 close $FILE;
 		
-#Output genomes_found as a text file, allow user to specify text file name
-print "Enter genomes found output file name:";
-my $refseq_genomes_filename = <STDIN>;
-chomp $refseq_genomes_filename; # remove empty line from species_file_name
+#Output genomes_found as a text file
 open my $FILE2, ">", $refseq_genomes_filename or die("Can't open file. $!");
 print $FILE2 $Genomes_found;
 close $FILE2;
 
-#Output genomes_not_found as a text file, allow user to specify text file name
-print "Enter genomes absent from refseq output file name:";
-my $Refseq_absent_genomes = <STDIN>; ##Use this as input for section 2.
-chomp $Refseq_absent_genomes; # remove empty line from species_file_name
+#Output genomes_not_found as a text file
 open my $FILE3, ">", $Refseq_absent_genomes or die("Can't open file. $!");
 print $FILE3 $Genomes_not_found;
 close $FILE3;
-		
+
+#Store RefSeq Genomes in RefSeq_Genomes Directory 
+my $RefSeq_Directory = $Prefix."_RefSeq_Genomes";
+system("mkdir $RefSeq_Directory");
+system("mv GCF* $RefSeq_Directory");
 
 ########################################################################################################################
 
@@ -228,6 +247,9 @@ if ($Total_species_input == $Total_genomes) {
 }
 
 
+
+
+
 ##############################################################################################################################################################################################	
 
 #2. GENBANK GENOMES:
@@ -288,28 +310,25 @@ close IN3;
 print $bell;
 
 #Output filtered_assembly as a text file, allow user to specify text file name
-print "\n","\n","Enter filtered genbank representative genome assembly output file name:";
-my $filtered_genbank_rep_assembly_filename = <STDIN>;
-chomp $filtered_genbank_rep_assembly_filename; # remove empty line from species_file_name
 open my $FILE4, ">", $filtered_genbank_rep_assembly_filename or die("Can't open file. $!");
 print $FILE4 $Filtered_genbank_rep_assembly;
 close $FILE4;
 		
 #Output genomes_found as a text file, allow user to specify text file name
-print "Enter representative genbank genomes found output file name:";
-my $genbank_rep_genomes_filename = <STDIN>;
-chomp $genbank_rep_genomes_filename; # remove empty line from species_file_name
 open my $FILE5, ">", $genbank_rep_genomes_filename or die("Can't open file. $!");
 print $FILE5 $genbank_rep_genomes_found;
 close $FILE5;
 
 #Output genomes_not_found as a text file, allow user to specify text file name
-print "Enter representative genbank genomes absent from refseq output file name:";
-my $Genbank_absent_rep_genomes = <STDIN>; ##Use this as input for section 2.
-chomp $Genbank_absent_rep_genomes; # remove empty line from species_file_name
 open my $FILE6, ">", $Genbank_absent_rep_genomes or die("Can't open file. $!");
 print $FILE6 $genbank_rep_genomes_absent;
 close $FILE6;
+
+#Store RefSeq Genomes in RefSeq_Genomes Directory 
+my $GenBank_Rep_Directory = $Prefix."_GenBank_Rep_Genomes";
+system("mkdir $GenBank_Rep_Directory");
+system("mv GCA* $GenBank_Rep_Directory");
+
 
 
 ########################################################################################################################
@@ -495,29 +514,57 @@ close IN4;
 print $bell;		
 		
 #Output filtered_assembly as a text file, allow user to specify text file name
-print "\n","\n","Enter filtered genbank representative genome assembly output file name:";
-my $Filtered_genbank_na_assembly_filename = <STDIN>;
-chomp $Filtered_genbank_na_assembly_filename; # remove empty line from species_file_name
 open my $FILE9, ">", $Filtered_genbank_na_assembly_filename or die("Can't open file. $!");
 print $FILE9 $Filtered_genbank_na_assembly;
 close $FILE9;		
 		
 		
 #Output genomes_found as a text file, allow user to specify text file name
-print "Enter genomes found output file name:";
-my $genbank_na_present_filename = <STDIN>;
-chomp $genbank_na_present_filename; # remove empty line from species_file_name
 open my $FILE7, ">", $genbank_na_present_filename or die("Can't open file. $!");
 print $FILE7 $genbank_na_genomes_found;
 close $FILE7;
 
 #Output genomes_not_found as a text file, allow user to specify text file name
-print "Enter genomes not found output file name:";
-my $genbank_absent_filename = <STDIN>;
-chomp $genbank_absent_filename; # remove empty line from species_file_name
 open my $FILE8, ">", $genbank_absent_filename or die("Can't open file. $!");
 print $FILE8 $genbank_na_genomes_absent;
 close $FILE8;
+
+#Store RefSeq Genomes in RefSeq_Genomes Directory 
+my $GenBank_NonRep_Directory = $Prefix."_GenBank_non_rep_Genomes";
+system("mkdir $GenBank_NonRep_Directory");
+system("mv GCA* $GenBank_NonRep_Directory");
+
+###############################################################################################################################################################################
+
+
+#RefSeq Sub Directory for LOG files
+
+my $RefSeq_log_sub_Directory = $RefSeq_Directory."/LOG_files";
+system("mkdir $RefSeq_log_sub_Directory");
+system("mv $filtered_refseq_assembly_filename $refseq_genomes_filename $Refseq_absent_genomes $RefSeq_log_sub_Directory");
+
+
+#GenBank Representative Genomes Sub Directory for LOG files
+my $GenBank_rep_log_sub_Directory = $GenBank_Rep_Directory."/LOG_files";
+system("mkdir $GenBank_rep_log_sub_Directory");
+system("mv $filtered_genbank_rep_assembly_filename $genbank_rep_genomes_filename $Genbank_absent_rep_genomes $GenBank_rep_log_sub_Directory");
+
+#GenBank Non Representative Genomes Sub Directory for LOG files
+my $GenBank_NonRep_log_sub_Directory= $GenBank_NonRep_Directory."/LOG_files";
+system("mkdir $GenBank_NonRep_log_sub_Directory");
+my $Absent_from_NCBI_filename = $Prefix."_absent_from_NCBI.txt";
+system("cp $genbank_absent_filename $Absent_from_NCBI_filename");
+system("mv $Filtered_genbank_na_assembly_filename $genbank_na_present_filename $genbank_absent_filename $GenBank_NonRep_log_sub_Directory");
+
+#Directory for all output files
+my $OutDirectory = $Prefix."_Output_files";
+system("mkdir $OutDirectory");
+system("mv $Prefix* $OutDirectory");
+
+exit;  
+
+
+
 
 ##############################################################################################################
 
