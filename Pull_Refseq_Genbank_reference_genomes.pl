@@ -18,6 +18,16 @@
 ## Output summary files will be generated for each stage and stored in the LOG_file sub directories
 
 ############################################################################################################################################
+# Get the RefSeq assembly and Genbank assembly summary files. These are required for this script to work. Can comment this out if you      #
+# already have these files, or want to use an older version of these files.                                                                #
+############################################################################################################################################
+
+system("wget https://ftp.ncbi.nlm.nih.gov/genomes/genbank/assembly_summary_genbank.txt"); #Genbank summary file
+system("wget https://ftp.ncbi.nlm.nih.gov/genomes/refseq/assembly_summary_refseq.txt"); #RefSeq summary file
+
+
+
+############################################################################################################################################
 #1. REFSEQ GENOMES                                                                                                                         #
 ############################################################################################################################################		      		 
 
@@ -115,8 +125,8 @@ my $RefSeq_Directory = $Prefix."_RefSeq_Genomes";
 system("mkdir $RefSeq_Directory");
 
 #Unless there are no GCA files in directory, move all GCA files to GenBank_NonRep_Directory
-my @array=(<GCF*>);
-unless (@array == 0) {
+my @array1=(<GCF*>);
+unless (@array1 == 0) {
     system("mv GCF* $RefSeq_Directory");
 }
 
@@ -301,8 +311,8 @@ my $GenBank_Rep_Directory = $Prefix."_GenBank_Rep_Genomes";
 system("mkdir $GenBank_Rep_Directory");
 
 #Unless no GCA files in directory, move al GCA files to GenBank_Rep_Directory
-my @array=(<GCA*>);
-unless (@array == 0) {
+my @array2=(<GCA*>);
+unless (@array2 == 0) {
     system("mv GCA* $GenBank_Rep_Directory");
 }
 
@@ -477,7 +487,7 @@ my $GenBank_NonRep_Directory = $Prefix."_GenBank_non_rep_Genomes";
 system("mkdir $GenBank_NonRep_Directory");
 
 #Unless there are no GCA files in directory, move all GCA files to GenBank_NonRep_Directory
-my @array=(<GCA*>);
+my @array3=(<GCA*>);
 unless (@array == 0) {
     system("mv GCA* $GenBank_NonRep_Directory");
 }
