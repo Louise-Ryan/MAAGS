@@ -7,10 +7,7 @@
 ## For species with a genome on refseq, list these with their accession number and relevant FTP links in an output text file. ##
 ## Also list species not available on refseq in a seperate text file.                                                         ##
 ## Download all available refseq files specified.                                                                             ##
-##													      		      ##
-## NOTE: Canis lupus will match with both 'Canis lupis' and Canis lupis familiaris'. 		      		              ##
-## Hence three canis lupus matches will be found, where canis lupis familiaris is repeated twice	      		      ##
-## Wasn't sure how to fix this.											              ##
+##													      		      ##										              ##
 ################################################################################################################################
 
 
@@ -291,14 +288,14 @@ foreach my $target(@target_species_array){  #Loop over each element, $target, in
     open(IN2, "assembly_summary_refseq.txt"); #open the assembly_summary text file, file handle = IN
 	while(<IN2>) { 
 	my $line=$_; #store each line of the text file in $line
-   		if ($line =~m/genome[\s]+[0-9]+[\s]+[0-9]+[\s]+$target/){ #if $line matches "genome +space + numbers + space +target
+   		if ($line =~m/genome[\s]+[0-9]+[\s]+[0-9]+[\s]+$target+[\t]/){ #if $line matches "genome +space + numbers + space +target
 			if($line=~m/(ftp[\S]+)/){ #if this line has ftp followed by anything (FTP://...link) take this and store it as link
 	    		my $link=$1;#create variable link and store the FTP link
 	    			if($link=~m/(GCF_+[0-9]+\.[0-9])/){ #we want to take the GCF accession from the link and store it as accession 
 				my $accession =$1." "; #save the accession which matched the regex above
 				#$Genomes_found = $Genomes_found.$target." ".$accession."\n"; #append the target match to genomes found along with the refseq accession number
 	    				if($link=~m/\/(GCF\_[\S]+)/){ #we want to take the \GCF part of the FTP link and repeat it by appending it to the FTP liK 
-					    $Genomes_found = $Genomes_found.$target." ".$accession."\n";
+					    $Genomes_found = $Genomes_found.$target."\t".$accession."\n";
 					    my $file =$1.$Extension_1 ; #we still need to append  _genomic.fna.gz to get the full genome link (link we want)
 					    my $file2 =$1.$Extension_2 ;
 					    my $file3 =$1.$Extension_3 ;
@@ -333,7 +330,7 @@ foreach my $target(@target_species_array){  #Loop over each element, $target, in
 						}
 					}
 				}
-			}if ($Genomes_found !~ m/$target/){ #if after looping through all lines, there is no match stored in genomes found
+			}if ($Genomes_found !~ m/$target+[\t]/){ #if after looping through all lines, there is no match stored in genomes found
 			$Genomes_not_found = $Genomes_not_found.$target."\n"; #append the miss species to the genomes_not_found variable
 		}
 	}
