@@ -1,0 +1,60 @@
+Carlito syrichta
+Daubentonia madagascariensis
+Indri indri
+Lemur catta
+Microcebus sp. 3 GT-2019
+Mirza zaza
+Alouatta palliata
+Aotus nancymaae
+Ateles geoffroyi
+Cebus albifrons
+Cebus imitator
+Cercocebus atys
+Cercopithecus mona
+Cercopithecus neglectus
+Cheirogaleus medius
+Colobus angolensis palliatus
+Erythrocebus patas
+Eulemur flavifrons
+Eulemur fulvus
+Eulemur macaco
+Hylobates moloch
+Mandrillus leucophaeus
+Mandrillus sphinx
+Microcebus griseorufus
+Microcebus mittermeieri
+Microcebus murinus
+Microcebus ravelobensis
+Microcebus tavaratra
+Mirza coquereli
+Nasalis larvatus
+Nycticebus coucang
+Otolemur garnettii
+Piliocolobus tephrosceles
+Pithecia pithecia
+Plecturocebus donacophilus
+Prolemur simus
+Propithecus coquereli
+Pygathrix nemaeus
+Rhinopithecus bieti
+Rhinopithecus roxellana
+Saimiri boliviensis boliviensis
+Semnopithecus entellus
+Theropithecus gelada
+Callithrix jacchus
+Chlorocebus sabaeus
+Gorilla gorilla gorilla
+Homo sapiens
+Macaca fuscata fuscata
+Macaca mulatta
+Macaca nemestrina
+Pan troglodytes
+Pongo pygmaeus
+Saguinus imperator
+Sapajus apella
+Trachypithecus francoisi
+Macaca fascicularis
+Nomascus leucogenys
+Pan paniscus
+Papio anubis
+Pongo abelii
