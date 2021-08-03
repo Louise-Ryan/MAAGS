@@ -141,92 +141,93 @@ unless (@array1 == 0) {
 ## Takes the output refseq_present text file and the output refseq_absent text file from the search_refseq_genomes.pl script as inputs.	        ##
 ## Prints total counts for genomes present on reseq, genomes absent on refseq and total genomes.						##
 ## Total genomes should match the number of query genomes used as input for the 'search_refseq_genomes.pl script.				##
-##																		##
+## This section is redundant now unless you want to opt out of pipeline	after any stage (Refseq, genbank rep, genbank nonrep).			##
+## UNCOMMENT THIS SECTION IF YOU WANT OPT OUT OPTIONS. TO SUBMIT TO SERVER, LEAVE COMMENTED OUT                                                 ##
 ##################################################################################################################################################
 
-my $bell = chr(7); #To warn when first step is done. Checkpoint allows escape after RefSeq download if something seems to have gone wrong.
+#my $bell = chr(7); #To warn when first step is done. Checkpoint allows escape after RefSeq download if something seems to have gone wrong.
 
-my $Total_refseq_present = 0;
-my $Total_refseq_absent = 0; 
-my $Total_species_input = 0;
+#my $Total_refseq_present = 0;
+#my $Total_refseq_absent = 0; 
+#my $Total_species_input = 0;
 
 #Count refseq present:
-unless ( open(REFSEQ_Present, $refseq_genomes_filename) ) {  #open the file. If it doesnt exist, exit and print an error
-     print "Filename entered does not exist \n ";
-	exit;
-}
+#unless ( open(REFSEQ_Present, $refseq_genomes_filename) ) {  #open the file. If it doesnt exist, exit and print an error
+#     print "Filename entered does not exist \n ";
+#	exit;
+#}
 
 #Store the file data as an array
-my @refseq_array_present = <REFSEQ_Present>;
+#my @refseq_array_present = <REFSEQ_Present>;
 
 #Close the file, Remove empty lines from array
-close REFSEQ_Present;
-chomp(@refseq_array_present); 
+#close REFSEQ_Present;
+#chomp(@refseq_array_present); 
 
 #Loop over each element, $target, in @array
-foreach my $species(@refseq_array_present){  
-	$Total_refseq_present = $Total_refseq_present +1 }
+#foreach my $species(@refseq_array_present){  
+#	$Total_refseq_present = $Total_refseq_present +1 }
        
 #Count refseq absent:
-unless ( open(REFSEQ_Absent, $Refseq_absent_genomes) ) {  #open the file. If it doesnt exist, exit and print an error
-     print "Filename entered does not exist \n ";
-	exit;
-}
+#unless ( open(REFSEQ_Absent, $Refseq_absent_genomes) ) {  #open the file. If it doesnt exist, exit and print an error
+#     print "Filename entered does not exist \n ";
+#	exit;
+#}
 
 #Store the file data as an array
-my @refseq_array_absent = <REFSEQ_Absent>;
+#my @refseq_array_absent = <REFSEQ_Absent>;
 
 #Close the file
-close REFSEQ_Absent;
+#close REFSEQ_Absent;
 
 #Remove empty lines from array
-chomp(@refseq_array_absent); 
+#chomp(@refseq_array_absent); 
 
 
 #Loop over each element, $target, in @array
-foreach my $species(@refseq_array_absent){  
-	$Total_refseq_absent = $Total_refseq_absent +1 }
+#foreach my $species(@refseq_array_absent){  
+#	$Total_refseq_absent = $Total_refseq_absent +1 }
 
 
 #Count total number of input species
-foreach my $species(@target_species_array) {
-	$Total_species_input = $Total_species_input +1 }
+#foreach my $species(@target_species_array) {
+#	$Total_species_input = $Total_species_input +1 }
 
-my $Total_genomes = $Total_refseq_present + $Total_refseq_absent;
+#my $Total_genomes = $Total_refseq_present + $Total_refseq_absent;
 
 #Print outs 
-print "\n","\n", "Checkpoint 1: Counting genomes... \n";
-print "Total genomes present on refseq:", "\n", $Total_refseq_present, "\n";	
-print "Total genomes absent on refseq:", "\n", $Total_refseq_absent, "\n";
-print "Total genomes:", "\n", $Total_genomes, "\n";
-print "Total query species:", "\n", $Total_species_input, "\n";
+#print "\n","\n", "Checkpoint 1: Counting genomes... \n";
+#print "Total genomes present on refseq:", "\n", $Total_refseq_present, "\n";	
+#print "Total genomes absent on refseq:", "\n", $Total_refseq_absent, "\n";
+#print "Total genomes:", "\n", $Total_genomes, "\n";
+#print "Total query species:", "\n", $Total_species_input, "\n";
 
 #Warning message
-if ($Total_species_input != $Total_genomes) {
-    print $bell;
-    print "Total genomes searched ", "(", $Total_genomes, ")",  " is not equal to total query species ", "(", $Total_species_input, ")", "\n";
-    print "Somthing may have gone wrong, Do you still want to continue to downloading genbank genomes? (Yes/No):";
-    my $Yes_No = <STDIN>;
-    chomp($Yes_No);
-    unless ($Yes_No =~ /^[Yes|yes|Y|y]$/) {
-	exit;
-    }
-}
+#if ($Total_species_input != $Total_genomes) {
+#    print $bell;
+#    print "Total genomes searched ", "(", $Total_genomes, ")",  " is not equal to total query species ", "(", $Total_species_input, ")", "\n";
+#    print "Somthing may have gone wrong, Do you still want to continue to downloading genbank genomes? (Yes/No):";
+#    my $Yes_No = <STDIN>;
+#    chomp($Yes_No);
+#    unless ($Yes_No =~ /^[Yes|yes|Y|y]$/) {
+#	exit;
+#    }
+#}
 
 #All clear message
-if ($Total_species_input == $Total_genomes) {
-    print $bell;
-    print "Total genomes searched ", "(", $Total_genomes, ")",  " is equal to total query species ", "(", $Total_species_input, ")", "\n";
-    print "Everything looks good. Do you want to continue to downloading genbank genomes? (Yes/No):";
-    my $Yes_No = <STDIN>;
-    chomp($Yes_No);
-    if ($Yes_No =~ /^Yes|yes|Y|y$/) {
-	print "\n","\n","Proceeding to genbank downloads...","\n\n";
-    }else{
-	print "exiting pipeline...","\n\n";
-	exit;
-    }
-}
+#if ($Total_species_input == $Total_genomes) {
+#    print $bell;
+#    print "Total genomes searched ", "(", $Total_genomes, ")",  " is equal to total query species ", "(", $Total_species_input, ")", "\n";
+#    print "Everything looks good. Do you want to continue to downloading genbank genomes? (Yes/No):";
+#    my $Yes_No = <STDIN>;
+#    chomp($Yes_No);
+#    if ($Yes_No =~ /^Yes|yes|Y|y$/) {
+#	print "\n","\n","Proceeding to genbank downloads...","\n\n";
+#    }else{
+#	print "exiting pipeline...","\n\n";
+#	exit;
+#    }
+#}
 
 
 #########################################################################################################################################	
@@ -321,90 +322,94 @@ unless (@array2 == 0) {
 ##################################################################################################################################################
 # Count Check point for part 2 to part 3 progression:                                                                                           ##
 ##################################################################################################################################################
+## Total genomes should match the number of query genomes used as input for the 'search_refseq_genomes.pl script.				##
+## This section is redundant now unless you want to opt out of pipeline	after any stage (Refseq, genbank rep, genbank nonrep).			##
+## UNCOMMENT THIS SECTION IF YOU WANT OPT OUT OPTIONS. TO SUBMIT TO SERVER, LEAVE COMMENTED OUT                                                 ##
+##################################################################################################################################################
 
-my $Total_genbank_rep_present = 0;
-my $Total_genbank_rep_absent = 0; 
-my $Total_genbank_species_input = 0;
+#my $Total_genbank_rep_present = 0;
+#my $Total_genbank_rep_absent = 0; 
+#my $Total_genbank_species_input = 0;
 
 
 #Count refseq present:
-unless ( open(GENBANK_REP_Present, $genbank_rep_genomes_filename) ) {  #open the file. If it doesnt exist, exit and print an error
-     print "Filename entered does not exist \n ";
-	exit;
-}
+#unless ( open(GENBANK_REP_Present, $genbank_rep_genomes_filename) ) {  #open the file. If it doesnt exist, exit and print an error
+#     print "Filename entered does not exist \n ";
+#	exit;
+#}
 
 #Store the file data as an array
-my @GENBANK_rep_array_present = <GENBANK_REP_Present>;
+#my @GENBANK_rep_array_present = <GENBANK_REP_Present>;
 
 #Close the file
-close GENBANK_REP_Present;
+#close GENBANK_REP_Present;
 
 #Remove empty lines from array
-chomp(@GENBANK_rep_array_present); 
+#chomp(@GENBANK_rep_array_present); 
 
 #Loop over each element, $target, in @array
-foreach my $species(@GENBANK_rep_array_present){ 
-	$Total_genbank_rep_present = $Total_genbank_rep_present +1 }
+#foreach my $species(@GENBANK_rep_array_present){ 
+#	$Total_genbank_rep_present = $Total_genbank_rep_present +1 }
 
 #Count refseq absent:
-unless ( open(GENBANK_REP_Absent, $Genbank_absent_rep_genomes) ) {  
-     print "Filename entered does not exist \n ";
-	exit;
-}
+#unless ( open(GENBANK_REP_Absent, $Genbank_absent_rep_genomes) ) {  
+#     print "Filename entered does not exist \n ";
+#	exit;
+#}
 
 #Store the file data as an array
-my @GENBANK_rep_array_absent = <GENBANK_REP_Absent>;
+#my @GENBANK_rep_array_absent = <GENBANK_REP_Absent>;
 
 #Close the file
-close GENBANK_REP_Absent;
+#close GENBANK_REP_Absent;
 
 #Remove empty lines from array
-chomp(@GENBANK_rep_array_absent); 
+#chomp(@GENBANK_rep_array_absent); 
 
 #Loop over each element, $target, in @array
-foreach my $species(@GENBANK_rep_array_absent){  
-	$Total_genbank_rep_absent = $Total_genbank_rep_absent +1 }
+#foreach my $species(@GENBANK_rep_array_absent){  
+#	$Total_genbank_rep_absent = $Total_genbank_rep_absent +1 }
 
 
 #Count total number of input species
-foreach my $species(@target_genbank_species_array) {
-	$Total_genbank_species_input = $Total_genbank_species_input +1 }
+#foreach my $species(@target_genbank_species_array) {
+#	$Total_genbank_species_input = $Total_genbank_species_input +1 }
 
-my $Total_genbank_genomes = $Total_genbank_rep_present + $Total_genbank_rep_absent;
+#my $Total_genbank_genomes = $Total_genbank_rep_present + $Total_genbank_rep_absent;
 
 #Printouts
-print "\n","\n", "Checkpoint 1: Counting genomes...\n";
-print "Total representative genomes present on genbank:", "\n", $Total_genbank_rep_present, "\n";	
-print "Total genomes with no representative genome on genbank:", "\n", $Total_genbank_rep_absent, "\n";
-print "Total genomes searched:", "\n", $Total_genbank_genomes, "\n";
-print "Total query species:", "\n", $Total_genbank_species_input, "\n";
+#print "\n","\n", "Checkpoint 1: Counting genomes...\n";
+#print "Total representative genomes present on genbank:", "\n", $Total_genbank_rep_present, "\n";	
+#print "Total genomes with no representative genome on genbank:", "\n", $Total_genbank_rep_absent, "\n";
+#print "Total genomes searched:", "\n", $Total_genbank_genomes, "\n";
+#print "Total query species:", "\n", $Total_genbank_species_input, "\n";
 
 #Warning Printout..opt out option
-if ($Total_genbank_species_input != $Total_genbank_genomes) {
-    print $bell;
-    print "Total genomes searched ", "(", $Total_genbank_genomes, ")",  " is not equal to total query species ", "(", $Total_genbank_species_input, ")", "\n";
-    print "Somthing may have gone wrong, Do you still want to continue to downloading genbank genomes? (Yes/No):";
-    my $Yes_No2 = <STDIN>;
-    chomp($Yes_No2);
-    unless ($Yes_No2 =~ /^[Yes|yes|Y|y]$/) {
-	exit;
-    }
-}
+#if ($Total_genbank_species_input != $Total_genbank_genomes) {
+#    print $bell;
+#    print "Total genomes searched ", "(", $Total_genbank_genomes, ")",  " is not equal to total query species ", "(", $Total_genbank_species_input, ")", "\n";
+#    print "Somthing may have gone wrong, Do you still want to continue to downloading genbank genomes? (Yes/No):";
+#    my $Yes_No2 = <STDIN>;
+#    chomp($Yes_No2);
+#    unless ($Yes_No2 =~ /^[Yes|yes|Y|y]$/) {
+#	exit;
+#    }
+#}
 
 #All clear printout ..opt out option
-if ($Total_genbank_species_input == $Total_genbank_genomes) {
-    print $bell;
-    print "Total genomes searched ", "(", $Total_genbank_genomes, ")",  " is equal to total query species ", "(", $Total_genbank_species_input, ")", "\n";
-    print "Everything looks good. Do you want to continue to downloading genbank non-representative genomes? (Yes/No):";
-    my $Yes_No2 = <STDIN>;
-    chomp($Yes_No2);
-    if ($Yes_No2 =~ /^Yes|yes|Y|y$/) {
-	print "\n","\n","Proceeding to genbank non-representative genome downloads...","\n\n";
-    }else{
-	print "exiting pipeline...","\n\n";
-	exit;
-    }
-}
+#if ($Total_genbank_species_input == $Total_genbank_genomes) {
+#    print $bell;
+#    print "Total genomes searched ", "(", $Total_genbank_genomes, ")",  " is equal to total query species ", "(", $Total_genbank_species_input, ")", "\n";
+#    print "Everything looks good. Do you want to continue to downloading genbank non-representative genomes? (Yes/No):";
+#    my $Yes_No2 = <STDIN>;
+#    chomp($Yes_No2);
+#    if ($Yes_No2 =~ /^Yes|yes|Y|y$/) {
+#	print "\n","\n","Proceeding to genbank non-representative genome downloads...","\n\n";
+#    }else{
+#	print "exiting pipeline...","\n\n";
+#	exit;
+#    }
+#}
 
 
 #########################################################################################################################################	
