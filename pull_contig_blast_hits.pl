@@ -71,8 +71,9 @@ foreach my $line(@Blast_array) { #each query chunk is stored in $line from blast
 	    $Contig =~ s/\>//;
 	    $Contig =~ s/\s//;
 	    $Contig = $Contig."_"; #Add underscore to identifier. Important for contig check. Removed again later on.
-	    if ($Contig !~ m/$Contig_check/g) { #If unique contig hit, store to contig list
-		$Contig_check = $Contig;
+	    if ($Contig_check !~ m/.*\_$Contig/i && $Contig_check !~ m/$Contig/i) { #If unique contig hit, store to contig list
+		$Contig_check = $Contig_check.$Contig;
+		print "\n\nContig: ".$Contig."\nContig Check: ".$Contig_check."\n\n";
 		$Contig_List = $Contig_List.$Contig;
 	    }
 	    $Contig =~ s/\_//;
