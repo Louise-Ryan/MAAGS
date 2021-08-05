@@ -14,6 +14,8 @@
 #Run this script on one blast output file corresponding to one target genome at a time.
 #Can handle multiple genes from multiple species as blast query against target genome.
 
+#WARNING: Make sure no stray fasta header symbols (>) in query. Carlito syrichta fasta headers include an unecessary stray > in description. These need to be removed prior to this script!
+
 #ARGV0=Blast output file name
 #ARGV1=Target Genome
 
