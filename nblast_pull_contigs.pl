@@ -7,6 +7,8 @@
 #Generate blast results out file for each species
 #parse blastn output file for each species.
 #Pull contig hit name and store in an array. Only store unique hits where genes from multiple species are used as blastn input.
+#All contigs with a hit will be pulled regardless of signifigance scores.
+#hence if query hits 2 contigs, both are pulled, not just most signifigant one.
 #Pull scores and contig info and stores in Contig_Hit_Summary.txt.
 #Opens Genome file and pulls unique contigs from the target genome and stores in Contig_Hit_SeqFile.fa.
 #Run this script on one blast output file corresponding to one target genome at a time.
@@ -21,7 +23,7 @@
 # 1. makeblastdb and nblast  on all genomes in directory using query seqfile
 my $Query = $ARGV[0];
 my $genome_file_extension = ".fna";
-my @genome_array = (<*$genome_file_extension>);
+my @genome_array = (<*$genome_file_extension>); #Script acs on all .fna files in directory. 
 
 
 
@@ -38,6 +40,7 @@ foreach my $GENOME(@genome_array) {
     my @Contig_array;
     my $Contig_Hit_Summary;
     my $Database;
+    my $LOC;
     my $Contig_check="";
     my $GENOME_ID;
     my $contig_seq;
@@ -58,48 +61,67 @@ foreach my $GENOME(@genome_array) {
 	    local $/; #changes delimiter to nothing. Allows entire file to be read in as one chunk
 	    $Blast_output = <BLASTFILE>; #Stores contents of BLAST file into a scalor
 	}
-	my @Blast_array = split("Query\=", $Blast_output); #Splits by query and stores each query as an element of the array that can be looped over
-	foreach my $line(@Blast_array) { #each query chunk is stored in $line from blast output file # print $line."\n";
-	    if ($line =~ m/(\s.*\n?GC)/i){
+	my @Blast_array = split("Query\=", $Blast_output); #Splits blast out file  by query chunk
+	foreach my $line(@Blast_array) { #Loop over each query chunk
+	    $line="Query=".$line; 
+	    if ($line =~ m/(\s.*\n?GC)/i){  
 		my $Query = $1; #Query is "GENE_Genus_species" info
 		$Query =~ s/\nGC//;
 		$Query =~ s/\s//;
-		if ($Query !~ m/Database/i) { #RegEx was not specific enough so removing this non-specific hit
-		    $Contig_Hit_Summary = $Contig_Hit_Summary."\n"."Query = ".$Query.", "; #Add query info to summary file
-		} if ($line =~ m/(Database.*?fna)/i) { #storing the database (genome being blasted) info (will be added to sumamry at end)
-		    $Database = $1
+		if ($line =~ m/(LOC[0-9]*)/s) {
+			$LOC = $1; #If LOC ID in header, store
+		    }else {
+			$LOC = ""; #Else continue without LOC ID
 		}
-		if ($line =~ m/(\>.*?\s)/i) {
-		    $Contig = $1; #Storing Contig Hit identifier
-		    $Contig =~ s/\>//;
-		    $Contig =~ s/\s//;
-		    $Contig = $Contig."_"; #Add underscore to identifier. Important for contig check. Removed again later on.
-		    if ($Contig_check !~ m/.*\_$Contig/i && $Contig_check !~ m/$Contig/i) { #If unique contig hit, store to contig list
-			$Contig_check = $Contig_check.$Contig;
-			print "\n\nContig: ".$Contig."\nContig Check: ".$Contig_check."\n\n";
-			$Contig_List = $Contig_List.$Contig;
+		if ($line =~ m/(Database.*?fna)/i) { #storing the database (genome being blasted) info (will be added to sumamry at end)
+		    $Database = $1;
+		}		    
+		my @contig_array = split(">", $line); #Split each query chunk into contig chunks 
+		foreach my $contig_chunk(@contig_array) { #Loop over each contig chunk within query chunk
+		    unless($contig_chunk =~ m/BLASTN\s2\.9\.0\+/ ||  $contig_chunk =~ m/Query\=.*/i) { #Only reappend the > to contig IDs
+			$contig_chunk = ">".$contig_chunk; #Reappend the fasta header to contig chunk
 		    }
-		    $Contig =~ s/\_//;
-		    $Contig_Hit_Summary = $Contig_Hit_Summary.$Contig.", "; #Store contig identifier in summary file
-		    if ($line =~ m/(Score\s\=.*?\,)/i) {
-			$Score = $1; #Store score (bits) info in summary file
-			$Contig_Hit_Summary = $Contig_Hit_Summary.$Score;
+		    if ($contig_chunk =~ m/(\>.*?\s)/i) { 
+			if ($Query !~ m/Database/i) { #RegEx was not specific enough so removing this non-specific hit
+			    if ($LOC =~ m/LOC.*/i){
+				$Contig_Hit_Summary = $Contig_Hit_Summary."\n"."Query = ".$Query."_".$LOC.", "; #Add query info to summary file
+			    }else{
+				$Contig_Hit_Summary = $Contig_Hit_Summary."\n"."Query = ".$Query.", "; #Add query info to summary file
+			    }
+			}
+			$Contig = $1; #Storing Contig Hit identifier
+			$Contig =~ s/\>//;
+			$Contig =~ s/\s//;
+			$Contig = $Contig."_"; #Add underscore to identifier. Important for contig check. Removed again later on.
+			if ($Contig !~ m/\s\_/){ 
+			    if ($Contig_check !~ m/.*\_$Contig/i && $Contig_check !~ m/$Contig/i) { #If unique contig hit, store to contig list
+				$Contig_check = $Contig_check.$Contig;
+			#	print "\n\nContig: ".$Contig."\nContig Check: ".$Contig_check."\n\n"; #can comment this out
+				$Contig_List = $Contig_List.$Contig
+			    }
+			}
+			$Contig =~ s/\_//;
+			$Contig_Hit_Summary = $Contig_Hit_Summary.$Contig.", "; #Store contig identifier in summary file
+			if ($line =~ m/(Score\s\=.*?\,)/i) {
+			    $Score = $1; #Store score (bits) info in summary file
+			    $Contig_Hit_Summary = $Contig_Hit_Summary.$Score;
+			}
 			if ($line =~ m/(Expect\s\=.*[0-9].*e.*[0-9])/i) {
 			    $EValue = $1; #Store e-value score info in summary file
 			    $Contig_Hit_Summary = $Contig_Hit_Summary." ".$EValue.", ";
-			    if ($line =~ m/(Identities\s\=.*?\,)/i) {
-				$Identity = $1; #Store Identity score in summary file
-				$Contig_Hit_Summary = $Contig_Hit_Summary.$Identity;
-				if ($line =~ m/(Gaps\s\=.*?\))/i) {
-				    $Gaps = $1; #Store Gap info in summary file
-				    $Contig_Hit_Summary = $Contig_Hit_Summary." ".$Gaps.", ";
-				    if ($line =~ m/(Strand\=.*\/.*?\n)/i) {
-					$Strand = $1; #Store strand info in summary file
-					$Strand =~ s/\n//;
-					$Contig_Hit_Summary = $Contig_Hit_Summary.$Strand;
-				    }
-				}
-			    }
+			}
+			if ($line =~ m/(Identities\s\=.*?\,)/i) {
+			    $Identity = $1; #Store Identity score in summary file
+			    $Contig_Hit_Summary = $Contig_Hit_Summary.$Identity;
+			}
+			if ($line =~ m/(Gaps\s\=.*?\))/i) {
+			$Gaps = $1; #Store Gap info in summary file
+			$Contig_Hit_Summary = $Contig_Hit_Summary." ".$Gaps.", ";
+			}
+			if ($line =~ m/(Strand\=.*\/.*?\n)/i) {
+			    $Strand = $1; #Store strand info in summary file
+			    $Strand =~ s/\n//;
+			    $Contig_Hit_Summary = $Contig_Hit_Summary.$Strand;
 			}
 		    }
 		}
