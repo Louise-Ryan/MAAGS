@@ -16,8 +16,7 @@
 
 #WARNING: Make sure no stray fasta header symbols (>) in query. Carlito syrichta fasta headers include an unecessary stray > in description. These need to be removed prior to this script!
 
-#ARGV0=Blast output file name
-#ARGV1=Target Genome
+#ARGV0=Query seq file
 
 
 #------------------------------------------------------------------------------------------------------------------
@@ -94,15 +93,15 @@ foreach my $GENOME(@genome_array) {
 			$Contig = $1; #Storing Contig Hit identifier
 			$Contig =~ s/\>//;
 			$Contig =~ s/\s//;
-			$Contig = $Contig."_"; #Add underscore to identifier. Important for contig check. Removed again later on.
-			if ($Contig !~ m/\s\_/){ 
-			    if ($Contig_check !~ m/.*\_$Contig/i && $Contig_check !~ m/$Contig/i) { #If unique contig hit, store to contig list
+			$Contig = $Contig."split"; #Add split term to identifier. Important for contig check. Removed again later on.
+			if ($Contig !~ m/\s\split/){ 
+			    if ($Contig_check !~ m/.*\split$Contig/i && $Contig_check !~ m/$Contig/i) { #If unique contig hit, store to contig list
 				$Contig_check = $Contig_check.$Contig;
-			#	print "\n\nContig: ".$Contig."\nContig Check: ".$Contig_check."\n\n"; #can comment this out
+				#print "\n\nContig: ".$Contig."\nContig Check: ".$Contig_check."\n\n"; #can comment this out
 				$Contig_List = $Contig_List.$Contig
 			    }
 			}
-			$Contig =~ s/\_//;
+			$Contig =~ s/split//;
 			$Contig_Hit_Summary = $Contig_Hit_Summary.$Contig.", "; #Store contig identifier in summary file
 			if ($line =~ m/(Score\s\=.*?\,)/i) {
 			    $Score = $1; #Store score (bits) info in summary file
@@ -130,7 +129,7 @@ foreach my $GENOME(@genome_array) {
 	    }
 	}
 	$Contig_Hit_Summary = "Blast results against ".$Database.":".$Contig_Hit_Summary."\n\n"."Unique Contig Hits: \n"; #Add database info to summary file.
-	@Contig_array = split("_",$Contig_List); #Split the unique contigs into an array. This is where the underscore is important.
+	@Contig_array = split("split",$Contig_List); #Split the unique contigs into an array. This is where the underscore is important.
 	foreach my $Contig_ID (@Contig_array) { #Loop over array and print unique contig list to summary file
 	    $Contig_Hit_Summary = $Contig_Hit_Summary.$Contig_ID."\n";
 	}
