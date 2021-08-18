@@ -1,5 +1,7 @@
+#!/usr/bin/perl
+
 # 1. Align and generate tree for all files in directory
-my $file_extension = "\.fa";
+my $file_extension = "fa";
 my @filename_array = (<*$file_extension>);
 
 
@@ -47,13 +49,13 @@ foreach my $gene_file(@filename_array){
 	} $outlines_modified = $outlines_modified.$line;
     }
     close IN;
-    $outlines_modified =~ s/\!/\-/g;
+    $outlines_modified =~ s/\!/N/g;
     open my $OUTFILE, ">", $modified_alignment_file or die("Can't open file. $!");
     print $OUTFILE $outlines_modified;
     close $OUTFILE; 
-    my $tree_file = $modified_alignment_file.".treefile";
-    my $cladogram_out = $gene_file."_Cladogram.jpeg";
-    my $phylogram_out = $gene_file."_Phylogram.jpeg";
+    my $tree_file = $file_prefix.".treefile";
+    my $cladogram_out = $file_prefix."_Cladogram.jpeg";
+    my $phylogram_out = $file_prefix."_Phylogram.jpeg";
     open(IN2, $gene_file);
     my $outgroup = "";
     while(<IN2>){
@@ -65,9 +67,9 @@ foreach my $gene_file(@filename_array){
 	}
     }
     if ($outgroup =~ m/.*[A-Za-z].*/i) {
-	$cmd_iqtree = "./iqtree2 -s ".$modified_alignment_file." -o ".$outgroup." -nt AUTO"."\n";
+	$cmd_iqtree = "./iqtree2 -s ".$modified_alignment_file." -o ".$outgroup." -nt AUTO -bb 1000"."\n";
     }else{
-	$cmd_iqtree = "./iqtree2 -s ".$modified_alignment_file."_NT"." -nt AUTO"."\n";
+	$cmd_iqtree = "./iqtree2 -s ".$modified_alignment_file."_NT"." -nt AUTO -bb 1000"."\n";
     }
     print $cmd_iqtree;
     system("$cmd_iqtree");

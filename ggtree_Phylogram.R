@@ -1,3 +1,5 @@
+#!/usr/bin/Rscript --vanilla
+
 library(ape)
 library(aplot)
 library(dplyr)
