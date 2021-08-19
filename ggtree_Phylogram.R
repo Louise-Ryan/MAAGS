@@ -33,7 +33,4 @@ ggtree_run <- function() {
 ggtree_run()
 
 
-
-
-
 # ggtree argument branch.length="none"

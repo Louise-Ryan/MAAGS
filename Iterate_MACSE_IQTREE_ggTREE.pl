@@ -53,7 +53,7 @@ foreach my $gene_file(@filename_array){
     open my $OUTFILE, ">", $modified_alignment_file or die("Can't open file. $!");
     print $OUTFILE $outlines_modified;
     close $OUTFILE; 
-    my $tree_file = $file_prefix.".treefile";
+    my $tree_file = $modified_alignment_file.".treefile";
     my $cladogram_out = $file_prefix."_Cladogram.jpeg";
     my $phylogram_out = $file_prefix."_Phylogram.jpeg";
     open(IN2, $gene_file);
@@ -73,10 +73,10 @@ foreach my $gene_file(@filename_array){
     }
     print $cmd_iqtree;
     system("$cmd_iqtree");
-    $cmd_ggtree = "Rscript ggtree_Cladogram.R $wd $tree_file $cladogram_out"."\n";
+    $cmd_ggtree = "ggtree_Cladogram.R $wd $tree_file $cladogram_out"."\n";
     print $cmd_ggtree;
     system("$cmd_ggtree");
-    my $cmd_ggtree_phylogram = "Rscript ggtree_Phylogram.R $wd $tree_file $phylogram_out"."\n";
+    my $cmd_ggtree_phylogram = "ggtree_Phylogram.R $wd $tree_file $phylogram_out"."\n";
     print $cmd_ggtree_phylogram;
     system("$cmd_ggtree_phylogram");
     my $directory_out = $file_prefix."_alignments_and_treefiles_output";
