@@ -3,17 +3,24 @@
 my $fasta_file_extension = "fa";
 my @file_array = (<*$fasta_file_extension>);
 
-my $outfile;
+#my $outfile;
 
 foreach my $file(@file_array) {
-    my $outfile ="";
-    my $newheader="";
     open(IN, $file);
     {
 	local $/; #changes delimiter to nothing. Allows entire file to be read in as one chun
 	$GENES = <IN>; #Stores contents of BLAST file into a scalor
     }
     close IN;
+    my $outfile ="";
+    my $newheader="";
+    my $head="";
+    my $seq="";
+    my $gene="";
+    my $Head1="";
+    my $LOC = "";
+    my $Genome ="";
+    my $prot_desc = "";
     if($GENES =~ m/.*?(\.\.\>).*/i) {
 	$rm = $1;
 	print $rm."\n\n";
@@ -46,14 +53,16 @@ foreach my $file(@file_array) {
 	    chop ($prot_desc);
 #	    print $prot_desc."\n";
 	}
-	my $newheader = $Head1.$LOC." ".$Genome." ".$prot_desc."\n";
+        $newheader = $Head1.$LOC." ".$Genome." ".$prot_desc."\n";
 #	print $newheader;
 	$outfile=$outfile.$newheader.$seq;
     }
-#    print $outfile;
+    $empty_check = "  \n";
+    unless ($outfile == $empty_check) {
     open my $NEWFILE, ">", $file or die("Can't open file. $!");
     print $NEWFILE $outfile;
     close $NEWFILE;
+    }
 }
 
 exit;
