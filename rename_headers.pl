@@ -7,6 +7,7 @@ my $outfile;
 
 foreach my $file(@file_array) {
     my $outfile ="";
+    my $newheader="";
     open(IN, $file);
     {
 	local $/; #changes delimiter to nothing. Allows entire file to be read in as one chun
