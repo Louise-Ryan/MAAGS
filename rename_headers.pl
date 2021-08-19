@@ -19,7 +19,7 @@ foreach my $file(@file_array) {
 	print $rm."\n\n";
 	$GENES =~ s/\Q$rm\E//g;
     }
-    #@GENES=[];
+    @GENES=[];
     @GENES=split(/\>/,$GENES);
     foreach $gene(@GENES) {
 	if($gene=~m/(.*)\n([A-Za-z\s\n\-]+)/){
