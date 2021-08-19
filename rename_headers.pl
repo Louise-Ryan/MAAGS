@@ -23,8 +23,8 @@ foreach my $file(@file_array) {
     @GENES=split(/\>/,$GENES);
     foreach $gene(@GENES) {
 	if($gene=~m/(.*)\n([A-Za-z\s\n\-]+)/){
-	    $head=">".$1."\n";
-	    $seq=$2;
+	    my $head=">".$1."\n";
+	    my $seq=$2;
 	}
 	if ($head =~ m/(\>.*?\s)/i) {
 	    $Head1 = $1;
