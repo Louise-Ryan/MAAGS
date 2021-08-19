@@ -8,10 +8,17 @@ my $outfile;
 foreach my $file(@file_array) {
     my $outfile = "";
     open(IN, $file);
-    my @GENES = <IN>;
+    {
+	local $/; #changes delimiter to nothing. Allows entire file to be read in as one chun
+	$GENES = <IN>; #Stores contents of BLAST file into a scalor
+    }
     close IN;
-    $GENES = join('', @GENES);
-    @GENES=[];
+    if($GENES =~ m/.*?(\.\.\>).*/i) {
+	$rm = $1;
+	print $rm."\n\n";
+	$GENES =~ s/\Q$rm\E//g;
+    }
+    #@GENES=[];
     @GENES=split(/\>/,$GENES);
     foreach $gene(@GENES) {
 	if($gene=~m/(.*)\n([A-Za-z\s\n\-]+)/){
@@ -39,10 +46,10 @@ foreach my $file(@file_array) {
 #	    print $prot_desc."\n";
 	}
 	my $newheader = $Head1.$LOC." ".$Genome." ".$prot_desc."\n";
-	print $newheader;
+#	print $newheader;
 	$outfile=$outfile.$newheader.$seq;
     }
-    print $outfile;
+#    print $outfile;
     open my $NEWFILE, ">", $file or die("Can't open file. $!");
     print $NEWFILE $outfile;
     close $NEWFILE;
