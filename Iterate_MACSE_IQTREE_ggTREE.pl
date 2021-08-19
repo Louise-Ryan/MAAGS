@@ -69,7 +69,7 @@ foreach my $gene_file(@filename_array){
     if ($outgroup =~ m/.*[A-Za-z].*/i) {
 	$cmd_iqtree = "./iqtree2 -s ".$modified_alignment_file." -o ".$outgroup." -nt AUTO -bb 1000"."\n";
     }else{
-	$cmd_iqtree = "./iqtree2 -s ".$modified_alignment_file."_NT"." -nt AUTO -bb 1000"."\n";
+	$cmd_iqtree = "./iqtree2 -s ".$modified_alignment_file." -nt AUTO -bb 1000"."\n";
     }
     print $cmd_iqtree;
     system("$cmd_iqtree");
