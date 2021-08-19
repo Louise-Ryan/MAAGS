@@ -6,6 +6,7 @@ my @file_array = (<*$fasta_file_extension>);
 my $outfile;
 
 foreach my $file(@file_array) {
+    my $outfile ="";
     open(IN, $file);
     {
 	local $/; #changes delimiter to nothing. Allows entire file to be read in as one chun
@@ -52,8 +53,6 @@ foreach my $file(@file_array) {
     open my $NEWFILE, ">", $file or die("Can't open file. $!");
     print $NEWFILE $outfile;
     close $NEWFILE;
-    my $outfile = "";
-    my $newheader ="";
 }
 
 exit;
