@@ -53,16 +53,15 @@ foreach my $file(@file_array) {
 	    chop ($prot_desc);
 #	    print $prot_desc."\n";
 	}
-        $newheader = $Head1.$LOC." ".$Genome." ".$prot_desc."\n";
-#	print $newheader;
-	$outfile=$outfile.$newheader.$seq;
+	if ($Head1 =~ m/\>.*/i){
+	    $newheader = $Head1.$LOC." ".$Genome." ".$prot_desc."\n";
+	    #	print $newheader;
+	    $outfile=$outfile.$newheader.$seq;
+	}
     }
-    $empty_check = "  \n";
-    unless ($outfile == $empty_check) {
     open my $NEWFILE, ">", $file or die("Can't open file. $!");
     print $NEWFILE $outfile;
     close $NEWFILE;
-    }
 }
 
 exit;
