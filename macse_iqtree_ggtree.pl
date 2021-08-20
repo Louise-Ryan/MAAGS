@@ -20,40 +20,8 @@ foreach my $gene_file(@filename_array){
     my $Alignment_file_AA = $file_prefix."_AA";
     system("mv $Alignment_NT_file_oldname $Alignment_file_NT");
     system("mv $Alignment_AA_file_oldname $Alignment_file_AA");
-    my $outlines_modified = "";
-    my $modified_alignment_file = $file_prefix."_IQ_tree_input_alignment";
-    open(IN, $Alignment_file_NT);
-    while (<IN>){
-	my $LOC = "";
-	my $GeneID = "";
-	my $line = $_;
-	if ($line =~ m/(\s.*\[gbkey\=CDS\])/i) {
-	    $rm_description = $1;
-	    if ($line =~ m/(gene\=LOC.*?\])/){
-	        $LOC = $1;
-		$LOC =~ s/\]//;
-		$LOC =~ s/gene\=//;
-		print $LOC."\n";
-	    }elsif ($line !~ m/gene\=/i && $line =~ m/(GeneID.*?\])/i){
-		$GeneID = $1;
-		$GeneID =~ s/\]//;
-	    }
-	    $line =~ s/\Q$rm_description\E//;
-	    if ($LOC =~ m/[A-Za-z].*/){
-		chomp $line;
-		$line = $line."_".$LOC."\n";
-	    }elsif ($GeneID =~ m/Gene.*/) {
-		chomp $line;
-		$line = $line."_".$GeneID."\n";
-	    }
-	} $outlines_modified = $outlines_modified.$line;
-    }
-    close IN;
-    $outlines_modified =~ s/\!/N/g;
-    open my $OUTFILE, ">", $modified_alignment_file or die("Can't open file. $!");
-    print $OUTFILE $outlines_modified;
-    close $OUTFILE; 
-    my $tree_file = $modified_alignment_file.".treefile";
+    system("sed -ie s/\!/N/g $Alignment_file_NT");
+    my $tree_file = $Alignment_file_NT.".treefile";
     my $cladogram_out = $file_prefix."_Cladogram.jpeg";
     my $phylogram_out = $file_prefix."_Phylogram.jpeg";
     open(IN2, $gene_file);
@@ -67,9 +35,9 @@ foreach my $gene_file(@filename_array){
 	}
     }
     if ($outgroup =~ m/.*[A-Za-z].*/i) {
-	$cmd_iqtree = "./iqtree2 -s ".$modified_alignment_file." -o ".$outgroup." -nt AUTO -bb 1000"."\n";
+	$cmd_iqtree = "./iqtree2 -s ".$Alignment_file_NT." -o ".$outgroup." -nt AUTO -bb 1000"."\n";
     }else{
-	$cmd_iqtree = "./iqtree2 -s ".$modified_alignment_file." -nt AUTO -bb 1000"."\n";
+	$cmd_iqtree = "./iqtree2 -s ".$Alignment_file_NT." -nt AUTO -bb 1000"."\n";
     }
     print $cmd_iqtree;
     system("$cmd_iqtree");
