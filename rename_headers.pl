@@ -21,6 +21,7 @@ foreach my $file(@file_array) {
     my $LOC = "";
     my $Genome ="";
     my $prot_desc = "";
+    my $Gene_ID ="";
     if($GENES =~ m/.*?(\.\.\>).*/i) {
 	$rm = $1;
 	print $rm."\n\n";
@@ -48,14 +49,23 @@ foreach my $file(@file_array) {
 	    chop ($LOC);
 #	    print $LOC."\n";
 	}
+	if ($head =~ m/.*Macaca_fascicularis.*/i) { #Macaca Fas has no LOC IDs
+	    if ($head =~ m/(GENEID:.*?\])/i) {
+		$Gene_ID = "_".$1;
+		chop($Gene_ID);
+	    }
+	}
+	if ($head !~ m/.*Macaca_fascicularis.*/i) {
+	    $Gene_ID = "";
+	}
 	if ($head =~ m/protein\=(.*?\])/i) {
 	    $prot_desc = $1;
 	    chop ($prot_desc);
 #	    print $prot_desc."\n";
 	}
 	if ($Head1 =~ m/\>.*/i){
-	    $newheader = $Head1.$LOC." ".$Genome." ".$prot_desc."\n";
-	    #	print $newheader;
+	    $newheader = $Head1.$LOC.$Gene_ID." ".$Genome." ".$prot_desc."\n";
+#	    print $newheader;
 	    $outfile=$outfile.$newheader.$seq;
 	}
     }
