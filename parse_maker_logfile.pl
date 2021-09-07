@@ -11,8 +11,9 @@ foreach my $file(@logfile_array) {
 	my $line = $_;
 	if ($line =~ m/.*?\s(.*)?\t.*FINISHED/i){
 	    my $dir = $1;
-	    if ($dir =~ m/(GC.*)?_/i){
+	    if ($dir =~ m/(GC.*?_.*)?_/i){
 		my $genome = $1;
+		print $genome."\n";
 	    }
 	    #print $dir."\n";
 	    my $dir_files = $dir."*fasta";
