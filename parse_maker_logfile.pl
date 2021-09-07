@@ -19,10 +19,10 @@ foreach my $file(@logfile_array) {
     if ($file =~ m/(GC.*)\_Contig/){
 	my $genome = $1;
 	print "\n\n".$genome."\n\n";
+	my $gendir = $maker_pred_dir.$genome;
+	system("mkdir $gendir");
+	#my $maker_pred_fasta= $maker_pred_dir."*fasta";
+	#system("mv $maker_pred_fasta $gendir");
     }
-   # my $gendir = $maker_pred_dir.$genome;
-   # system("mkdir $gendir");
-   # my $maker_pred_fasta= $maker_pred_dir."*fasta";
-   # system("mv $maker_pred_fasta $gendir");
 }
 
