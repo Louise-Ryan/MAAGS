@@ -6,15 +6,15 @@ my $file_extension = "master_datastore_index.log";
 my @logfile_array = (<*$file_extension>);
 
 foreach my $file(@logfile_array) {
+    if ($file =~ m/(GC.*)\_Contig/){
+	my $genome = $1;
+	print $genome;
+    }
     open(IN, $file);
     while(<IN>){
 	my $line = $_;
 	if ($line =~ m/.*?\s(.*)?\t.*FINISHED/i){
 	    my $dir = $1;
-	    if ($dir =~ m/(GC.*?_.*)?_/i){
-		my $genome = $1;
-		print $genome."\n";
-	    }
 	    #print $dir."\n";
 	    my $dir_files = $dir."*fasta";
 	    system("cp $dir_files $maker_pred_dir");
@@ -22,7 +22,7 @@ foreach my $file(@logfile_array) {
     }
     my $gendir = $maker_pred_dir.$genome;
     system("mkdir $gendir");
-    my $maker_pred_fasta= $maker_pred_dir."*.fasta";
+    my $maker_pred_fasta= $maker_pred_dir."*fasta";
     system("mv $maker_pred_fasta $gendir");
 }
 
