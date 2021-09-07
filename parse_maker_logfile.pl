@@ -13,7 +13,7 @@ foreach my $file(@logfile_array) {
 	    my $dir = $1;
 	    #print $dir."\n";
 	    my $dir_files = $dir."*fasta";
-	   # system("cp $dir_files $maker_pred_dir");
+	    system("cp $dir_files $maker_pred_dir");
 	}
     }
     if ($file =~ m/(GC.*)\_Contig/){
@@ -21,8 +21,8 @@ foreach my $file(@logfile_array) {
 	print "\n\n".$genome."\n\n";
 	my $gendir = $maker_pred_dir.$genome;
 	system("mkdir $gendir");
-	#my $maker_pred_fasta= $maker_pred_dir."*fasta";
-	#system("mv $maker_pred_fasta $gendir");
+	my $maker_pred_fasta= $maker_pred_dir."*fasta";
+	system("mv $maker_pred_fasta $gendir");
     }
 }
 
