@@ -78,7 +78,6 @@ foreach my $GENOME(@genome_array) {
 	    $count = 1;
 	    foreach my $gene_chunk(@gene_array) { #Loop over each gene chunk within query chunk
 		$Hit = $Hit + $count;
-		print "\n\nValue: ".$Hit."\n\n"; #comment this out
 		unless($gene_chunk =~ m/BLASTN\s2\.9\.0\+/ ||  $gene_chunk =~ m/Query\=.*/i) { #Only reappend the > to gene IDs
 		    $gene_chunk = ">".$gene_chunk; #Reappend the fasta header to gene chunk
 		}
@@ -93,10 +92,10 @@ foreach my $GENOME(@genome_array) {
 		if ($Gene !~ m/\s\split/){ 
 		    if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
 			$Gene_check = $Gene_check.$Gene;
-			if ($Hit == $count) {	
+			#if ($Hit == $count) {	
 			    $Gene_List = $Gene_List.$Gene;
 			    $Gene_Annotation = $Gene_Annotation.$Gene."|".$Gene_Query."\n";
-			}
+			#}
 			    
 		    }
 		}
@@ -158,7 +157,7 @@ foreach my $GENOME(@genome_array) {
 		     $GENE_HIT = $GENE_HIT.">".$gene_seq."\n";
 		 }
 	     }
-	    }
+	  }
 	}
 	close GENOME;
 	print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
