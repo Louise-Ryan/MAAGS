@@ -1,16 +1,16 @@
 #!/usr/bin/perl 
 
 #------------------------------------------------------------------------------------------------------------------
-#PULL CONTIGS FROM blastn OUTFILE
+#PULL GENE PREDICTIONS FROM blastn OUTFILE
 #loop over each genome in directory and makeblastdb.
 #Run blastn against each genome db using query sequences. Query sequences can be multiple genes from multiple species in one input query fa seqfile.
 #Generate blast results out file for each species
 #parse blastn output file for each species.
-#Pull contig hit name and store in an array. Only store unique hits where genes from multiple species are used as blastn input.
-#All contigs with a hit will be pulled regardless of signifigance scores.
-#hence if query hits 2 contigs, both are pulled, not just most signifigant one.
-#Pull scores and contig info and stores in Contig_Hit_Summary.txt.
-#Opens Genome file and pulls unique contigs from the target genome and stores in Contig_Hit_SeqFile.fa.
+#Pull gene hit name and store in an array. Only store unique hits where genes from multiple species are used as blastn input.
+#All genes with a hit will be pulled regardless of signifigance scores.
+#hence if query hits 2 genes, both are pulled, not just most signifigant one.
+#Pull scores and gene info and stores in Gene_Hit_Summary.txt.
+#Opens Genome file and pulls unique genes from the target genome and stores in Gene_Hit_SeqFile.fa.
 #Run this script on one blast output file corresponding to one target genome at a time.
 #Can handle multiple genes from multiple species as blast query against target genome.
 
@@ -31,21 +31,15 @@ my @genome_array = (<*$genome_file_extension>); #Script acs on all .fna files in
 foreach my $GENOME(@genome_array) {
     #Declare/Reset Variables
     my $Blast_output;
-    my $Contig;
-    my $EValue;
-    my $Score;
-    my $Identity;
-    my $Gaps;
-    my $Strand;
-    my $Contig_List;
-    my @Contig_array;
-    my $Contig_Hit_Summary;
+    my $Gene;
+    my $Gene_List;
+    my @Gene_array;
+    my $Gene_Hit_Summary;
     my $Database;
-    my $LOC;
-    my $Contig_check="";
+    my $Gene_check="";
     my $GENOME_ID;
-    my $contig_seq;
-    my $CONTIG_HIT;
+    my $gene_seq;
+    my $GENE_HIT;
     if ($GENOME =~ m/(GC.*\_.*?\_)/i) {
 	my $genome_acession = $1;
 	chop($genome_acession);
@@ -66,88 +60,85 @@ foreach my $GENOME(@genome_array) {
 	foreach my $line(@Blast_array) { #Loop over each query chunk
 	    $line="Query=".$line; 
 	    if ($line =~ m/(\s(.*)\n)/i){  
-		my $Query = $1; #Query is "GENE_Genus_species" info
+		my $Query = $1; #Query is "GENE" 
 		}
 		if ($line =~ m/(Database.*?fna)/i) { #storing the database (genome being blasted) info (will be added to sumamry at end)
 		    $Database = $1;
 		}		    
-		my @contig_array = split(">", $line); #Split each query chunk into contig chunks 
-		foreach my $contig_chunk(@contig_array) { #Loop over each contig chunk within query chunk
-		    unless($contig_chunk =~ m/BLASTN\s2\.9\.0\+/ ||  $contig_chunk =~ m/Query\=.*/i) { #Only reappend the > to contig IDs
-			$contig_chunk = ">".$contig_chunk; #Reappend the fasta header to contig chunk
+		my @gene_array = split(">", $line); #Split each query chunk into gene chunks 
+		foreach my $gene_chunk(@gene_array) { #Loop over each gene chunk within query chunk
+		    unless($gene_chunk =~ m/BLASTN\s2\.9\.0\+/ ||  $gene_chunk =~ m/Query\=.*/i) { #Only reappend the > to gene IDs
+			$gene_chunk = ">".$gene_chunk; #Reappend the fasta header to gene chunk
 		    }
-		    if ($contig_chunk =~ m/(\>.*?\s)/i) { 
+		    if ($gene_chunk =~ m/(\>.*?\s)/i) { 
 			if ($Query !~ m/Database/i) { #RegEx was not specific enough so removing this non-specific hit
-			    $Contig_Hit_Summary = $Contig_Hit_Summary."\n"."Query = ".$Query.", "; #Add query info to summary file
+			    $Gene_Hit_Summary = $Gene_Hit_Summary."\n"."Query = ".$Query.", "; #Add query info to summary file
 			}
-			$Contig = $1; #Storing Contig Hit identifier
-			$Contig =~ s/\>//;
-			$Contig =~ s/\s//;
-			$Contig = $Contig."split"; #Add split term to identifier. Important for contig check. Removed again later on.
-			if ($Contig !~ m/\s\split/){ 
-			    if ($Contig_check !~ m/.*\split$Contig/i && $Contig_check !~ m/$Contig/i) { #If unique contig hit, store to contig list
-				$Contig_check = $Contig_check.$Contig;
-				#print "\n\nContig: ".$Contig."\nContig Check: ".$Contig_check."\n\n"; #can comment this out
-				$Contig_List = $Contig_List.$Contig
+			$Gene = $1; #Storing Gene Hit identifier
+			$Gene =~ s/\>//;
+			$Gene =~ s/\s//;
+			$Gene = $Gene."split"; #Add split term to identifier. Important for gene check. Removed again later on.
+			if ($Gene !~ m/\s\split/){ 
+			    if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
+				$Gene_check = $Gene_check.$Gene;
+				#print "\n\nGene: ".$Gene."\nGene Check: ".$Gene_check."\n\n"; #can comment this out
+				$Gene_List = $Gene_List.$Gene
 			    }
 			}
-			$Contig =~ s/split//;
-			$Contig_Hit_Summary = $Contig_Hit_Summary.$Contig; #Store contig identifier in summary file
+			$Gene =~ s/split//;
+			$Gene_Hit_Summary = $Gene_Hit_Summary.$Gene; #Store gene identifier in summary file
 			}
-		    }
 		}
-	    }
 	}
-	$Contig_Hit_Summary = "Blast results against ".$Database.":".$Contig_Hit_Summary."\n\n"."Unique gene hits: \n"; #Add database info to summary file.
-	@Contig_array = split("split",$Contig_List); #Split the unique contigs into an array. This is where the underscore is important.
-	foreach my $Contig_ID (@Contig_array) { #Loop over array and print unique contig list to summary file
-	    $Contig_Hit_Summary = $Contig_Hit_Summary.$Contig_ID."\n";
+	$Gene_Hit_Summary = "Blast results against ".$Database.":".$Gene_Hit_Summary."\n\n"."Unique gene hits: \n"; #Add database info to summary file.
+	@Gene_array = split("split",$Gene_List); #Split the unique genes into an array. This is where the underscore is important.
+	foreach my $Gene_ID (@Gene_array) { #Loop over array and print unique gene list to summary file
+	    $Gene_Hit_Summary = $Gene_Hit_Summary.$Gene_ID."\n";
 	}
-	print $Contig_Hit_Summary."\n\n";
+	print $Gene_Hit_Summary."\n\n";
 	if ($Database =~ m/(GC.*?\_.*?\_)/i){ #Getting Genome ID for output file names
 	    $GENOME_ID = $1;
 	    chop($GENOME_ID);
 	}
-	my $Contig_Hit_Summary_File = $GENOME_ID."_Contig_Hit_Summary_File.txt"; #Set Summary File name
-	open my $FILE1, ">", $Contig_Hit_Summary_File or die("Can't open file. $!"); #Output Summary File
-	print $FILE1 $Contig_Hit_Summary;
+	my $Gene_Hit_Summary_File = $GENOME_ID."_Gene_Hit_Summary_File.txt"; #Set Summary File name
+	open my $FILE1, ">", $Gene_Hit_Summary_File or die("Can't open file. $!"); #Output Summary File
+	print $FILE1 $Gene_Hit_Summary;
 	close $FILE1;
 	close BLASTFILE;
 	unless ( open(GENOME, $GENOME) ) {  #open the file. If it doesnt exist, exit and print an error
 	    print "Filename entered does not exist \n ";
 	    exit;
 	}
-	foreach my $Contig_ID(@Contig_array) {
-	    print "Pulling ".$Contig_ID." from ".$GENOME."...\n";
-	    {local $/ = ">"; #  change line delimter to read in file by contig
+	foreach my $Gene_ID(@Gene_array) {
+	    print "Pulling ".$Gene_ID." from ".$GENOME."...\n";
+	    {local $/ = ">"; #  change line delimter to read in file by gene
 	     open(GENOME, $GENOME); #Open the genome file
 	     while(<GENOME>) {
 		 chomp;
-		 $contig_seq = $_; #store each contig  of the genome file in $contig_seq
-		 if ($contig_seq =~ m/($Contig_ID)/i) { #if contig is a match, pull the contig sequence from genome file
-		     $CONTIG_HIT = $CONTIG_HIT.">".$contig_seq."\n";
+		 $gene_seq = $_; #store each gene  of the genome file in $gene_seq
+		 if ($gene_seq =~ m/($Gene_ID)/i) { #if gene is a match, pull the gene sequence from genome file
+		     $GENE_HIT = $GENE_HIT.">".$gene_seq."\n";
 		 }
 	     }
 	    }
 	}
 	close GENOME;
-	print "\n\nUnique contigs retrieved and output to 'Contig_Hit_SeqFile.fa'!\n";
-	my $Contig_Seq_File = $GENOME_ID."_Contig_Hit_SeqFile.fa"; #Output contig sequence file
-	open my $FILE2, ">", $Contig_Seq_File or die("Can't open file. $!");
-	print $FILE2 $CONTIG_HIT;
+	print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
+	my $Gene_Seq_File = $GENOME_ID."_Gene_Hit_SeqFile.fa"; #Output gene sequence file
+	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
+	print $FILE2 $GENE_HIT;
 	close $FILE2;
 	my $GenDIR= $genome_acession."_Blast_Files";
 	system("mkdir $GenDIR");
 	system("mv *_File.txt *nhr *nin *nog *nsd *nsi *nsq *out $GenDIR");
     }
-   
 }
 my $BLASTDIR = "BLAST_Files";
 system("mkdir $BLASTDIR");
 system("mv *_Blast_Files $BLASTDIR");
-my $CONTIGDIR = "Contig_Hit_SeqFiles";
-system("mkdir $CONTIGDIR");
-system("mv *Contig_Hit_SeqFile.fa $CONTIGDIR");
-system("mv $BLASTDIR $CONTIGDIR");
+my $GENEDIR = "Gene_Hit_SeqFiles";
+system("mkdir $GENEDIR");
+system("mv *Gene_Hit_SeqFile.fa $GENEDIR");
+system("mv $BLASTDIR $GENEDIR");
 
 exit;
