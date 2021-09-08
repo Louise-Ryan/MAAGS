@@ -152,7 +152,7 @@ foreach my $GENOME(@genome_array) {
 	    exit;
 	}
 	foreach my $Gene_ID(@Gene_array) {
-	    ($Annotation, $Prediction) = split("|",$Gene_ID);
+	    ($Annotation, $Prediction) = split("/\|/",$Gene_ID);
 	    print "Pulling ".$Prediction." from ".$GENOME."...\n";
 	    {local $/ = ">"; #  change line delimter to read in file by gene
 	     open(GENOME, $GENOME); #Open the genome file
