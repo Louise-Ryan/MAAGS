@@ -93,7 +93,7 @@ foreach my $GENOME(@genome_array) {
 		if ($Gene !~ m/\s\split/){ 
 		    if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
 			$Gene_check = $Gene_check.$Gene.", ";
-			if ($Hit == 1) {	
+			if ($Hit == $count) {	
 			    $Gene_List = $Gene_List.$Gene;
 			    $Gene_Annotation = $Gene_Annotation.$Gene."|".$Gene_Query."\n";
 			}
