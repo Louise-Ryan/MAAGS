@@ -162,7 +162,7 @@ foreach my $GENOME(@genome_array) {
 	     while(<GENOME>) {
 		 chomp;
 		 $gene_seq = $_; #store each gene  of the genome file in $gene_seq
-		 if ($gene_seq =~ m/($Prediction)/i) { #if gene is a match, pull the gene sequence from genome file
+		 if ($gene_seq =~ m/$Prediction\s/i) { #if gene is a match, pull the gene sequence from genome file
 		     $GENE_HIT = $GENE_HIT.">".$Annotation."_".$gene_seq."\n";
 		 }
 	     }
