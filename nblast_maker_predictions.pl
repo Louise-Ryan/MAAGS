@@ -32,6 +32,7 @@ foreach my $GENOME(@genome_array) {
     #Declare/Reset Variables
     my $Blast_output;
     my $Gene;
+    my $Gene_Query;
     my $Gene_List;
     my @Gene_array;
     my $Gene_Hit_Summary;
@@ -59,8 +60,8 @@ foreach my $GENOME(@genome_array) {
 	my @Blast_array = split("Query\=", $Blast_output); #Splits blast out file  by query chunk
 	foreach my $line(@Blast_array) { #Loop over each query chunk
 	    $line="Query=".$line; 
-	    if ($line =~ m/Query\=(.*)\n\nLength/i){
-		my $Gene_Query = $1; #Query is "GENE"
+	    if ($line =~ m/Query\=\s(.*)\n\nLength/i){
+	        $Gene_Query = $1; #Query is "GENE"
 		print "\n\nQuery: ".$Gene_Query."\n";
 		}
 		if ($line =~ m/(Database.*?fna)/i) { #storing the database (genome being blasted) info (will be added to sumamry at end)
