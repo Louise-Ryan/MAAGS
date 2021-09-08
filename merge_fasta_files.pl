@@ -2,7 +2,7 @@
 
 my $Output_File = $ARGV[0];
 my $fasta_file_extension = "fa";
-my @file_array = (<*$fasta_file_extensio>);
+my @file_array = (<*$fasta_file_extension>);
 
 foreach my $file(@file_array) {
     unless ($file eq $Output_File) {
