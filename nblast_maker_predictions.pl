@@ -31,6 +31,8 @@ my @genome_array = (<*$genome_file_extension>); #Script acs on all .fna files in
 foreach my $GENOME(@genome_array) {
     #Declare/Reset Variables
     my $Blast_output;
+    my $Hit;
+    my $Count;
     my $Gene;
     my $EValue;
     my $Score;
@@ -73,8 +75,8 @@ foreach my $GENOME(@genome_array) {
 		    $Database = $1;
 		}		    
 	    my @gene_array = split(">", $line); #Split each query chunk into gene chunks
-	    my $Hit = 0;
-	    my $count = 1;
+	    $Hit = 0;
+	    $count = 1;
 	    foreach my $gene_chunk(@gene_array) { #Loop over each gene chunk within query chunk
 		$Hit = $Hit + $count;
 		unless($gene_chunk =~ m/BLASTN\s2\.9\.0\+/ ||  $gene_chunk =~ m/Query\=.*/i) { #Only reappend the > to gene IDs
