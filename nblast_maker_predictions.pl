@@ -131,13 +131,13 @@ foreach my $GENOME(@genome_array) {
 	    }
 	}
 	$Gene_Hit_Summary = "Blast results against ".$Database.":".$Gene_Hit_Summary."\n\n"."Unique gene hits: \n"; #Add database info to summary file.
-	@Gene_array = split("split",$Gene_List); #Split the unique genes into an array. This is where the underscore is important.
+	@Gene_array = split("\n",$Gene_Annotation); #Split the unique genes into an array. This is where the underscore is important.
 	foreach my $Gene_ID (@Gene_array) { #Loop over array and print unique gene list to summary file
 	    $Gene_Hit_Summary = $Gene_Hit_Summary.$Gene_ID."\n";
 	}
 	print $Gene_Hit_Summary."\n\n";
-	print "Annotation Summary: \n";
-	print $Gene_Annotation;
+	#print "Annotation Summary: \n";
+	#print $Gene_Annotation;
 	if ($Database =~ m/(GC.*?\_.*?\_)/i){ #Getting Genome ID for output file names
 	    $GENOME_ID = $1;
 	    chop($GENOME_ID);
@@ -152,14 +152,15 @@ foreach my $GENOME(@genome_array) {
 	    exit;
 	}
 	foreach my $Gene_ID(@Gene_array) {
-	    print "Pulling ".$Gene_ID." from ".$GENOME."...\n";
+	    ($Annotation, $Prediction) = split("|",$Gene_ID);
+	    print "Pulling ".$Prediction." from ".$GENOME."...\n";
 	    {local $/ = ">"; #  change line delimter to read in file by gene
 	     open(GENOME, $GENOME); #Open the genome file
 	     while(<GENOME>) {
 		 chomp;
 		 $gene_seq = $_; #store each gene  of the genome file in $gene_seq
-		 if ($gene_seq =~ m/($Gene_ID)/i) { #if gene is a match, pull the gene sequence from genome file
-		     $GENE_HIT = $GENE_HIT.">".$gene_seq."\n";
+		 if ($gene_seq =~ m/($Prediction)/i) { #if gene is a match, pull the gene sequence from genome file
+		     $GENE_HIT = $GENE_HIT.">".$Annotation."_".$gene_seq."\n";
 		 }
 	     }
 	  }
