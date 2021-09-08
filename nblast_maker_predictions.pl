@@ -72,51 +72,57 @@ foreach my $GENOME(@genome_array) {
 		if ($line =~ m/(Database.*?fna)/i) { #storing the database (genome being blasted) info (will be added to sumamry at end)
 		    $Database = $1;
 		}		    
-		my @gene_array = split(">", $line); #Split each query chunk into gene chunks 
-		foreach my $gene_chunk(@gene_array) { #Loop over each gene chunk within query chunk
-		    unless($gene_chunk =~ m/BLASTN\s2\.9\.0\+/ ||  $gene_chunk =~ m/Query\=.*/i) { #Only reappend the > to gene IDs
-			$gene_chunk = ">".$gene_chunk; #Reappend the fasta header to gene chunk
-		    }
-		    if ($gene_chunk =~ m/(\>.*?\s)/i) { 
-			if ($Gene_Query !~ m/Database/i) { #RegEx was not specific enough so removing this non-specific hit
-			    $Gene_Hit_Summary = $Gene_Hit_Summary."\n"."Query= ".$Gene_Query.", "; #Add query info to summary file
+	    my @gene_array = split(">", $line); #Split each query chunk into gene chunks
+	    my $Hit = 0;
+	    my $count = 1;
+	    foreach my $gene_chunk(@gene_array) { #Loop over each gene chunk within query chunk
+		$Hit = $Hit + $count;
+		unless($gene_chunk =~ m/BLASTN\s2\.9\.0\+/ ||  $gene_chunk =~ m/Query\=.*/i) { #Only reappend the > to gene IDs
+		    $gene_chunk = ">".$gene_chunk; #Reappend the fasta header to gene chunk
+		}
+		if ($gene_chunk =~ m/(\>.*?\s)/i) { 
+		if ($Gene_Query !~ m/Database/i) { #RegEx was not specific enough so removing this non-specific hit
+		    $Gene_Hit_Summary = $Gene_Hit_Summary."\n"."Query= ".$Gene_Query.", "; #Add query info to summary file
+		}
+		$Gene = $1; #Storing Gene Hit identifier
+		$Gene =~ s/\>//;
+		$Gene =~ s/\s//;
+		$Gene = $Gene."split"; #Add split term to identifier. Important for gene check. Removed again later on.
+		if ($Gene !~ m/\s\split/){ 
+		    if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
+			$Gene_check = $Gene_check.$Gene.", ";
+			if ($Hit == 1) {	
+			    $Gene_List = $Gene_List.$Gene;
+			    $Gene_Annotation = $Gene_Annotation.$Gene."|".$Gene_Query."\n";
 			}
-			$Gene = $1; #Storing Gene Hit identifier
-			$Gene =~ s/\>//;
-			$Gene =~ s/\s//;
-			$Gene = $Gene."split"; #Add split term to identifier. Important for gene check. Removed again later on.
-			if ($Gene !~ m/\s\split/){ 
-			    if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
-				$Gene_check = $Gene_check.$Gene.", ";
-				#print "\n\nGene: ".$Gene."\nGene Check: ".$Gene_check."\n\n"; #can comment this out
-				$Gene_List = $Gene_List.$Gene
-			    }
-			}
-			$Gene =~ s/split//;
-			$Gene_Hit_Summary = $Gene_Hit_Summary.$Gene; #Store gene identifier in summary file
-			if ($line =~ m/(Score\s\=.*?\,)/i) {
-			    $Score = $1; #Store score (bits) info in summary file
-			    $Gene_Hit_Summary = $Gene_Hit_Summary.$Score;
-			}
-			if ($line =~ m/(Expect\s\=.*[0-9].*e.*[0-9])/i) {
-			    $EValue = $1; #Store e-value score info in summary file
-			    $Gene_Hit_Summary = $Gene_Hit_Summary." ".$EValue.", ";
-			}
-			if ($line =~ m/(Identities\s\=.*?\,)/i) {
-			    $Identity = $1; #Store Identity score in summary file
-			    $Gene_Hit_Summary = $Gene_Hit_Summary.$Identity;
-			}
-			if ($line =~ m/(Gaps\s\=.*?\))/i) {
-			    $Gaps = $1; #Store Gap info in summary file
-			    $Gene_Hit_Summary = $Gene_Hit_Summary." ".$Gaps.", ";
-			}
-			if ($line =~ m/(Strand\=.*\/.*?\n)/i) {
-			    $Strand = $1; #Store strand info in summary file
-			    $Strand =~ s/\n//;
-			    $Gene_Hit_Summary = $Gene_Hit_Summary.$Strand;
-			}
+			    
 		    }
 		}
+		$Gene =~ s/split//;
+		$Gene_Hit_Summary = $Gene_Hit_Summary.$Gene; #Store gene identifier in summary file
+		if ($line =~ m/(Score\s\=.*?\,)/i) {
+		    $Score = $1; #Store score (bits) info in summary file
+		    $Gene_Hit_Summary = $Gene_Hit_Summary.$Score;
+		}
+		if ($line =~ m/(Expect\s\=.*[0-9].*e.*[0-9])/i) {
+		    $EValue = $1; #Store e-value score info in summary file
+		    $Gene_Hit_Summary = $Gene_Hit_Summary." ".$EValue.", ";
+		}
+		if ($line =~ m/(Identities\s\=.*?\,)/i) {
+		    $Identity = $1; #Store Identity score in summary file
+		    $Gene_Hit_Summary = $Gene_Hit_Summary.$Identity;
+		}
+		if ($line =~ m/(Gaps\s\=.*?\))/i) {
+		    $Gaps = $1; #Store Gap info in summary file
+		    $Gene_Hit_Summary = $Gene_Hit_Summary." ".$Gaps.", ";
+		}
+		if ($line =~ m/(Strand\=.*\/.*?\n)/i) {
+		    $Strand = $1; #Store strand info in summary file
+		    $Strand =~ s/\n//;
+		    $Gene_Hit_Summary = $Gene_Hit_Summary.$Strand;
+		}
+		}
+	    }
 	}
 	$Gene_Hit_Summary = "Blast results against ".$Database.":".$Gene_Hit_Summary."\n\n"."Unique gene hits: \n"; #Add database info to summary file.
 	@Gene_array = split("split",$Gene_List); #Split the unique genes into an array. This is where the underscore is important.
@@ -124,6 +130,8 @@ foreach my $GENOME(@genome_array) {
 	    $Gene_Hit_Summary = $Gene_Hit_Summary.$Gene_ID."\n";
 	}
 	print $Gene_Hit_Summary."\n\n";
+	print "Annotation Summary: \n";
+	print $Gene_Annotation;
 	if ($Database =~ m/(GC.*?\_.*?\_)/i){ #Getting Genome ID for output file names
 	    $GENOME_ID = $1;
 	    chop($GENOME_ID);
