@@ -69,7 +69,6 @@ foreach my $GENOME(@genome_array) {
 	    $line="Query=".$line; 
 	    if ($line =~ m/Query\=\s(.*)\n\nLength/i){
 	        $Gene_Query = $1; #Query is "GENE"
-		print "\n\nQuery: ".$Gene_Query."\n";
 		}
 		if ($line =~ m/(Database.*?fna)/i) { #storing the database (genome being blasted) info (will be added to sumamry at end)
 		    $Database = $1;
@@ -79,6 +78,7 @@ foreach my $GENOME(@genome_array) {
 	    $count = 1;
 	    foreach my $gene_chunk(@gene_array) { #Loop over each gene chunk within query chunk
 		$Hit = $Hit + $count;
+		print "\n\nValue: ".$Hit."\n\n"; #comment this out
 		unless($gene_chunk =~ m/BLASTN\s2\.9\.0\+/ ||  $gene_chunk =~ m/Query\=.*/i) { #Only reappend the > to gene IDs
 		    $gene_chunk = ">".$gene_chunk; #Reappend the fasta header to gene chunk
 		}
