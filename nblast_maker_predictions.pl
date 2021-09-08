@@ -99,7 +99,7 @@ foreach my $GENOME(@genome_array) {
 				$Gene_List = $Gene_List.$Gene;
 				$Gene2 = $Gene;
 				$Gene2 =~ s/split//;
-				$Gene_Annotation = $Gene_Annotation.$Query."|".$Gene2."\n";
+				$Gene_Annotation = $Gene_Annotation.$Gene_Query."|".$Gene2."\n";
 			    }
 			    
 		#	}
