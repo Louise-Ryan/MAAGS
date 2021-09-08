@@ -34,6 +34,8 @@ foreach my $GENOME(@genome_array) {
     my $Hit;
     my $Count;
     my $Gene;
+    my $Gene_Annotation;
+    my $Gene2;
     my $EValue;
     my $Score;
     my $Identity;
@@ -90,14 +92,17 @@ foreach my $GENOME(@genome_array) {
 		    $Gene =~ s/\s//;
 		    $Gene = $Gene."split"; #Add split term to identifier. Important for gene check. Removed again later on.
 		    if ($Gene !~ m/\s\split/){ 
-			if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
-			    $Gene_check = $Gene_check.$Gene;
+			#if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
+			   # $Gene_check = $Gene_check.$Gene;
 			    print "\nDoes ".$Hit." equal ".$count."?\n"; #delete this 
-			    if ($Hit == $count) {	
+			    if ($Hit == $count) {
 				$Gene_List = $Gene_List.$Gene;
+				$Gene2 = $Gene;
+				$Gene2 =~ s/split//;
+				$Gene_Annotation = $Gene_Annotation.$Query."|".$Gene2."\n";
 			    }
 			    
-			}
+		#	}
 		    }
 		    $Gene =~ s/split//;
 		    $Gene_Hit_Summary = $Gene_Hit_Summary.$Gene.", "; #Store gene identifier in summary file
