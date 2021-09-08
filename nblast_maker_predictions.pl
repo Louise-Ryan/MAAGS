@@ -59,8 +59,8 @@ foreach my $GENOME(@genome_array) {
 	my @Blast_array = split("Query\=", $Blast_output); #Splits blast out file  by query chunk
 	foreach my $line(@Blast_array) { #Loop over each query chunk
 	    $line="Query=".$line; 
-	    if ($line =~ m/(\s(.*)\n)/i){  
-		my $Query = $1; #Query is "GENE" 
+	    if ($line =~ m/(Query\=\s(.*)\n)/i){  
+		my $Gene_Query = $1; #Query is "GENE" 
 		}
 		if ($line =~ m/(Database.*?fna)/i) { #storing the database (genome being blasted) info (will be added to sumamry at end)
 		    $Database = $1;
@@ -71,8 +71,8 @@ foreach my $GENOME(@genome_array) {
 			$gene_chunk = ">".$gene_chunk; #Reappend the fasta header to gene chunk
 		    }
 		    if ($gene_chunk =~ m/(\>.*?\s)/i) { 
-			if ($Query !~ m/Database/i) { #RegEx was not specific enough so removing this non-specific hit
-			    $Gene_Hit_Summary = $Gene_Hit_Summary."\n"."Query = ".$Query.", "; #Add query info to summary file
+			if ($Gene_Query !~ m/Database/i) { #RegEx was not specific enough so removing this non-specific hit
+			    $Gene_Hit_Summary = $Gene_Hit_Summary."\n"."Query Gene = ".$Gene_Query.", "; #Add query info to summary file
 			}
 			$Gene = $1; #Storing Gene Hit identifier
 			$Gene =~ s/\>//;
