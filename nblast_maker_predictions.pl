@@ -31,6 +31,8 @@ my @genome_array = (<*$genome_file_extension>); #Script acs on all .fna files in
 foreach my $GENOME(@genome_array) {
     #Declare/Reset Variables
     my $Blast_output;
+    my $Annotation;
+    my $Prediction;
     my $Hit;
     my $Count;
     my $Gene;
@@ -152,6 +154,7 @@ foreach my $GENOME(@genome_array) {
 	    exit;
 	}
 	foreach my $Gene_ID(@Gene_array) {
+	    print "\n".$Gene_ID."\n";
 	    ($Annotation, $Prediction) = split("/\|/",$Gene_ID);
 	    print "Pulling ".$Prediction." from ".$GENOME."...\n";
 	    {local $/ = ">"; #  change line delimter to read in file by gene
