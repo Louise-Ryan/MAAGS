@@ -87,7 +87,7 @@ foreach my $GENOME(@genome_array) {
 			$Gene = $Gene."split"; #Add split term to identifier. Important for gene check. Removed again later on.
 			if ($Gene !~ m/\s\split/){ 
 			    if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
-				$Gene_check = $Gene_check.$Gene;
+				$Gene_check = $Gene_check.$Gene.", ";
 				#print "\n\nGene: ".$Gene."\nGene Check: ".$Gene_check."\n\n"; #can comment this out
 				$Gene_List = $Gene_List.$Gene
 			    }
