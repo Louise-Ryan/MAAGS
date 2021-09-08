@@ -92,7 +92,7 @@ foreach my $GENOME(@genome_array) {
 		$Gene = $Gene."split"; #Add split term to identifier. Important for gene check. Removed again later on.
 		if ($Gene !~ m/\s\split/){ 
 		    if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
-			$Gene_check = $Gene_check.$Gene.", ";
+			$Gene_check = $Gene_check.$Gene;
 			if ($Hit == $count) {	
 			    $Gene_List = $Gene_List.$Gene;
 			    $Gene_Annotation = $Gene_Annotation.$Gene."|".$Gene_Query."\n";
@@ -101,7 +101,7 @@ foreach my $GENOME(@genome_array) {
 		    }
 		}
 		$Gene =~ s/split//;
-		$Gene_Hit_Summary = $Gene_Hit_Summary.$Gene; #Store gene identifier in summary file
+		$Gene_Hit_Summary = $Gene_Hit_Summary.$Gene.", "; #Store gene identifier in summary file
 		if ($line =~ m/(Score\s\=.*?\,)/i) {
 		    $Score = $1; #Store score (bits) info in summary file
 		    $Gene_Hit_Summary = $Gene_Hit_Summary.$Score;
