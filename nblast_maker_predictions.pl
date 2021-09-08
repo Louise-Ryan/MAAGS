@@ -77,51 +77,51 @@ foreach my $GENOME(@genome_array) {
 	    $Hit = 0;
 	    $count = 1;
 	    foreach my $gene_chunk(@gene_array) { #Loop over each gene chunk within query chunk
-		$Hit = $Hit + $count;
 		unless($gene_chunk =~ m/BLASTN\s2\.9\.0\+/ ||  $gene_chunk =~ m/Query\=.*/i) { #Only reappend the > to gene IDs
 		    $gene_chunk = ">".$gene_chunk; #Reappend the fasta header to gene chunk
 		}
-		if ($gene_chunk =~ m/(\>.*?\s)/i) { 
-		if ($Gene_Query !~ m/Database/i) { #RegEx was not specific enough so removing this non-specific hit
-		    $Gene_Hit_Summary = $Gene_Hit_Summary."\n"."Query= ".$Gene_Query.", "; #Add query info to summary file
-		}
-		$Gene = $1; #Storing Gene Hit identifier
-		$Gene =~ s/\>//;
-		$Gene =~ s/\s//;
-		$Gene = $Gene."split"; #Add split term to identifier. Important for gene check. Removed again later on.
-		if ($Gene !~ m/\s\split/){ 
-		    if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
-			$Gene_check = $Gene_check.$Gene;
-			print "\nDoes".$Hit." equal ".$count."?\n"; #delete this 
-			if ($Hit == $count) {	
-			    $Gene_List = $Gene_List.$Gene;
-			}
-			    
+		if ($gene_chunk =~ m/(\>.*?\s)/i) {
+		    $Hit = $Hit + $count;
+		    if ($Gene_Query !~ m/Database/i) { #RegEx was not specific enough so removing this non-specific hit
+			$Gene_Hit_Summary = $Gene_Hit_Summary."\n"."Query= ".$Gene_Query.", "; #Add query info to summary file
 		    }
-		}
-		$Gene =~ s/split//;
-		$Gene_Hit_Summary = $Gene_Hit_Summary.$Gene.", "; #Store gene identifier in summary file
-		if ($line =~ m/(Score\s\=.*?\,)/i) {
-		    $Score = $1; #Store score (bits) info in summary file
-		    $Gene_Hit_Summary = $Gene_Hit_Summary.$Score;
-		}
-		if ($line =~ m/(Expect\s\=.*[0-9].*e.*[0-9])/i) {
-		    $EValue = $1; #Store e-value score info in summary file
-		    $Gene_Hit_Summary = $Gene_Hit_Summary." ".$EValue.", ";
-		}
-		if ($line =~ m/(Identities\s\=.*?\,)/i) {
-		    $Identity = $1; #Store Identity score in summary file
-		    $Gene_Hit_Summary = $Gene_Hit_Summary.$Identity;
-		}
-		if ($line =~ m/(Gaps\s\=.*?\))/i) {
-		    $Gaps = $1; #Store Gap info in summary file
-		    $Gene_Hit_Summary = $Gene_Hit_Summary." ".$Gaps.", ";
-		}
-		if ($line =~ m/(Strand\=.*\/.*?\n)/i) {
-		    $Strand = $1; #Store strand info in summary file
-		    $Strand =~ s/\n//;
-		    $Gene_Hit_Summary = $Gene_Hit_Summary.$Strand;
-		}
+		    $Gene = $1; #Storing Gene Hit identifier
+		    $Gene =~ s/\>//;
+		    $Gene =~ s/\s//;
+		    $Gene = $Gene."split"; #Add split term to identifier. Important for gene check. Removed again later on.
+		    if ($Gene !~ m/\s\split/){ 
+			if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
+			    $Gene_check = $Gene_check.$Gene;
+			    print "\nDoes ".$Hit." equal ".$count."?\n"; #delete this 
+			    if ($Hit == $count) {	
+				$Gene_List = $Gene_List.$Gene;
+			    }
+			    
+			}
+		    }
+		    $Gene =~ s/split//;
+		    $Gene_Hit_Summary = $Gene_Hit_Summary.$Gene.", "; #Store gene identifier in summary file
+		    if ($line =~ m/(Score\s\=.*?\,)/i) {
+			$Score = $1; #Store score (bits) info in summary file
+			$Gene_Hit_Summary = $Gene_Hit_Summary.$Score;
+		    }
+		    if ($line =~ m/(Expect\s\=.*[0-9].*e.*[0-9])/i) {
+			$EValue = $1; #Store e-value score info in summary file
+			$Gene_Hit_Summary = $Gene_Hit_Summary." ".$EValue.", ";
+		    }
+		    if ($line =~ m/(Identities\s\=.*?\,)/i) {
+			$Identity = $1; #Store Identity score in summary file
+			$Gene_Hit_Summary = $Gene_Hit_Summary.$Identity;
+		    }
+		    if ($line =~ m/(Gaps\s\=.*?\))/i) {
+			$Gaps = $1; #Store Gap info in summary file
+			$Gene_Hit_Summary = $Gene_Hit_Summary." ".$Gaps.", ";
+		    }
+		    if ($line =~ m/(Strand\=.*\/.*?\n)/i) {
+			$Strand = $1; #Store strand info in summary file
+			$Strand =~ s/\n//;
+			$Gene_Hit_Summary = $Gene_Hit_Summary.$Strand;
+		    }
 		}
 	    }
 	}
