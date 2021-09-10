@@ -208,7 +208,7 @@ system("mv *_Blast_Files $BLASTDIR");
 my $GENEDIR = "Gene_Hit_SeqFiles";
 system("mkdir $GENEDIR");
 system("mv *Gene_Hit_SeqFile.fa $GENEDIR");
-system("mv *Gene_Annotation_Summary.txt $GENDIR");
+system("mv *Gene_Annotation_Summary.txt $GENEDIR");
 system("mv $BLASTDIR $GENEDIR");
 
 exit;
