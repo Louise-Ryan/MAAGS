@@ -171,12 +171,6 @@ foreach my $GENOME(@genome_array) {
 	  }
 	}
 	close GENOME;
-	my @Annotation_Summary_Array = split("\n",$Gene_Annotation_Summary);
-	my $Gene_Annotation_Summary = "";
-	my @Sorted_Array = sort { substr($a,4) <=> substr($b,4) } @Annotation_Summary_Array;
-	foreach $gn(@Sorted_Array){
-	    $Gene_Annotation_Summary = $Gene_Annotation_Summary.$GN."\n";
-	}	
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
