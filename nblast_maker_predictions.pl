@@ -37,6 +37,7 @@ foreach my $GENOME(@genome_array) {
     my $Count;
     my $Gene;
     my $Gene_Annotation;
+    my $Gene_Annotation_Summary;
     my $Gene2;
     my $EValue;
     my $Score;
@@ -102,6 +103,7 @@ foreach my $GENOME(@genome_array) {
 				$Gene2 = $Gene;
 				$Gene2 =~ s/split//;
 				$Gene_Annotation = $Gene_Annotation.$Gene_Query."|".$Gene2."\n";
+				$Gene_Annotation_Summary = $Gene_Annotation_Summary.$Gene2."|".$Gene_Query."\n";
 			    }
 			    
 		#	}
@@ -169,6 +171,10 @@ foreach my $GENOME(@genome_array) {
 	  }
 	}
 	close GENOME;
+	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary";
+	open my $sFile, ">", $Summary_File of die("Can't open file. $!");
+	print $SFile $Gene_Annotation_Summary;
+	close $sFile;
 	print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
 	my $Gene_Seq_File = $GENOME_ID."_Gene_Hit_SeqFile.fa"; #Output gene sequence file
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
