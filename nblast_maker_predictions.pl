@@ -190,6 +190,7 @@ foreach my $GENOME(@genome_array) {
 		    unless($entry_check =~ m/.*$entry\_/i){
 			$Gene_Annotation_Summary = $Gene_Annotation_Summary.$entry."\n";
 			$entry_check = $entry_check.$entry."_";
+			print $entry_check."\n";
 		    }
 		}
 	    }
