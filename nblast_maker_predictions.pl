@@ -103,7 +103,7 @@ foreach my $GENOME(@genome_array) {
 				$Gene2 = $Gene;
 				$Gene2 =~ s/split//;
 				$Gene_Annotation = $Gene_Annotation.$Gene_Query."|".$Gene2."\n";
-				$Gene_Annotation_Summary = $Gene_Annotation_Summary.$Gene2."|".$Gene_Query."\n";
+				$Gene_Annotation_Summary = $Gene_Annotation_Summary.$Gene_Annotation.",".$Gene_Query."\n";
 			    }
 			    
 		#	}
@@ -171,7 +171,7 @@ foreach my $GENOME(@genome_array) {
 	  }
 	}
 	close GENOME;
-	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary";
+	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.csv";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
 	close $SFile;
