@@ -173,6 +173,7 @@ foreach my $GENOME(@genome_array) {
 	}
 	close GENOME;
 	$Gene_Annotation_Summary =~ s/gene//g;
+	print $Gene_Annotation_Summary;
 	my @GAS = split("\n", $Gene_Annotation_Summary); #Gene Annotation Summary (GAS)
 	@GAS_sorted = (sort { $a <=> $b } @GAS);
 	$Gene_Annotation_Summary = "";
