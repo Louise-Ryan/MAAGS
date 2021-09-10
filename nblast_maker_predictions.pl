@@ -26,6 +26,7 @@ my $Query = $ARGV[0];
 my $genome_file_extension = ".fna";
 my @genome_array = (<*$genome_file_extension>); #Script acs on all .fna files in directory. 
 
+use List::Util qw(max); #allows me to use the max(array) function
 
 
 foreach my $GENOME(@genome_array) {
@@ -37,7 +38,7 @@ foreach my $GENOME(@genome_array) {
     my $Count;
     my $Gene;
     my $Gene_Annotation;
-    my $Gene_Annotation_Summary = "Gene,Annotation\n";
+    my $Gene_Annotation_Summary;
     my $Gene2;
     my $EValue;
     my $Score;
@@ -103,7 +104,7 @@ foreach my $GENOME(@genome_array) {
 				$Gene2 = $Gene;
 				$Gene2 =~ s/split//;
 				$Gene_Annotation = $Gene_Annotation.$Gene_Query."|".$Gene2."\n";
-				$Gene_Annotation_Summary = $Gene_Annotation_Summary.$Gene2.",".$Gene_Query."\n";
+				$Gene_Annotation_Summary = $Gene_Annotation_Summary.$Gene2."\n";
 			    }
 			    
 		#	}
@@ -171,6 +172,17 @@ foreach my $GENOME(@genome_array) {
 	  }
 	}
 	close GENOME;
+	$Gene_Annotation_Summary =~ s/gene//g;
+	my @GAS = split("\n", $Gene_Annotation_Summary); #Gene Annotation Summary (GAS)
+	sort @GAS;
+	$Gene_Annotation_Summary = "";
+	foreach my $gn (@GAS) {
+	    foreach my $GN (@GENE_ID) {
+		if ($GN =~ m/gene$gn\,(.*?)\n/) {
+		    $Gene_Annotation_Summary = "Gene".$gn."|".$1."\n";
+		}
+	    }
+	}	    
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.csv";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
