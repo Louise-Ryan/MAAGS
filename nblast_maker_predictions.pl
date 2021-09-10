@@ -172,7 +172,7 @@ foreach my $GENOME(@genome_array) {
 	}
 	close GENOME;
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary";
-	open my $sFile, ">", $Summary_File of die("Can't open file. $!");
+	open my $sFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
 	close $sFile;
 	print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
