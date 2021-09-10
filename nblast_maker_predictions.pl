@@ -178,13 +178,15 @@ foreach my $GENOME(@genome_array) {
 	@GAS_sorted = (sort { $a <=> $b } @GAS);
 	$Gene_Annotation_Summary = "";
 	foreach my $gn (@GAS_sorted) {
-	    print $gn."\n";
-	    foreach my $GN (@Gene_array) {
-		if ($GN =~ m/(.*?)\,Gene$gn/i) {
-		    $Gene_Annotation_Summary = $Gene_Annotation_Summary."Gene".$gn."|".$1."\n";
-		}
+	    $Gene_Annotation_Summary = $Gene_Annotation_Summary."Gene".$gn."\n";
+	}
+	@GAS3 = split("\n", $Gene_Annotation_Summary);
+	my $Gene_Annotation_Summary = "";
+	foreach my $GN(@GAS3){
+	    if ($Gene_Annotation =~ m/\n(.*)$GN\n"/i){
+		$Gene_Annotation_Summary = $Gene_Annotation_Summary.$GN."|".$1."\n";
 	    }
-	}	    
+	}
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.csv";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
