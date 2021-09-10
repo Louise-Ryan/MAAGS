@@ -180,9 +180,11 @@ foreach my $GENOME(@genome_array) {
 	foreach my $gn (@GAS_sorted) {
 	    $Gene_Annotation_Summary = $Gene_Annotation_Summary."Gene".$gn."\n";
 	}
+	#print $Gene_Annotation_Summary;
 	@GAS3 = split("\n", $Gene_Annotation_Summary);
 	my $Gene_Annotation_Summary = "";
 	foreach my $GN(@GAS3){
+	    print $GN."\n";
 	    if ($Gene_Annotation =~ m/\n(.*)$GN\n"/i){
 		$Gene_Annotation_Summary = $Gene_Annotation_Summary.$GN."|".$1."\n";
 	    }
