@@ -173,24 +173,22 @@ foreach my $GENOME(@genome_array) {
 	}
 	close GENOME;
 	$Gene_Annotation_Summary =~ s/Gene//g;
-	#print $Gene_Annotation_Summary;
 	my @GAS = split("\n", $Gene_Annotation_Summary); #Gene Annotation Summary (GAS)
-	@GAS_sorted = (sort { $a <=> $b } @GAS);
-	$Gene_Annotation_Summary = "";
-	foreach my $gn (@GAS_sorted) {
-	    $Gene_Annotation_Summary = $Gene_Annotation_Summary."Gene".$gn."\n";
+	@GAS_sorted = (sort { $a <=> $b } @GAS); #sort numbers in ascending order
+	$Gene_Annotation_Summary = ""; #clear variable for reuse
+	foreach my $gn (@GAS_sorted) { #gene (gn) 
+	    $Gene_Annotation_Summary = $Gene_Annotation_Summary."Gene".$gn."\n"; #Reappend 'gene' to sorted numbers
 	}
-	#print $Gene_Annotation_Summary;
-	@GAS3 = split("\n", $Gene_Annotation_Summary);
-	my $Gene_Annotation_Summary = "";
+	@GAS3 = split("\n", $Gene_Annotation_Summary); #Convert ordered gene list back into an array
+	my $Gene_Annotation_Summary = ""; #Clear variable once more for reuse
 	foreach my $GN(@GAS3){
-	    foreach my $ggnn(@Gene_array){
-		if ($ggnn =~ m/(.*)\|$GN$/i){
+	    foreach my $ggnn(@Gene_array){ #ggnn is gene (I'm running out of names ;) )
+		if ($ggnn =~ m/(.*)\|$GN$/i){ #Pull annotation and append it to ordered gene list 
 		    $Gene_Annotation_Summary = $Gene_Annotation_Summary.$GN."|".$1."\n";
 		}
 	    }
 	}
-	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.csv";
+	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.txt";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
 	close $SFile;
@@ -210,6 +208,7 @@ system("mv *_Blast_Files $BLASTDIR");
 my $GENEDIR = "Gene_Hit_SeqFiles";
 system("mkdir $GENEDIR");
 system("mv *Gene_Hit_SeqFile.fa $GENEDIR");
+system("mv *Gene_Annotation_Summary.txt $GENDIR");
 system("mv $BLASTDIR $GENEDIR");
 
 exit;
