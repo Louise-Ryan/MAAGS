@@ -185,7 +185,7 @@ foreach my $GENOME(@genome_array) {
 	my $Gene_Annotation_Summary = "";
 	foreach my $GN(@GAS3){
 	    foreach my $ggnn(@Gene_array){
-		if ($ggnn =~ m/$GN/i){
+		if ($ggnn =~ m/$GN$/i){
 		    $Gene_Annotation_Summary = $Gene_Annotation_Summary.$GN."|".$ggnn."\n";
 		}
 	    }
