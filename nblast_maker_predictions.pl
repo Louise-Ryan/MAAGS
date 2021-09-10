@@ -186,7 +186,7 @@ foreach my $GENOME(@genome_array) {
 	    foreach my $ggnn(@Gene_array){ #ggnn is gene (I'm running out of names ;) )
 		if ($ggnn =~ m/(.*)\|$GN$/i){ #Pull annotation and append it to ordered gene list
 		    my $ANNOT = $1;
-		    my $entry = $GN."|".$1.$ANNOT;
+		    my $entry = $GN."|".$ANNOT;
 		    unless($entry_check =~ m/.*$entry\|/i){
 			$Gene_Annotation_Summary = $Gene_Annotation_Summary.$entry."\n";
 			$entry_check = $entry_check.$entry."|";
