@@ -179,9 +179,9 @@ foreach my $GENOME(@genome_array) {
 	$Gene_Annotation_Summary = "";
 	foreach my $gn (@GAS_sorted) {
 	    print $gn."\n";
-	    foreach my $GN (@GENE_ID) {
-		if ($GN =~ m/Gene$gn\,(.*?)\n/) {
-		    $Gene_Annotation_Summary = "Gene".$gn."|".$1."\n";
+	    foreach my $GN (@Gene_array) {
+		if ($GN =~ m/(.*?)\,Gene$gn\n/) {
+		    $Gene_Annotation_Summary = $Gene_Annotation_Summary. "Gene".$gn."|".$1."\n";
 		}
 	    }
 	}	    
