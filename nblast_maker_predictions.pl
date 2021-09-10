@@ -184,9 +184,10 @@ foreach my $GENOME(@genome_array) {
 	@GAS3 = split("\n", $Gene_Annotation_Summary);
 	my $Gene_Annotation_Summary = "";
 	foreach my $GN(@GAS3){
-	    print $GN."\n";
-	    if ($Gene_Annotation =~ m/\n(.*)$GN\n"/i){
-		$Gene_Annotation_Summary = $Gene_Annotation_Summary.$GN."|".$1."\n";
+	    foreach my $ggnn(@Gene_array){
+		if ($ggnn =~ m/$GN/i){
+		    $Gene_Annotation_Summary = $Gene_Annotation_Summary.$GN."|".$ggnn."\n";
+		}
 	    }
 	}
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.csv";
