@@ -37,7 +37,7 @@ foreach my $GENOME(@genome_array) {
     my $Count;
     my $Gene;
     my $Gene_Annotation;
-    my $Gene_Annotation_Summary;
+    my $Gene_Annotation_Summary = "Gene,Annotation\n";
     my $Gene2;
     my $EValue;
     my $Score;
