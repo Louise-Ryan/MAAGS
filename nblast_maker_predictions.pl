@@ -80,7 +80,7 @@ my $Ab_Initio_Merged_extension ="_Merged_Ab_Initio_Predictions.fna";
 
 my @file_array = (<*$Augustus_extension>);
 foreach my $file(@file_array) {
-    if ($file =~ m/(GC.*\_.*?\_)/i) {
+    if ($file =~ m/(GC.*?\_.*?\_)/i) {
 	my $genome = $1;
 	chop($genome);
 	my $out = $genome.$Ab_Initio_Merged_extension;
@@ -92,7 +92,7 @@ foreach my $file(@file_array) {
 
 my @file_array = (<*$Ab_initio_extension>);
 foreach my $file(@file_array) {
-    if ($file =~ m/(GC.*\_.*?\_)/i) {
+    if ($file =~ m/(GC.*?\_.*?\_)/i) {
 	my $genome = $1;
 	chop($genome);
 	my $out = $genome.$Ab_Initio_Merged_extension;
