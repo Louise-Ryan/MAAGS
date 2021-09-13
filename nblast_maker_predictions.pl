@@ -66,7 +66,7 @@ foreach my $GENOME(@genome_array){
 	    $outfile=$outfile.$newheader.$seq;
 	}
     } $VAR_SAVE = $VAR_SAVE.$var;
-    open my $NEWFILE, ">", $file or die("Can't open file. $!");
+    open my $NEWFILE, ">", $GENOME or die("Can't open file. $!");
     print $NEWFILE $outfile;
     close $NEWFILE;
 }
