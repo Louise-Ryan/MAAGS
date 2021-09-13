@@ -21,13 +21,136 @@
 
 #------------------------------------------------------------------------------------------------------------------
 
-# 1. makeblastdb and nblast  on all genomes in directory using query seqfile
+# 1. Maker transcript predictions
 my $Query = $ARGV[0];
-my $genome_file_extension = ".fna";
+my $genome_file_extension = "maker_transcripts.fna";
 my @genome_array = (<*$genome_file_extension>); #Script acs on all .fna files in directory. 
 
-use List::Util qw(max); #allows me to use the max(array) function
 
+#1.2 Rename Maker transcript predictions to be suitable for blast. Assign arbirtry gene number to each prediction.
+
+foreach my $GENOME(@genome_array){
+    open(IN, $GENOME);
+    {
+	local $/; #changes delimiter to nothing. Allows entire file to be read in as one chun
+	$GENES = <IN>; 
+    }
+    close IN;
+    my $outfile ="";
+    my $newheader="";
+    my $head="";
+    my $seq="";
+    my $gene="";
+    my $Head1="";
+    my $var = 0;
+    my $a = 1;
+    if($GENES =~ m/.*?(\.\.\>).*/i) {
+	$rm = $1;
+	print $rm."\n\n";
+	$GENES =~ s/\Q$rm\E//g;
+    }
+    @GENES=[];
+    @GENES=split(/\>/,$GENES);
+    foreach $gene(@GENES) {
+	if($gene=~m/(.*)\n([A-Za-z\s\n\-]+)/){
+	    $head=">".$1."\n";
+	    $seq=$2;
+	    $var = $var + $a;
+	}
+	if ($head =~ m/\>(.*)/i) {
+	    $Head1 =">Gene".$var." (MAKER prediction)".$1;
+	    chop($Head1);
+	}
+	if ($Head1 =~ m/\>.*/i){
+	    $newheader = $Head1."\n";
+	    $outfile=$outfile.$newheader.$seq;
+	}
+    } $VAR_SAVE = $VAR_SAVE.$var;
+    open my $NEWFILE, ">", $file or die("Can't open file. $!");
+    print $NEWFILE $outfile;
+    close $NEWFILE;
+}
+
+
+
+# 2. AbInitio Predictions (For genes excluded from Maker Output)
+my $Augustus_extension = "augustus_masked_transcripts_fasta";
+my $Ab_initio_extension = "non_overlapping_ab_initio_transcripts_fasta";
+my $Ab_Initio_Merged_extension ="_Merged_Ab_Initio_Predictions.fna"; 
+
+my @file_array = (<*$Augustus_extension>);
+foreach my $file(@file_array) {
+    if ($file =~ m/(GC.*\_.*?\_)/i) {
+	my $genome = $1;
+	chop($genome);
+	my $out = $genome.$Ab_Initio_Merged_extension;
+	my $cmd = "cat $file >> $out";
+    print $cmd."\n";
+    system("$cmd");
+    }
+}
+
+my @file_array = (<*$Ab_initio_extension>);
+foreach my $file(@file_array) {
+    if ($file =~ m/(GC.*\_.*?\_)/i) {
+	my $genome = $1;
+	chop($genome);
+	my $out = $genome.$Ab_Initio_Merged_extension;
+	my $cmd = "cat $file >> $out";
+    print $cmd."\n";
+    system("$cmd");
+    }
+}
+
+
+# 2.1. Rename Ab Initio predictions to be suitable for BLAST. Assign gene neames starting from last number of above numeric scheme (VAR SAVE). Add Ab-Initio to gene name to make it clear these are *NOT* maker predictions, rather Ab-inito predictions.
+
+my @file_array = (<*$Ab_Initio_Merged_extension>);
+foreach my $file(@file_array){
+    open(IN, $file);
+    {
+	local $/; #changes delimiter to nothing. Allows entire file to be read in as one chun
+	$GENES = <IN>; 
+    }
+    close IN;
+    my $outfile ="";
+    my $newheader="";
+    my $head="";
+    my $seq="";
+    my $gene="";
+    my $Head1="";
+    #my $var = 0;
+    my $a = 1;
+    if($GENES =~ m/.*?(\.\.\>).*/i) {
+	$rm = $1;
+	print $rm."\n\n";
+	$GENES =~ s/\Q$rm\E//g;
+    }
+    @GENES=[];
+    @GENES=split(/\>/,$GENES);
+    foreach $gene(@GENES) {
+	if($gene=~m/(.*)\n([A-Za-z\s\n\-]+)/){
+	    $head=">".$1."\n";
+	    $seq=$2;
+	    $VAR_SAVE = $VAR_SAVE + $a;
+	}
+	if ($head =~ m/\>(.*)/i) {
+	    $Head1 =">Gene".$var." (Ab-Initio Prediction)".$1;
+	    chop($Head1);
+	}
+	if ($Head1 =~ m/\>.*/i){
+	    $newheader = $Head1."\n";
+	    $outfile=$outfile.$newheader.$seq;
+	}
+    }
+    open my $NEWFILE, ">", $file or die("Can't open file. $!");
+    print $NEWFILE $outfile;
+    close $NEWFILE;
+}
+
+
+
+#3. BLAST maker predictions using reference genes as query. Reference gene file is the input argument (ARGV[0]).
 
 foreach my $GENOME(@genome_array) {
     #Declare/Reset Variables
