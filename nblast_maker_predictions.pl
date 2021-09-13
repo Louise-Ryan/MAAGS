@@ -79,10 +79,8 @@ my $Augustus_extension = "augustus_masked_transcripts_fasta";
 my $Ab_initio_extension = "non_overlapping_ab_initio_transcripts_fasta";
 my $Ab_Initio_Merged_extension ="_Merged_Ab_Initio_Predictions.fna";
 
-@VAR = split("\n", $VAR_SAVE);
-foreach $el(@VAR) {
-    print "This is VAR: ".$el."\n";
-}
+my @VAR = split("\n", $VAR_SAVE);
+my $VAR = pop(@VAR);
 
 my @file_array = (<*$Augustus_extension>);
 foreach my $file(@file_array) {
@@ -109,7 +107,7 @@ foreach my $file(@file_array) {
 }
 
 
-# 2.1. Rename Ab Initio predictions to be suitable for BLAST. Assign gene neames starting from last number of above numeric scheme (VAR SAVE). Add Ab-Initio to gene name to make it clear these are *NOT* maker predictions, rather Ab-inito predictions.
+# 2.1. Rename Ab Initio predictions to be suitable for BLAST. Assign gene neames starting from last number of above numeric scheme (VAR). Add Ab-Initio to gene name to make it clear these are *NOT* maker predictions, rather Ab-inito predictions.
 
 my @file_array = (<*$Ab_Initio_Merged_extension>);
 foreach my $file(@file_array){
@@ -125,7 +123,6 @@ foreach my $file(@file_array){
     my $seq="";
     my $gene="";
     my $Head1="";
-    #my $var = 0;
     my $a = 1;
     if($GENES =~ m/.*?(\.\.\>).*/i) {
 	$rm = $1;
@@ -138,10 +135,10 @@ foreach my $file(@file_array){
 	if($gene=~m/(.*)\n([A-Za-z\s\n\-]+)/){
 	    $head=">".$1."\n";
 	    $seq=$2;
-	    $VAR_SAVE = $VAR_SAVE + $a;
+	    $VAR = $VAR + $a;
 	}
 	if ($head =~ m/\>(.*)/i) {
-	    $Head1 =">Gene".$var." (Ab-Initio Prediction)".$1;
+	    $Head1 =">Gene".$VAR." (Ab-Initio Prediction)".$1;
 	    chop($Head1);
 	}
 	if ($Head1 =~ m/\>.*/i){
