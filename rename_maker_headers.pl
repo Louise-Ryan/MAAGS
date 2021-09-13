@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
-my $fasta_file_extension = "fna";
+my $fasta_file_extension = $ARGV[0];
+chomp $ARGV[0];
 my @file_array = (<*$fasta_file_extension>);
 
 #my $outfile;
@@ -33,7 +34,7 @@ foreach my $file(@file_array) {
 	    $seq=$2;
 	    $var = $var + $a;
 	}
-	if ($head =~ m/\>(.*)transcript/i) {
+	if ($head =~ m/\>(.*)/i) {
 	    $Head1 =">Gene".$var." ".$1;
 	    chop($Head1);
 	}
