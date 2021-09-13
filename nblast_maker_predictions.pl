@@ -56,16 +56,17 @@ foreach my $GENOME(@genome_array){
 	    $head=">".$1."\n";
 	    $seq=$2;
 	    $var = $var + $a;
+	    $VAR_SAVE = $VAR_SAVE.$var."\n";
 	}
 	if ($head =~ m/\>(.*)/i) {
-	    $Head1 =">Gene".$var." (MAKER prediction)".$1;
+	    $Head1 =">Gene".$var." (MAKER prediction) ".$1;
 	    chop($Head1);
 	}
 	if ($Head1 =~ m/\>.*/i){
 	    $newheader = $Head1."\n";
 	    $outfile=$outfile.$newheader.$seq;
 	}
-    } $VAR_SAVE = $VAR_SAVE.$var;
+    } 
     open my $NEWFILE, ">", $GENOME or die("Can't open file. $!");
     print $NEWFILE $outfile;
     close $NEWFILE;
@@ -76,7 +77,12 @@ foreach my $GENOME(@genome_array){
 # 2. AbInitio Predictions (For genes excluded from Maker Output)
 my $Augustus_extension = "augustus_masked_transcripts_fasta";
 my $Ab_initio_extension = "non_overlapping_ab_initio_transcripts_fasta";
-my $Ab_Initio_Merged_extension ="_Merged_Ab_Initio_Predictions.fna"; 
+my $Ab_Initio_Merged_extension ="_Merged_Ab_Initio_Predictions.fna";
+
+@VAR = split("\n", $VAR_SAVE);
+foreach $el(@VAR) {
+    print "This is VAR: ".$el."\n";
+}
 
 my @file_array = (<*$Augustus_extension>);
 foreach my $file(@file_array) {
