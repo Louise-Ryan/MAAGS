@@ -138,7 +138,7 @@ foreach my $file(@file_array){
 	    $VAR = $VAR + $a;
 	}
 	if ($head =~ m/\>(.*)/i) {
-	    $Head1 =">Gene".$VAR." (Ab-Initio Prediction)".$1;
+	    $Head1 =">Gene".$VAR." (Ab-Initio Prediction) ".$1;
 	    chop($Head1);
 	}
 	if ($Head1 =~ m/\>.*/i){
@@ -158,13 +158,12 @@ foreach my $file(@file_array){
 foreach my $GENOME(@genome_array) {
     #Declare/Reset Variables
     my $Blast_output;
-    #my $Annotation;
-    #my $Prediction;
     my $Hit;
     my $Count;
     my $Gene;
     my $Gene_Annotation;
     my $Gene_Annotation_Summary;
+    my $GENE_LIST;
     my $Gene2;
     my $EValue;
     my $Score;
@@ -225,13 +224,14 @@ foreach my $GENOME(@genome_array) {
 		    if ($Gene !~ m/\s\split/){ 
 			#if ($Gene_check !~ m/.*\split$Gene/i && $Gene_check !~ m/$Gene/i) { #If unique gene hit, store to gene list
 			   # $Gene_check = $Gene_check.$Gene;
-			    print "\nDoes ".$Hit." equal ".$count."?\n"; #delete this 
+			    #print "\nDoes ".$Hit." equal ".$count."?\n"; #delete this 
 			    if ($Hit == $count) {
 				$Gene_List = $Gene_List.$Gene;
 				$Gene2 = $Gene;
 				$Gene2 =~ s/split//;
 				$Gene_Annotation = $Gene_Annotation.$Gene_Query."|".$Gene2."\n";
 				$Gene_Annotation_Summary = $Gene_Annotation_Summary.$Gene2."\n";
+				$GENE_LIST = $GENE_LIST.$Gene2."\n";
 			    }
 			    
 		#	}
