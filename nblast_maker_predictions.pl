@@ -195,7 +195,8 @@ foreach my $GENOME(@genome_array) {
 		}
 	    }
 	}
-	$Gene_Annotation = "Sorted by Annotation:\n\n".$Gene_Annotation; #test
+	$Gene_Annotation_Summary = "Sorted by Gene Number:\n".$Gene_Annotation_Summary;
+	$Gene_Annotation = "\n\nSorted by Annotation:\n".$Gene_Annotation; #test
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.txt";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
