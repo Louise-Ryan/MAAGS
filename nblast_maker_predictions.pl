@@ -195,9 +195,11 @@ foreach my $GENOME(@genome_array) {
 		}
 	    }
 	}
+	$Gene_Annotation = "Sorted by Annotation:\n\n".$Gene_Annotation; #test
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.txt";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
+	print $SFILE $Gene_Annotation;
 	close $SFile;
 	print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
 	my $Gene_Seq_File = $GENOME_ID."_Gene_Hit_SeqFile.fa"; #Output gene sequence file
