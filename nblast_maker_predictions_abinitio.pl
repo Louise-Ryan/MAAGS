@@ -36,7 +36,7 @@ foreach my $GENOME(@genome_array){
 	$GENES = <IN>; 
     }
     close IN;
-    $GENOME =~ s/\_fasta/\.fa/g ;
+    $GENOME =~ s/\_fasta/\.fna/g ;
     my $outfile ="";
     my $newheader="";
     my $head="";
@@ -74,7 +74,7 @@ foreach my $GENOME(@genome_array){
 }
 
 #Overwrite array with newly formatted maker_transcripts.fa file:
-my $genome_file_extension = "maker_transcripts.fa";
+my $genome_file_extension = "maker_transcripts.fna";
 my @genome_array = (<*$genome_file_extension>); #Script acs on all .fna files in directory. 
 
 
