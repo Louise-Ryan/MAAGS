@@ -534,7 +534,7 @@ print "\n\nAdding ab-initio predictions for query genes with no MAKER prediction
 
 $Seqfile = "SeqFile.fa";
 my @seqfiles = <*Seqfile>;
-foreach my $f @seqfiles {
+foreach my $f(@seqfiles) {
     if ($f =~ m/(GC.*\_.*?\_)/i) {
 	my $GENOME = $1;
 	my $final_SEQFILE = $GENOME."_Final_SeqFile.fa";
