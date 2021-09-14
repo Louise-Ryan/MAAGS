@@ -533,7 +533,7 @@ foreach my $ABINIT(@ABINIT_array) {
 print "\n\nAdding ab-initio predictions for query genes with no MAKER prediction to final output file ...\n\n";
 
 $Seqfile = "SeqFile.fa";
-my @seqfiles = <*Seqfile>;
+my @seqfiles = <*$Seqfile>;
 foreach my $f(@seqfiles) {
     print "\n".$f."\n";
     if ($f =~ m/(GC.*\_.*?\_)/i) {
