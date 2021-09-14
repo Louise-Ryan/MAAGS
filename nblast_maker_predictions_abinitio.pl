@@ -528,13 +528,27 @@ foreach my $ABINIT(@ABINIT_array) {
     }
 }
 
+#Cat seqfiles to final merged seqfile
+
+print "\n\nAdding ab-initio predictions for query genes with no MAKER prediction to final output file ...\n\n";
+
+$Seqfile = "SeqFile.fa";
+my @seqfiles = <*Seqfile>;
+foreach my $f @seqfiles {
+    if ($f =~ m/(GC.*\_.*?\_)/i) {
+	my $GENOME = $1;
+	my $final_SEQFILE = $GENOME."_Final_SeqFile.fa";
+	system("cat $f >> $final_SEQFILE");
+    }
+}
+	
 
 my $BLASTDIR = "BLAST_Files";
 system("mkdir $BLASTDIR");
 system("mv *_Blast_Files $BLASTDIR");
 my $GENEDIR = "Gene_Hit_SeqFiles";
 system("mkdir $GENEDIR");
-system("mv *Gene_Hit_SeqFile.fa $GENEDIR");
+system("mv *SeqFile.fa $GENEDIR");
 system("mv *Gene_Annotation_Summary.txt $GENEDIR");
 system("mv $BLASTDIR $GENEDIR");
 
