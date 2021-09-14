@@ -538,7 +538,9 @@ foreach my $f(@seqfiles) {
     if ($f =~ m/(GC.*\_.*?\_)/i) {
 	my $GENOME = $1;
 	my $final_SEQFILE = $GENOME."_Final_SeqFile.fa";
-	system("cat $f >> $final_SEQFILE");
+	my $cmd = "cat ".$f." >> ".$final_SEQFILE;
+	print "\n".$cmd;
+	system("$cmd");
     }
 }
 	
