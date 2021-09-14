@@ -2,11 +2,12 @@
 
 print "\nMerging maker predictions to output files ..\n\n";
 
-#1 Store genome accession:
+#1 Store genome accession:                                                                                                                                                                    
 use Cwd qw(cwd);
 my $dir = cwd;
+$dir =~ s/\///g;
 print "\n$dir\n";
-if ($dir =~ m/.*(GC.*?\_.*?\_).*/i) {
+if ($dir =~ m/.*(GC.*?_.*?\.\d).*/i) {
     my $GENOME = $1;
 }
 
@@ -66,7 +67,7 @@ system("merge_fasta_files.pl $Maker_Augustus_transcripts_extension $Maker_August
 
 my $RAWDIR = "RAW_MAKER_FILES";
 system("mkdir $RAWDIR");
-system("mv *fasta $RAWDIR");
+system("mv *.fasta $RAWDIR");
 
 #4 Move protein files to directory
 
