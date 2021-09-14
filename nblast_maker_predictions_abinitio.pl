@@ -155,7 +155,7 @@ foreach my $file(@file_array){
 
 
 
-#3. BLAST maker predictions using reference genes as query. Reference gene file is the input argument (ARGV[0]).
+#3. BLAST maker predictions using reference genes as query. Reference gene file is the input argument (ARGV[0])
 
 foreach my $GENOME(@genome_array) {
     #Declare/Reset Variables
@@ -165,7 +165,7 @@ foreach my $GENOME(@genome_array) {
     my $Gene;
     my $Gene_Annotation;
     my $Gene_Annotation_Summary;
-    my $GENE_LIST;
+    #my $GENE_LIST;
     my $Gene2;
     my $EValue;
     my $Score;
@@ -341,7 +341,7 @@ foreach my $GENOME(@genome_array) {
     }
 }
 
-print "\n\nGene QUery check list:\n";
+print "\n\nGene Query check list:\n";
 print $GENE_LIST."\n\n";
 
 #4. BLAST on abinitio
