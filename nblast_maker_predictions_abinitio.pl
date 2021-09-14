@@ -299,7 +299,7 @@ foreach my $GENOME(@genome_array) {
 		 chomp;
 		 $gene_seq = $_; #store each gene  of the genome file in $gene_seq
 		 if ($gene_seq =~ m/$Prediction\s\(.*\)(.*)?\n/i) { #if gene is a match, pull the gene sequence from genome file
-		     $gene_seq =~ s/\Q$1\E//g;
+		     $gene_seq =~ s/\Q$1\E//g; #remove long maker headers
 		     $GENE_HIT = $GENE_HIT.">".$Annotation."_".$GENOME_ID."_".$gene_seq."\n";
 		 }
 	     }
@@ -487,7 +487,8 @@ foreach my $ABINIT(@ABINIT_array) {
 	     while(<ABINITFILE>) {
 		 chomp;
 		 $gene_seq = $_; #store each gene  of the genome file in $gene_seq
-		 if ($gene_seq =~ m/$Prediction\s/i) { #if gene is a match, pull the gene sequence from genome file
+		 if ($gene_seq =~ m/$Prediction\s\(.*\)(.*)?\n/i) { #if gene is a match, pull the gene sequence from genome file
+		     $gene_seq =~ s/\Q$1\E//g; #remove long maker headers
 		     $GENE_HIT = $GENE_HIT.">".$Annotation."_".$GENOME_ACCESSION."_".$gene_seq."\n";
 		 }
 	     }
