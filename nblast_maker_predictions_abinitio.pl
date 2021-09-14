@@ -552,7 +552,7 @@ system("mv *_Blast_Files $BLASTDIR");
 my $GENEDIR = "Gene_Hit_SeqFiles";
 system("mkdir $GENEDIR");
 system("mv *SeqFile.fa $GENEDIR");
-system("mv *SeqFile.fasta $GENDIR");
+system("mv *SeqFile.fasta $GENEDIR");
 system("mv *Gene_Annotation_Summary.txt $GENEDIR");
 system("mv $BLASTDIR $GENEDIR");
 
