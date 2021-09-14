@@ -109,6 +109,8 @@ foreach my $file(@file_array) {
 
 # 2.1. Rename Ab Initio predictions to be suitable for BLAST. Assign gene neames starting from last number of above numeric scheme (VAR). Add Ab-Initio to gene name to make it clear these are *NOT* maker predictions, rather Ab-inito predictions.
 
+print "\nAssigning gene numbers to maker predictions ....\n"
+    
 my @file_array = (<*$Ab_Initio_Merged_extension>);
 foreach my $file(@file_array){
     open(IN, $file);
@@ -339,6 +341,8 @@ foreach my $GENOME(@genome_array) {
     }
 }
 
+print "\n\nGene QUery check list:\n";
+print $GENE_LIST."\n\n";
 
 #4. BLAST on abinitio
 
@@ -353,7 +357,6 @@ foreach my $ABINIT(@ABINIT_array) {
     my $Gene;
     my $Gene_Annotation;
     my $Gene_Annotation_Summary;
-    my $GENE_LIST;
     my $Gene2;
     my $EValue;
     my $Score;
@@ -411,7 +414,7 @@ foreach my $ABINIT(@ABINIT_array) {
 		    $Gene =~ s/\s//;
 		    $Gene = $Gene."split"; #Add split term to identifier. Important for gene check. Removed again later on.
 		    if ($Gene !~ m/\s\split/){ 
-			if ($GENE_LIST!~ m/.*$Gene_Query\n.*/i) { #If unique gene hit, store to gene list
+			if ($GENE_LIST !~ m/.*$Gene_Query\n.*/i) { #If unique gene hit, store to gene list
 			    if ($Hit == $count) {
 				$Gene_List = $Gene_List.$Gene;
 				$Gene2 = $Gene;
