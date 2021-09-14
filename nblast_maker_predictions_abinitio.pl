@@ -536,11 +536,11 @@ $Seqfile = "SeqFile.fa";
 my @seqfiles = <*$Seqfile>;
 foreach my $f(@seqfiles) {
     print "\n".$f."\n";
-    if ($f =~ m/(GC.*\_.*?\_)/i) {
+    if ($f =~ m/(GC.*?\_.*?\_)/i) {
 	my $GENOME = $1;
-	my $final_SEQFILE = $GENOME."_Final_SeqFile.fasta";
+	my $final_SEQFILE = $GENOME."Final_SeqFile.fasta";
 	my $cmd = "cat ".$f." >> ".$final_SEQFILE;
-	print "\n".$cmd;
+	print "\n".$cmd."\n";
 	system("$cmd");
     }
 }
@@ -552,8 +552,10 @@ system("mv *_Blast_Files $BLASTDIR");
 my $GENEDIR = "Gene_Hit_SeqFiles";
 system("mkdir $GENEDIR");
 system("mv *SeqFile.fa $GENEDIR");
-system("mv *fasta $GENDIR");
+system("mv *SeqFile.fasta $GENDIR");
 system("mv *Gene_Annotation_Summary.txt $GENEDIR");
 system("mv $BLASTDIR $GENEDIR");
+
+print "\n\nDone!\n";
 
 exit;
