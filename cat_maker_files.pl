@@ -21,7 +21,7 @@ my $Maker_transcripts_file = $GENOME.$Maker_transcripts;
 
 #Maker abinitio proteins
 my $Maker_AbInitio_proteins_extension = "maker_non_overlapping_ab_initio_proteins.fasta";
-my $Maker_AbInitio_proteins = "maker_non_overlapping_ab_initio_proteins_fasta"
+my $Maker_AbInitio_proteins = "maker_non_overlapping_ab_initio_proteins_fasta";
 my $Maker_AbInitio_proteins_file = $GENOME.$Maker_AbInitio_proteins;
 
 #Maker abinitio transcripts
