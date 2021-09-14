@@ -535,9 +535,10 @@ print "\n\nAdding ab-initio predictions for query genes with no MAKER prediction
 $Seqfile = "SeqFile.fa";
 my @seqfiles = <*Seqfile>;
 foreach my $f(@seqfiles) {
+    print "\n".$f."\n";
     if ($f =~ m/(GC.*\_.*?\_)/i) {
 	my $GENOME = $1;
-	my $final_SEQFILE = $GENOME."_Final_SeqFile.fa";
+	my $final_SEQFILE = $GENOME."_Final_SeqFile.fasta";
 	my $cmd = "cat ".$f." >> ".$final_SEQFILE;
 	print "\n".$cmd;
 	system("$cmd");
@@ -551,6 +552,7 @@ system("mv *_Blast_Files $BLASTDIR");
 my $GENEDIR = "Gene_Hit_SeqFiles";
 system("mkdir $GENEDIR");
 system("mv *SeqFile.fa $GENEDIR");
+system("mv *fasta $GENDIR");
 system("mv *Gene_Annotation_Summary.txt $GENEDIR");
 system("mv $BLASTDIR $GENEDIR");
 
