@@ -464,7 +464,7 @@ foreach my $ABINIT(@ABINIT_array) {
 	print $Gene_Hit_Summary."\n\n";
 	#print "Annotation Summary: \n";
 	#print $Gene_Annotation;
-	if ($Database =~ m/(GC.*?\_.*)?\_/i){ #Getting Genome ID for output file names
+	if ($Database =~ m/(GC.*?\_.*)\_Merged/i){ #Getting Genome ID for output file names
 	    $GENOME_ACCESSION = $1;
 	    $GENOME_ID = $GENOME_ACCESSION."_AbInitio_Predictions";
 	}
