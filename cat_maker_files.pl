@@ -5,37 +5,38 @@ print "\nMerging maker predictions to output files ..\n\n";
 #1 Store genome accession:
 use Cwd qw(cwd);
 my $dir = cwd;
+print "\n$dir\n";
 if ($dir =~ m/.*(GC.*?\_.*?\_).*/i) {
     my $GENOME = $1;
 }
 
 #Maker Proteins 
-my $Maker_proteins_extension = "maker_proteins.fasta";
+my $Maker_proteins_extension = "maker.proteins.fasta";
 my $Maker_proteins = "maker_proteins_fasta";
 my $Maker_proteins_file = $GENOME.$Maker_proteins;
 
 #Maker transcripts
-my $Maker_transcripts_extension = "maker_transcripts.fasta";
+my $Maker_transcripts_extension = "maker.transcripts.fasta";
 my $Maker_transcripts = "maker_transcripts_fasta";
 my $Maker_transcripts_file = $GENOME.$Maker_transcripts;
 
 #Maker abinitio proteins
-my $Maker_AbInitio_proteins_extension = "maker_non_overlapping_ab_initio_proteins.fasta";
+my $Maker_AbInitio_proteins_extension = "maker.non_overlapping_ab_initio.proteins.fasta";
 my $Maker_AbInitio_proteins = "maker_non_overlapping_ab_initio_proteins_fasta";
 my $Maker_AbInitio_proteins_file = $GENOME.$Maker_AbInitio_proteins;
 
 #Maker abinitio transcripts
-my $Maker_AbInitio_transcripts_extension = "maker_non_overlapping_ab_initio_transcripts.fasta";
+my $Maker_AbInitio_transcripts_extension = "maker.non_overlapping_ab_initio.transcripts.fasta";
 my $Maker_AbInitio_transcripts = "maker_non_overlapping_ab_initio_transcripts_fasta";
 my $Maker_AbInitio_transcripts_file = $GENOME.$Maker_AbInitio_transcripts;
 
 #Maker augustus proteins
-my $Maker_Augustus_proteins_extension = "augustus_masked_proteins.fasta";
+my $Maker_Augustus_proteins_extension = "maker.augustus_masked.proteins.fasta";
 my $Maker_Augustus_proteins = "augustus_masked_proteins_fasta";
 my $Maker_Augustus_proteins_file = $GENOME.$Maker_Augustus_proteins;
 
 #Maker augustus transcripts
-my $Maker_Augustus_transcripts_extension ="augustus_masked_transcripts.fasta";
+my $Maker_Augustus_transcripts_extension ="maker.augustus_masked.transcripts.fasta";
 my $Maker_Augustus_transcripts = "augustus_masked_transcripts_fasta";
 my $Maker_Augustus_transcripts_file = $GENOME.$Maker_Augustus_transcripts;
 
