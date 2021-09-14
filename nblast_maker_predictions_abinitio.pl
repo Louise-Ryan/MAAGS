@@ -73,6 +73,9 @@ foreach my $GENOME(@genome_array){
     close $NEWFILE;
 }
 
+#Overwrite array with newly formatted maker_transcripts.fa file:
+my $genome_file_extension = "maker_transcripts.fa";
+my @genome_array = (<*$genome_file_extension>); #Script acs on all .fna files in directory. 
 
 
 # 2. AbInitio Predictions (For genes excluded from Maker Output)
