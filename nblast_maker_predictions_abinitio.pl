@@ -109,7 +109,7 @@ foreach my $file(@file_array) {
 
 # 2.1. Rename Ab Initio predictions to be suitable for BLAST. Assign gene neames starting from last number of above numeric scheme (VAR). Add Ab-Initio to gene name to make it clear these are *NOT* maker predictions, rather Ab-inito predictions.
 
-print "\nAssigning gene numbers to maker predictions ....\n"
+print "\nAssigning gene numbers to maker predictions ....\n";
     
 my @file_array = (<*$Ab_Initio_Merged_extension>);
 foreach my $file(@file_array){
