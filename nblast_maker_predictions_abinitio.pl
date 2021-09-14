@@ -550,11 +550,15 @@ foreach my $f(@seqfiles) {
 my $BLASTDIR = "BLAST_Files";
 system("mkdir $BLASTDIR");
 system("mv *_Blast_Files $BLASTDIR");
-my $GENEDIR = "Gene_Hit_SeqFiles";
+my $GENEDIR = "Annotated_Maker_Gene_Predictions";
 system("mkdir $GENEDIR");
-system("mv *SeqFile.fa $GENEDIR");
+#system("mv *SeqFile.fa $GENEDIR");
 system("mv *SeqFile.fasta $GENEDIR");
-system("mv *Gene_Annotation_Summary.txt $GENEDIR");
+my $SUMMARYFILES = "Annotation_Summaries";
+system("mkdir $SUMMARYFILES");
+system("mv *SeqFile.fa $SUMMARYFILES");
+system("mv *Gene_Annotation_Summary.txt $SUMMARYFILES");
+system("mv $SUMMARYFILES $GENEDIR");
 system("mv $BLASTDIR $GENEDIR");
 
 print "\n\nDone!\n";
