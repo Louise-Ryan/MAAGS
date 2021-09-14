@@ -460,8 +460,9 @@ foreach my $ABINIT(@ABINIT_array) {
 	print $Gene_Hit_Summary."\n\n";
 	#print "Annotation Summary: \n";
 	#print $Gene_Annotation;
-	if ($Database =~ m/(GC.*?\_.*?\_)/i){ #Getting Genome ID for output file names
-	    $GENOME_ID = $1."AbInitio_Predictions";
+	if ($Database =~ m/(GC.*?\_.*)?\_/i){ #Getting Genome ID for output file names
+	    $GENOME_ACCESSION = $1;
+	    $GENOME_ID = $GENOME_ACCESSION."_AbInitio_Predictions";
 	}
 	my $Gene_Hit_Summary_File = $GENOME_ID."_Gene_Hit_Summary_File.txt"; #Set Summary File name
 	open my $FILE1, ">", $Gene_Hit_Summary_File or die("Can't open file. $!"); #Output Summary File
@@ -482,7 +483,7 @@ foreach my $ABINIT(@ABINIT_array) {
 		 chomp;
 		 $gene_seq = $_; #store each gene  of the genome file in $gene_seq
 		 if ($gene_seq =~ m/$Prediction\s/i) { #if gene is a match, pull the gene sequence from genome file
-		     $GENE_HIT = $GENE_HIT.">".$Annotation."_".$GENOME_ID."_".$gene_seq."\n";
+		     $GENE_HIT = $GENE_HIT.">".$Annotation."_".$GENOME_ACCESSION."_".$gene_seq."\n";
 		 }
 	     }
 	  }
