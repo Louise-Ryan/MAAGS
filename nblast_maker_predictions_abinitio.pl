@@ -21,6 +21,7 @@
 
 #------------------------------------------------------------------------------------------------------------------
 
+
 # 1. Maker transcript predictions
 my $Query = $ARGV[0];
 my $genome_file_extension = "maker_transcripts_fasta";
