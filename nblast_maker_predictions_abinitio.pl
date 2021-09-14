@@ -23,7 +23,7 @@
 
 # 1. Maker transcript predictions
 my $Query = $ARGV[0];
-my $genome_file_extension = "maker_transcripts.fna";
+my $genome_file_extension = "maker_transcripts_fasta";
 my @genome_array = (<*$genome_file_extension>); #Script acs on all .fna files in directory. 
 
 
@@ -36,6 +36,7 @@ foreach my $GENOME(@genome_array){
 	$GENES = <IN>; 
     }
     close IN;
+    $GENOME =~ s/\_fasta/\.fa/g ;
     my $outfile ="";
     my $newheader="";
     my $head="";
