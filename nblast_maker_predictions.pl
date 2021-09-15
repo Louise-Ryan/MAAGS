@@ -197,7 +197,7 @@ foreach my $GENOME(@genome_array) {
 	my $blastn_cmd ="blastn -db $db -query $Query -out $out";
 	print "\n".$makeblastdb_cmd."\n";
 	system("$makeblastdb_cmd");
-	print "\n\n".$blastn_cmd."\n\n";
+	print "\n".$blastn_cmd."\n";
 	system("$blastn_cmd");
 	open(BLASTFILE, $out);
 	{
@@ -340,6 +340,7 @@ foreach my $GENOME(@genome_array) {
 	close $SFile;
 	print "\nGenes annotated using primary reference:\n";
 	system("cat $Summary_File");
+	print "-----------------------------------------------------------------------------------------------------";
 	#print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
 	my $Gene_Seq_File = $GENOME_ID."_Gene_Hit_SeqFile.fa"; #Output gene sequence file
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
@@ -391,7 +392,7 @@ foreach my $GENOME(@genome_array) {
 	my $blastn_cmd ="blastn -db $db -query $Alt_Query -out $out";
 	print "\n".$makeblastdb_cmd."\n";
 	system("$makeblastdb_cmd");
-	print "\n\n".$blastn_cmd."\n\n";
+	print "\n".$blastn_cmd."\n";
 	system("$blastn_cmd");
 	open(BLASTFILE, $out);
 	{
@@ -531,6 +532,7 @@ foreach my $GENOME(@genome_array) {
 	close $SFile;
 	print "\nAdditional hits picked up by Alternative reference:\n";
 	system("cat $Summary_File");
+	print "-----------------------------------------------------------------------------------------------------";
 	#print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
 	my $Gene_Seq_File = $GENOME_ID."_Alternative_Reference_Gene_Hit_SeqFile.fa"; #Output gene sequence file
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
@@ -585,7 +587,7 @@ foreach my $ABINIT(@ABINIT_array) {
 	my $blastn_cmd ="blastn -db $db -query $Query -out $out";
 	print "\n".$makeblastdb_cmd."\n";
 	system("$makeblastdb_cmd");
-	print "\n\n".$blastn_cmd."\n\n";
+	print "\n".$blastn_cmd."\n";
 	system("$blastn_cmd");
 	open(BLASTFILE, $out);
 	{
@@ -726,6 +728,7 @@ foreach my $ABINIT(@ABINIT_array) {
 	close $SFile;
 	print "\nHits not detected in maker output, but detected in AbInitio gene predictions:\n";
 	system("cat $Summary_File");
+	print "-----------------------------------------------------------------------------------------------------";
 	#print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
 	my $Gene_Seq_File = $GENOME_ID."_Gene_Hit_SeqFile.fa"; #Output gene sequence file
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
@@ -749,7 +752,7 @@ foreach my $f(@seqfiles) {
 	my $GENOME = $1;
 	my $final_SEQFILE = $GENOME."Final_SeqFile.fasta";
 	my $cmd = "cat ".$f." >> ".$final_SEQFILE;
-	print "\n".$cmd;
+	print $cmd;
 	system("$cmd");
     }
 }
@@ -769,6 +772,6 @@ system("mv *Gene_Annotation_Summary.txt $SUMMARYFILES");
 system("mv $SUMMARYFILES $GENEDIR");
 system("mv $BLASTDIR $GENEDIR");
 
-print "\nDone!\nFinal predictions are included in Final_Seq_File.fasta in /Annotated_Maker_Gene_Predictions directory!\n\n";
+print "\n\nDone!\nFinal predictions are included in Final_Seq_File.fasta in /Annotated_Maker_Gene_Predictions directory!\n\n";
 
 exit;
