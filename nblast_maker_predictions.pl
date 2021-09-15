@@ -275,7 +275,7 @@ foreach my $GENOME(@genome_array) {
 	foreach my $Gene_ID (@Gene_array) { #Loop over array and print unique gene list to summary file
 	    $Gene_Hit_Summary = $Gene_Hit_Summary.$Gene_ID."\n";
 	}
-	print $Gene_Hit_Summary."\n\n";
+	#print $Gene_Hit_Summary."\n\n";
 	#print "Annotation Summary: \n";
 	#print $Gene_Annotation;
 	if ($Database =~ m/(GC.*?\_.*?\_)/i){ #Getting Genome ID for output file names
@@ -292,9 +292,9 @@ foreach my $GENOME(@genome_array) {
 	    exit;
 	}
 	foreach my $Gene_ID(@Gene_array) {
-	    print "\n".$Gene_ID."\n";
+	   # print "\n".$Gene_ID."\n";
 	    my ($Annotation, $Prediction) = split(/\|/,$Gene_ID, 2);
-	    print "Pulling ".$Prediction." from ".$GENOME."...\n";
+	   # print "Pulling ".$Prediction." from ".$GENOME."...\n";
 	    {local $/ = ">"; #  change line delimter to read in file by gene
 	     open(GENOME, $GENOME); #Open the genome file
 	     while(<GENOME>) {
@@ -330,8 +330,9 @@ foreach my $GENOME(@genome_array) {
 		}
 	    }
 	}
-	$Gene_Annotation_Summary = "Sorted by Gene Number:\n".$Gene_Annotation_Summary;
+	$Gene_Annotation_Summary = "Primary reference: ".$Query."\n\nSorted by Gene Number:\n".$Gene_Annotation_Summary; ####
 	$Gene_Annotation = "\n\nSorted by Annotation:\n".$Gene_Annotation; #test
+	print $Gene_Annotation."\n";
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.txt";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
@@ -464,7 +465,7 @@ foreach my $GENOME(@genome_array) {
 	foreach my $Gene_ID (@Gene_array) { #Loop over array and print unique gene list to summary file
 	    $Gene_Hit_Summary = $Gene_Hit_Summary.$Gene_ID."\n";
 	}
-	print $Gene_Hit_Summary."\n\n";
+	#print $Gene_Hit_Summary."\n\n";
 	#print "Annotation Summary: \n";
 	#print $Gene_Annotation;
 	if ($Database =~ m/(GC.*?\_.*?\_)/i){ #Getting Genome ID for output file names
@@ -481,9 +482,9 @@ foreach my $GENOME(@genome_array) {
 	    exit;
 	}
 	foreach my $Gene_ID(@Gene_array) {
-	    print "\n".$Gene_ID."\n";
+	    #print "\n".$Gene_ID."\n";
 	    my ($Annotation, $Prediction) = split(/\|/,$Gene_ID, 2);
-	    print "Pulling ".$Prediction." from ".$GENOME."...\n";
+	    #print "Pulling ".$Prediction." from ".$GENOME."...\n";
 	    {local $/ = ">"; #  change line delimter to read in file by gene
 	     open(GENOME, $GENOME); #Open the genome file
 	     while(<GENOME>) {
@@ -519,8 +520,9 @@ foreach my $GENOME(@genome_array) {
 		}
 	    }
 	}
-	$Gene_Annotation_Summary = "Alternative reference:".$Alt_Query."\n\nSorted by Gene Number:\n".$Gene_Annotation_Summary;
-	$Gene_Annotation = "\n\nSorted by Annotation:\n".$Gene_Annotation; #test
+	$Gene_Annotation_Summary = "Alternative reference:".$Alt_Query."\n\nSorted by Gene Number:\n".$Gene_Annotation_Summary; ####
+	$Gene_Annotation = "\n\nSorted by Annotation:\n".$Gene_Annotation;
+	print $Gene_Annotation."\n";
 	my $Summary_File = $GENOME_ID."_Alternative_Reference_Gene_Annotation_Summary.txt";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
@@ -656,7 +658,7 @@ foreach my $ABINIT(@ABINIT_array) {
 	foreach my $Gene_ID (@Gene_array) { #Loop over array and print unique gene list to summary file
 	    $Gene_Hit_Summary = $Gene_Hit_Summary.$Gene_ID."\n";
 	}
-	print $Gene_Hit_Summary."\n\n";
+	#print $Gene_Hit_Summary."\n\n";
 	#print "Annotation Summary: \n";
 	#print $Gene_Annotation;
 	if ($Database =~ m/(GC.*?\_.*)\_Merged/i){ #Getting Genome ID for output file names
@@ -673,9 +675,9 @@ foreach my $ABINIT(@ABINIT_array) {
 	    exit;
 	}
 	foreach my $Gene_ID(@Gene_array) {
-	    print "\n".$Gene_ID."\n";
+	    #print "\n".$Gene_ID."\n";
 	    my ($Annotation, $Prediction) = split(/\|/,$Gene_ID, 2);
-	    print "Pulling ".$Prediction." from ".$ABINIT."...\n";
+	    #print "Pulling ".$Prediction." from ".$ABINIT."...\n";
 	    {local $/ = ">"; #  change line delimter to read in file by gene
 	     open(ABINITFILE, $ABINIT); #Open the genome file
 	     while(<ABINITFILE>) {
@@ -713,6 +715,7 @@ foreach my $ABINIT(@ABINIT_array) {
 	}
 	$Gene_Annotation_Summary = "Sorted by Gene Number:\n".$Gene_Annotation_Summary;
 	$Gene_Annotation = "\n\nSorted by Annotation:\n".$Gene_Annotation; #test
+	print $Gene_Annotation."\n";
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.txt";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
