@@ -1,22 +1,39 @@
 #!/usr/bin/perl 
 
 #------------------------------------------------------------------------------------------------------------------
-#PULL GENE PREDICTIONS FROM blastn OUTFILE
-#loop over each genome in directory and makeblastdb.
-#Run blastn against each genome db using query sequences. Query sequences can be multiple genes from multiple species in one input query fa seqfile.
-#Generate blast results out file for each species
-#parse blastn output file for each species.
-#Pull gene hit name and store in an array. Only store unique hits where genes from multiple species are used as blastn input.
-#All genes with a hit will be pulled regardless of signifigance scores.
-#hence if query hits 2 genes, both are pulled, not just most signifigant one.
-#Pull scores and gene info and stores in Gene_Hit_Summary.txt.
-#Opens Genome file and pulls unique genes from the target genome and stores in Gene_Hit_SeqFile.fa.
-#Run this script on one blast output file corresponding to one target genome at a time.
-#Can handle multiple genes from multiple species as blast query against target genome.
+#ANNOTATE MAKER GENE PREDICTIONS
+#Input files are the "_fasta" transcripts, output from cat_maker_files.pl.
+#Script will take _maker_transcripts_fasta file and add gene numbers to the maker predictions. Headers will be reformatted to be suitable with blast.
+#The re-formatted file will be called GCA123445.1_maker_transcripts.fna (any genome name).
+#The genome name is taken directly from the GENOME_maker_transcripts_fasta file, where GENOME is appendix. (This is auto from cat_maker_files.pl)
+#The AbInitio gene files will be merged into one file and reformatted as above, with gene numbers starting from last gene number in maker_transcripts.fna file.
+#This merged file is called GCA123445.1_Merged_Ab_Initio_Predictions.fna
 
-#WARNING: Make sure no stray fasta header symbols (>) in query. Carlito syrichta fasta headers include an unecessary stray > in description. These need to be removed prior to this script!
+#Input arguments are:
+#ARGV[0] = Primary_reference_file
+#ARGV[1] = Secondary_reference_file
+#Note the format of these should be >GENE . No other info on headers. This is necessary to annotate maker predictions properly.
 
-#ARGV0=Query seq file
+#Run blastn against GCA123445.1_maker_transcripts.fna with primary reference.
+#Annotate predictions with best hit from primary reference.
+#Eg if Gene1 has best hit with >ABL1 in primary reference, then Gene1 will be annotated as ABL1.
+
+#Run blastn against GCA123445.1_maker_transcripts.fna with secondary reference.
+#For any annotations in primary reference file that were not assigned a gene, if secondary reference query picks up a hit, it will be annotated.
+#Eg. NRXNY is not picked up by primary reference, but is picked up in predictions by secondary reference, then gene will be annotated using secondary reference.
+
+#Important to note: If reference 1 and reference 2 annotate the same gene differently, annotation by primary reference will be prioritised.
+
+#Run blastn against Ab-Initio predictions, with primary reference.
+#This will pick up any annotations in primary reference missed in the MAKER predictions file.
+#These are assigned asn (AbInitio Prediction) in header, to warn user that these may not be as reliable as (MAKER prediction).
+#Ab-Initio predictions are not blasted with secondary reference.
+
+#Output is Annotated_Maker_Predictions directory, which will contain:
+#Final_Seq_File.fasta, which includes all the annotated predictions. This is the ultimate output of this script.
+#Other summary files are included in subdirectories of Annotated_Maker_Predictions.
+#The Annotation summaries are stored in these subdirectories, but also printed to screen while this script is running.
+#All blast summary files are also included in subdirectories incase further investigation is needed. 
 
 
 #------------------------------------------------------------------------------------------------------------------
