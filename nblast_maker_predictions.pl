@@ -747,12 +747,12 @@ print "\n\nAdding ab-initio predictions for query genes with no MAKER prediction
 $Seqfile = "SeqFile.fa";
 my @seqfiles = <*$Seqfile>;
 foreach my $f(@seqfiles) {
-    print "\n".$f."\n";
+    #print "\n".$f."\n";
     if ($f =~ m/(GC.*?\_.*?\_)/i) {
 	my $GENOME = $1;
 	my $final_SEQFILE = $GENOME."Final_SeqFile.fasta";
 	my $cmd = "cat ".$f." >> ".$final_SEQFILE;
-	print $cmd;
+	print $cmd."\n";
 	system("$cmd");
     }
 }
