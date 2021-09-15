@@ -332,13 +332,15 @@ foreach my $GENOME(@genome_array) {
 	}
 	$Gene_Annotation_Summary = "Primary reference: ".$Query."\n\nSorted by Gene Number:\n".$Gene_Annotation_Summary; ####
 	$Gene_Annotation = "\n\nSorted by Annotation:\n".$Gene_Annotation; #test
-	print $Gene_Annotation."\n";
+	#print $Gene_Annotation."\n";
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.txt";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
 	print $SFile $Gene_Annotation;
 	close $SFile;
-	print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
+	print "\nGenes annotated using primary reference:\n";
+	system("cat $Gene_Annotation_Summary");
+	#print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
 	my $Gene_Seq_File = $GENOME_ID."_Gene_Hit_SeqFile.fa"; #Output gene sequence file
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
 	print $FILE2 $GENE_HIT;
@@ -522,14 +524,15 @@ foreach my $GENOME(@genome_array) {
 	}
 	$Gene_Annotation_Summary = "Alternative reference:".$Alt_Query."\n\nSorted by Gene Number:\n".$Gene_Annotation_Summary; ####
 	$Gene_Annotation = "\n\nSorted by Annotation:\n".$Gene_Annotation;
-	print $Gene_Annotation."\n";
 	my $Summary_File = $GENOME_ID."_Alternative_Reference_Gene_Annotation_Summary.txt";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
 	print $SFile $Gene_Annotation;
 	close $SFile;
-	print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
-	my $Gene_Seq_File = $GENOME_ID."Alternative_Reference_Gene_Hit_SeqFile.fa"; #Output gene sequence file
+	print "\nAdditional hits picked up by Alternative reference:\n";
+	system("cat $Gene_Annotation_Summary");
+	#print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
+	my $Gene_Seq_File = $GENOME_ID."_Alternative_Reference_Gene_Hit_SeqFile.fa"; #Output gene sequence file
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
 	print $FILE2 $GENE_HIT;
 	close $FILE2;
@@ -539,8 +542,8 @@ foreach my $GENOME(@genome_array) {
     }
 }
 
-print "\n\nGene Query check list:\n";
-print $GENE_LIST."\n\n";
+#print "\n\nGene Query check list:\n";
+#print $GENE_LIST."\n\n";
 
 
 
@@ -715,13 +718,15 @@ foreach my $ABINIT(@ABINIT_array) {
 	}
 	$Gene_Annotation_Summary = "Sorted by Gene Number:\n".$Gene_Annotation_Summary;
 	$Gene_Annotation = "\n\nSorted by Annotation:\n".$Gene_Annotation; #test
-	print $Gene_Annotation."\n";
+	#print $Gene_Annotation."\n";
 	my $Summary_File = $GENOME_ID."_Gene_Annotation_Summary.txt";
 	open my $SFile, ">", $Summary_File or die("Can't open file. $!");
 	print $SFile $Gene_Annotation_Summary;
 	print $SFile $Gene_Annotation;
 	close $SFile;
-	print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
+	print "\nHits not detected in maker output, but detected in AbInitio gene predictions:\n";
+	system("cat $Gene_Annotation_Summary");
+	#print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
 	my $Gene_Seq_File = $GENOME_ID."_Gene_Hit_SeqFile.fa"; #Output gene sequence file
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
 	print $FILE2 $GENE_HIT;
@@ -764,6 +769,6 @@ system("mv *Gene_Annotation_Summary.txt $SUMMARYFILES");
 system("mv $SUMMARYFILES $GENEDIR");
 system("mv $BLASTDIR $GENEDIR");
 
-print "\n\nDone!\n";
+print "\n\nDone!\nFinal predictions are included in Final_Seq_File.fasta in /Annotated_Maker_Gene_Predictions directory!\n\n";
 
 exit;
