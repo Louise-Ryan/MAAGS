@@ -339,7 +339,7 @@ foreach my $GENOME(@genome_array) {
 	print $SFile $Gene_Annotation;
 	close $SFile;
 	print "\nGenes annotated using primary reference:\n";
-	system("cat $Gene_Annotation_Summary");
+	system("cat $Summary_File");
 	#print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
 	my $Gene_Seq_File = $GENOME_ID."_Gene_Hit_SeqFile.fa"; #Output gene sequence file
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
@@ -351,8 +351,8 @@ foreach my $GENOME(@genome_array) {
     }
 }
 
-print "\n\nGene Query check list:\n";
-print $GENE_LIST."\n\n";
+#print "\n\nGene Query check list:\n";
+#print $GENE_LIST."\n\n";
 
 
 #4. BLAST MAKER predictions with secondary reference
@@ -530,7 +530,7 @@ foreach my $GENOME(@genome_array) {
 	print $SFile $Gene_Annotation;
 	close $SFile;
 	print "\nAdditional hits picked up by Alternative reference:\n";
-	system("cat $Gene_Annotation_Summary");
+	system("cat $Summary_File");
 	#print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
 	my $Gene_Seq_File = $GENOME_ID."_Alternative_Reference_Gene_Hit_SeqFile.fa"; #Output gene sequence file
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
@@ -725,7 +725,7 @@ foreach my $ABINIT(@ABINIT_array) {
 	print $SFile $Gene_Annotation;
 	close $SFile;
 	print "\nHits not detected in maker output, but detected in AbInitio gene predictions:\n";
-	system("cat $Gene_Annotation_Summary");
+	system("cat $Summary_File");
 	#print "\n\nUnique genes retrieved and output to 'Gene_Hit_SeqFile.fa'!\n";
 	my $Gene_Seq_File = $GENOME_ID."_Gene_Hit_SeqFile.fa"; #Output gene sequence file
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
