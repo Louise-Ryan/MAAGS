@@ -749,7 +749,7 @@ foreach my $f(@seqfiles) {
 	my $GENOME = $1;
 	my $final_SEQFILE = $GENOME."Final_SeqFile.fasta";
 	my $cmd = "cat ".$f." >> ".$final_SEQFILE;
-	print "\n".$cmd."\n";
+	print "\n".$cmd;
 	system("$cmd");
     }
 }
@@ -769,6 +769,6 @@ system("mv *Gene_Annotation_Summary.txt $SUMMARYFILES");
 system("mv $SUMMARYFILES $GENEDIR");
 system("mv $BLASTDIR $GENEDIR");
 
-print "\n\nDone!\nFinal predictions are included in Final_Seq_File.fasta in /Annotated_Maker_Gene_Predictions directory!\n\n";
+print "\nDone!\nFinal predictions are included in Final_Seq_File.fasta in /Annotated_Maker_Gene_Predictions directory!\n\n";
 
 exit;
