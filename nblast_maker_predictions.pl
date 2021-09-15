@@ -264,23 +264,23 @@ foreach my $GENOME(@genome_array) {
 		    }
 		    $Gene =~ s/split//;
 		    $Gene_Hit_Summary = $Gene_Hit_Summary.$Gene.", "; #Store gene identifier in summary file
-		    if ($gene_chunk=~ m/(Score\s\=.*?\,)/i) { #changed
+		    if ($line =~ m/(Score\s\=.*?\,)/i) { 
 			$Score = $1; #Store score (bits) info in summary file
 			$Gene_Hit_Summary = $Gene_Hit_Summary.$Score;
 		    }
-		    if ($gene_chunk =~ m/(Expect\s\=.*[0-9].*e.*[0-9])/i) { #changed
+		    if ($line =~ m/(Expect\s\=.*[0-9].*e.*[0-9])/i) { 
 			$EValue = $1; #Store e-value score info in summary file
 			$Gene_Hit_Summary = $Gene_Hit_Summary." ".$EValue.", ";
 		    }
-		    if ($gene_chunk =~ m/(Identities\s\=.*?\,)/i) { #chanhed
+		    if ($line =~ m/(Identities\s\=.*?\,)/i) { 
 			$Identity = $1; #Store Identity score in summary file
 			$Gene_Hit_Summary = $Gene_Hit_Summary.$Identity;
 		    }
-		    if ($gene_chunk =~ m/(Gaps\s\=.*?\))/i) { #changed
+		    if ($line =~ m/(Gaps\s\=.*?\))/i) {
 			$Gaps = $1; #Store Gap info in summary file
 			$Gene_Hit_Summary = $Gene_Hit_Summary." ".$Gaps.", ";
 		    }
-		    if ($gene_chunk =~ m/(Strand\=.*\/.*?\n)/i) { #changed $line to $gene_chunk
+		    if ($line =~ m/(Strand\=.*\/.*?\n)/i) { 
 			$Strand = $1; #Store strand info in summary file
 			$Strand =~ s/\n//;
 			$Gene_Hit_Summary = $Gene_Hit_Summary.$Strand;
