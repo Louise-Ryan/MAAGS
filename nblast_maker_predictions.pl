@@ -195,6 +195,7 @@ foreach my $GENOME(@genome_array) {
 	my $out = $genome_acession."_nblast.out";
 	my $makeblastdb_cmd ="makeblastdb -in $GENOME -dbtype nucl -parse_seqids -out $db";
 	my $blastn_cmd ="blastn -db $db -query $Query -out $out";
+	print "-----------------------------------------------------------------------------------------------------";
 	print "\n".$makeblastdb_cmd."\n";
 	system("$makeblastdb_cmd");
 	print "\n".$blastn_cmd."\n";
