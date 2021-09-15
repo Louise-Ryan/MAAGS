@@ -346,7 +346,7 @@ foreach my $GENOME(@genome_array) {
 	open my $FILE2, ">", $Gene_Seq_File or die("Can't open file. $!");
 	print $FILE2 $GENE_HIT;
 	close $FILE2;
-	my $GenDIR= $genome_acession."_Blast_Files";
+	my $GenDIR= $genome_acession."_Alternative_Reference_Blast_Files";
 	system("mkdir $GenDIR");
 	system("mv *_File.txt *nhr *nin *nog *nsd *nsi *nsq *out $GenDIR");
     }
