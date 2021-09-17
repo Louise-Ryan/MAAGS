@@ -23,7 +23,7 @@ my $SPECIES;
 my $GENOME;
 
 foreach my $file(@file_array) {
-    print "\nRenaming headers for ".$file."....\n";
+    print "Renaming headers for ".$file."....\n";
     if ($file =~ m/.*(GC.*?_.*?\.\d).*/i) {
 	$GENOME = $1;
 	#print $GENOME."\n";
@@ -84,6 +84,6 @@ foreach my $file(@file_array) {
     print $NEWFILE $outfile;
     close $NEWFILE;
 }
-print "Done! Files overwritten with new headers!\n";
+print "\nDone! Files overwritten with new headers!\n\n";
 
 exit;
