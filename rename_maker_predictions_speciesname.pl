@@ -69,12 +69,12 @@ foreach my $file(@file_array) {
 	   $GENE=$1;
 	   print $GENE."\n";
        }
+       if ($head =~ m/.*?\s(.*?\))/i) {
+	   $PREDICTION = $1;
+	   print $PREDICTION."\n";
+       }
     }
 }
-        #}
-	#if ($head =~ m/.*?\s(.*?\))/i) {
-         #   $PREDICTION = $1;
-        #}
         #if ($Head1 =~ m/\>.*/i){
          #   $newheader = $ANNOTATION."_".$SPECIES."_".$GENE." ".$PREDICTION."\n";
           #  $outfile=$outfile.$newheader.$seq;
