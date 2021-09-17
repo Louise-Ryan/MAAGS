@@ -11,7 +11,7 @@ open(IN, $Genome2Species);
 }
 my @ARRAY = split("\n", $LIST);
 foreach my $f(@ARRAY) {
-    print $f;
+    print "\n".$f;
 }
 
 
