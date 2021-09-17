@@ -25,10 +25,12 @@ foreach my $file(@file_array) {
 	my $GENOME = $1;
 	print $GENOME."\n";
     }
+    foreach my $line(@ARRAY) {
+	($genome, $species) = split("\t", $line);
+	print "\nThis is Genome: ".$genome."\n";
+	pint "This is Species: ".$species."\n";
+    }
 }
-
-#    foreach my $line(@ARRAY) {
-#	($genome, $species) = split("\t", $line);
 #	if ($genome eq $GENOME) {
 #	    $SPECIES = $species;
 #	}
