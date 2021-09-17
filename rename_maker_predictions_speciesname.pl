@@ -21,7 +21,7 @@ foreach my $f(@ARRAY) {
 #my $SPECIES;
 
 foreach my $file(@file_array) {
-    if ($file =~ m/(GC.*?_.*)?_/) {
+    if ($file =~ m/.*(GC.*?_.*?\.\d).*/i) {
 	my $GENOME = $1;
 	print $GENOME."\n";
     }
