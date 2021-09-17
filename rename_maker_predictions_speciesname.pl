@@ -12,21 +12,21 @@ open(IN, $Genome2Species);
 my @ARRAY = split("\n", $LIST);
 chomp @ARRAY;
 foreach my $f(@ARRAY) {
-    print "\n".$f;
+    print $f."\n";
 }
 
-
-
-#my $outfile;                                                                                                                   
 
 #Declare variables
 #my ($genome, $species);
 #my $SPECIES;
 
-#foreach my $file(@file_array) {
-#    if ($file =~ m/(GC.*?_.*)?_Gene/i) {
-#	my $GENOME = $1;
-#    }
+foreach my $file(@file_array) {
+    if ($file =~ m/(GC.*?_.*)?_/) {
+	my $GENOME = $1;
+	print $GENOME."\n";
+    }
+}
+
 #    foreach my $line(@ARRAY) {
 #	($genome, $species) = split("\t", $line);
 #	if ($genome eq $GENOME) {
