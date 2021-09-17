@@ -65,7 +65,7 @@ foreach my $file(@file_array) {
           chop($Genome_ID);
 	  print $Genome_ID."\n";
        }
-       if ($head =~ m/.*(Gene.*)\s\(/i {
+       if ($head =~ m/.*(Gene.*)\s\(/i) {
 	   $GENE=$1;
 	   print $GENE."\n";
        }
