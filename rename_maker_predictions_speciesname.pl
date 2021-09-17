@@ -22,6 +22,8 @@ chomp @ARRAY;
 my $SPECIES;
 my $GENOME;
 
+print "\n";
+
 foreach my $file(@file_array) {
     print "Renaming headers for ".$file."....\n";
     if ($file =~ m/.*(GC.*?_.*?\.\d).*/i) {
