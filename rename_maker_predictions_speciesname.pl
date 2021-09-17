@@ -10,6 +10,7 @@ open(IN, $Genome2Species);
     $LIST = <IN>;
 }
 my @ARRAY = split("\n", $LIST);
+chomp @ARRAY;
 foreach my $f(@ARRAY) {
     print "\n".$f;
 }
