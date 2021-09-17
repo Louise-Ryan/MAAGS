@@ -27,14 +27,13 @@ foreach my $file(@file_array) {
     }
     foreach my $line(@ARRAY) {
 	($genome, $species) = split("\t", $line);
-	print "\nThis is Genome: ".$genome."\n";
-	print "This is Species: ".$species."\n";
+	if ($genome eq $GENOME) {
+	    print $genome." is equal to ".$GENOME;
+	    $SPECIES = $species;
+	    print "This is the species: ".$SPECIES."\n";
+	}
     }
 }
-#	if ($genome eq $GENOME) {
-#	    $SPECIES = $species;
-#	}
- #   }
   #  open(IN, $file);
    # {
     #    local $/; #changes delimiter to nothing. Allows entire file to be read in as one chun
