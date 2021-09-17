@@ -19,10 +19,11 @@ foreach my $f(@ARRAY) {
 #Declare variables
 #my ($genome, $species);
 #my $SPECIES;
+my $GENOME;
 
 foreach my $file(@file_array) {
     if ($file =~ m/.*(GC.*?_.*?\.\d).*/i) {
-	my $GENOME = $1;
+	$GENOME = $1;
 	print $GENOME."\n";
     }
     foreach my $line(@ARRAY) {
