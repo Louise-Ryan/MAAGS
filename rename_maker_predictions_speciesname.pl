@@ -18,7 +18,7 @@ foreach my $f(@ARRAY) {
 
 #Declare variables
 #my ($genome, $species);
-#my $SPECIES;
+my $SPECIES;
 my $GENOME;
 
 foreach my $file(@file_array) {
@@ -31,34 +31,36 @@ foreach my $file(@file_array) {
 	if ($genome =~ m/$GENOME/i) {
 	    print $genome." is equal to ".$GENOME;
 	    $SPECIES = $species;
-	    print "This is the species: ".$SPECIES."\n";
+	    print " ....This is the species: ".$SPECIES."\n";
 	}
     }
+    open(IN, $file);
+    {
+        local $/; #changes delimiter to nothing. Allows entire file to be read in as one chun
+	$GENES = <IN>; #Stores contents of BLAST file into a scalor
+    }
+    close IN;
+    my $outfile ="";
+    my $newheader="";
+    my $head="";
+    my $seq="";
+    my $GENE="";
+    my $ANNOTATION="";
+    my $PREDICTION="";
+    @GENES=[];
+    @GENES=split(/\>/,$GENES);
+    foreach $gene(@GENES) {
+       if($gene=~m/(.*)\n([A-Za-z\s\n\-]+)/){
+          $head=">".$1."\n";
+          $seq=$2;
+       }
+       if ($head =~ m/(\>.*?_)/i) {
+           $ANNOTATION = $1;
+           chop($ANNOTATION);
+	   print $ANNOTATION;
+       }
+    }
 }
-  #  open(IN, $file);
-   # {
-    #    local $/; #changes delimiter to nothing. Allows entire file to be read in as one chun
-     #   $GENES = <IN>; #Stores contents of BLAST file into a scalor                                                             #
-    #}
-    #close IN;
-    #my $outfile ="";
-   #my $newheader="";
-    #my $head="";
-    #my $seq="";
-    #my $GENE="";
-    #my $ANNOTATION="";
-    #my $PREDICTION="";
-    #@GENES=[];
-    #@GENES=split(/\>/,$GENES);
-    #foreach $gene(@GENES) {
-     #   if($gene=~m/(.*)\n([A-Za-z\s\n\-]+)/){
-      #      $head=">".$1."\n";
-       #     $seq=$2;
-       # }
-       # if ($head =~ m/(\>.*?_)/i) {
-        #    $ANNOTATION = $1;
-         #   chop($ANNOTATION);
-        #}
         #if ($head =~ m/(GC.*?\_.*?\_)/i){
          #   $Genome = $1;
           #  chop($Genome);
