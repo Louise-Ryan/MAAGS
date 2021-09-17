@@ -65,10 +65,12 @@ foreach my $file(@file_array) {
           chop($Genome_ID);
 	  print $Genome_ID."\n";
        }
+       if ($head =~ m/.*(Gene.*)?\s/) {
+	   $GENE=$1;
+	   print $GENE."\n";
+       }
     }
 }
-        #if ($head =~ m/.*(Gene.*)?\s/) {
-         #   $GENE=$1;
         #}
 	#if ($head =~ m/.*?\s(.*?\))/i) {
          #   $PREDICTION = $1;
