@@ -27,7 +27,7 @@ foreach my $file(@file_array) {
     }
     foreach my $line(@ARRAY) {
 	($genome, $species) = split("\t", $line);
-	if ($genome eq $GENOME) {
+	if ($genome =~ m/$GENOME/i) {
 	    print $genome." is equal to ".$GENOME;
 	    $SPECIES = $species;
 	    print "This is the species: ".$SPECIES."\n";
