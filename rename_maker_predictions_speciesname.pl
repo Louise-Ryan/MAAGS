@@ -1,9 +1,13 @@
-#!/usr/bin/perl                                                                                                                 
+#!/usr/bin/perl
+
+my $ARGV[0] = $Genome2Species; #This is the text file with the genome and species information. Format of text file is: Genome\tGenus_Species
+
+#my $Genome2Species = "Genome2Species.txt";
 
 my $fasta_file_extension = "fasta";
 my @file_array = (<*$fasta_file_extension>);
 
-my $Genome2Species = "Genome2Species.txt";
+
 open(IN, $Genome2Species);
 {
     local $/;
@@ -11,9 +15,6 @@ open(IN, $Genome2Species);
 }
 my @ARRAY = split("\n", $LIST);
 chomp @ARRAY;
-foreach my $f(@ARRAY) {
-    print $f."\n";
-}
 
 
 #Declare variables
@@ -22,16 +23,17 @@ my $SPECIES;
 my $GENOME;
 
 foreach my $file(@file_array) {
+    print "\nRenaming headers for ".$file."....";
     if ($file =~ m/.*(GC.*?_.*?\.\d).*/i) {
 	$GENOME = $1;
-	print $GENOME."\n";
+	#print $GENOME."\n";
     }
     foreach my $line(@ARRAY) {
 	($genome, $species) = split("\t", $line);
 	if ($genome =~ m/$GENOME/i) {
-	    print $genome." is equal to ".$GENOME;
+	    #print $genome." is equal to ".$GENOME;
 	    $SPECIES = $species;
-	    print " ....This is the species: ".$SPECIES."\n";
+	    #print " ....This is the species: ".$SPECIES."\n";
 	}
     }
     open(IN, $file);
@@ -58,20 +60,20 @@ foreach my $file(@file_array) {
        if ($head =~ m/(\>.*?_)/i) {
            $ANNOTATION = $1;
            chop($ANNOTATION);
-	   print $ANNOTATION."\n";
+	  # print $ANNOTATION."\n";
        }
        if ($head =~ m/(GC.*?\_.*?\_)/i){
           $Genome_ID = $1;
           chop($Genome_ID);
-	  print $Genome_ID."\n";
+	  #print $Genome_ID."\n";
        }
        if ($head =~ m/.*(Gene.*)\s\(/i) {
 	   $GENE=$1;
-	   print $GENE."\n";
+	   #print $GENE."\n";
        }
        if ($head =~ m/.*?\s(.*?\))/i) {
 	   $PREDICTION = $1;
-	   print $PREDICTION."\n";
+	  # print $PREDICTION."\n";
        }
        if ($head =~ m/\>.*/i){
           $newheader = $ANNOTATION."_".$SPECIES."_".$GENE." ".$Genome_ID." ".$PREDICTION."\n";
