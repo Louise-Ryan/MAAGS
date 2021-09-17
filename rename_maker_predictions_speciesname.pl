@@ -74,7 +74,7 @@ foreach my $file(@file_array) {
 	   print $PREDICTION."\n";
        }
        if ($head =~ m/\>.*/i){
-          $newheader = $ANNOTATION."_".$SPECIES."_".$GENE." ".$PREDICTION."\n";
+          $newheader = $ANNOTATION."_".$SPECIES."_".$GENE." ".$Genome_ID." ".$PREDICTION."\n";
 	  $outfile=$outfile.$newheader.$seq;
         }
     }
