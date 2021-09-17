@@ -73,16 +73,14 @@ foreach my $file(@file_array) {
 	   $PREDICTION = $1;
 	   print $PREDICTION."\n";
        }
+       if ($head =~ m/\>.*/i){
+          $newheader = $ANNOTATION."_".$SPECIES."_".$GENE." ".$PREDICTION."\n";
+	  $outfile=$outfile.$newheader.$seq;
+        }
     }
+    open my $NEWFILE, ">", $file or die("Can't open file. $!");
+    print $NEWFILE $outfile;
+    close $NEWFILE;
 }
-        #if ($Head1 =~ m/\>.*/i){
-         #   $newheader = $ANNOTATION."_".$SPECIES."_".$GENE." ".$PREDICTION."\n";
-          #  $outfile=$outfile.$newheader.$seq;
-        #}
-    #}
-    #open my $NEWFILE, ">", $file or die("Can't open file. $!");
-    #print $NEWFILE $outfile;
-    #close $NEWFILE;
-#}
 
-#exit;
+exit;
