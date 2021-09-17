@@ -28,7 +28,7 @@ foreach my $file(@file_array) {
     foreach my $line(@ARRAY) {
 	($genome, $species) = split("\t", $line);
 	print "\nThis is Genome: ".$genome."\n";
-	pint "This is Species: ".$species."\n";
+	print "This is Species: ".$species."\n";
     }
 }
 #	if ($genome eq $GENOME) {
