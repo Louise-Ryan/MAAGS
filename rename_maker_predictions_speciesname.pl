@@ -47,6 +47,7 @@ foreach my $file(@file_array) {
     my $GENE="";
     my $ANNOTATION="";
     my $PREDICTION="";
+    my $Genome_ID;
     @GENES=[];
     @GENES=split(/\>/,$GENES);
     foreach $gene(@GENES) {
@@ -57,14 +58,15 @@ foreach my $file(@file_array) {
        if ($head =~ m/(\>.*?_)/i) {
            $ANNOTATION = $1;
            chop($ANNOTATION);
-	   print $ANNOTATION;
+	   print $ANNOTATION."\n";
+       }
+       if ($head =~ m/(GC.*?\_.*?\_)/i){
+          $Genome_ID = $1;
+          chop($Genome_ID);
+	  print $Genome_ID."\n";
        }
     }
 }
-        #if ($head =~ m/(GC.*?\_.*?\_)/i){
-         #   $Genome = $1;
-          #  chop($Genome);
-        #}
         #if ($head =~ m/.*(Gene.*)?\s/) {
          #   $GENE=$1;
         #}
