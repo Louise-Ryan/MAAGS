@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-my $ARGV[0] = $Genome2Species; #This is the text file with the genome and species information. Format of text file is: Genome\tGenus_Species
+my $Genome2Species = $ARGV[0]; #This is the text file with the genome and species information. Format of text file is: Genome\tGenus_Species
 
 #my $Genome2Species = "Genome2Species.txt";
 
