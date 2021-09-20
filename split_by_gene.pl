@@ -25,7 +25,7 @@ foreach my $file (@FILES) {
 	    my $GENE_NAME = $1;
 	    my $GENEFILE = $GENE_NAME."Gene_Seq_File.fa";
 	    my $GENE_STORE = $head.$seq;
-	    open my $FILE, ">", $GENEFILE or die("Can't open file. $!");
+	    open my $FILE, ">>", $GENEFILE or die("Can't open file. $!");
 	    print $FILE $GENE_STORE;
 	    close $FILE;
 	}
