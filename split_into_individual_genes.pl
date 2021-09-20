@@ -21,7 +21,7 @@ foreach my $file (@FILES) {
 	    $head=">".$1."\n";
 	    $seq=$2;
 	}
-	if ($head =~ m/\>(.*)?\_/i) {
+	if ($head =~ m/\>(.*)?_/i) {
 	    my $GENE_NAME = $1;
 	    my $GENEFILE = $GENE_NAME."_Gene_Seq_File.fa";
 	    my $GENE_STORE = $head.$seq;
