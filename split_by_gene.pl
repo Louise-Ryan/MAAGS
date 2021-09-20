@@ -4,7 +4,10 @@ my $file_extension = $ARGV[0];
 chomp $ARGV[0];
 my @FILES = (<*$file_extension>);
 
-foreach my $file (@files) {
+print "\n";
+
+foreach my $file (@FILES) {
+    print "Splitting ".$file." by genes....\n";
     open (IN, $file);
      {
 	local $/; #changes delimiter to nothing. Allows entire file to be read in as one chun
