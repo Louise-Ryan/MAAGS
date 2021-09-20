@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
 my $file_extension = $ARGV[0];
-my @FILES = <*$file_extension>;
+chomp $ARGV[0];
+my @FILES = (<*$file_extension>);
 
 foreach my $file (@files) {
     open (IN, $file);
