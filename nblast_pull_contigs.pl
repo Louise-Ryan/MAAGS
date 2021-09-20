@@ -103,23 +103,23 @@ foreach my $GENOME(@genome_array) {
 			}
 			$Contig =~ s/split//;
 			$Contig_Hit_Summary = $Contig_Hit_Summary.$Contig.", "; #Store contig identifier in summary file
-			if ($line =~ m/(Score\s\=.*?\,)/i) {
+			if ($contig_chunk =~ m/(Score\s\=.*?\,)/i) {
 			    $Score = $1; #Store score (bits) info in summary file
 			    $Contig_Hit_Summary = $Contig_Hit_Summary.$Score;
 			}
-			if ($line =~ m/(Expect\s\=.*[0-9].*e.*[0-9])/i) {
+			if ($contig_chunk =~ m/(Expect\s\=.*[0-9].*e.*[0-9])/i) {
 			    $EValue = $1; #Store e-value score info in summary file
 			    $Contig_Hit_Summary = $Contig_Hit_Summary." ".$EValue.", ";
 			}
-			if ($line =~ m/(Identities\s\=.*?\,)/i) {
+			if ($contig_chunk =~ m/(Identities\s\=.*?\,)/i) {
 			    $Identity = $1; #Store Identity score in summary file
 			    $Contig_Hit_Summary = $Contig_Hit_Summary.$Identity;
 			}
-			if ($line =~ m/(Gaps\s\=.*?\))/i) {
+			if ($contig_chunk =~ m/(Gaps\s\=.*?\))/i) {
 			$Gaps = $1; #Store Gap info in summary file
 			$Contig_Hit_Summary = $Contig_Hit_Summary." ".$Gaps.", ";
 			}
-			if ($line =~ m/(Strand\=.*\/.*?\n)/i) {
+			if ($contig_chunk =~ m/(Strand\=.*\/.*?\n)/i) {
 			    $Strand = $1; #Store strand info in summary file
 			    $Strand =~ s/\n//;
 			    $Contig_Hit_Summary = $Contig_Hit_Summary.$Strand;
