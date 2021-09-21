@@ -1,6 +1,9 @@
 #!/usr/bin/perl
 
-my $maker_pred_dir = "/home/people/16386986/scratch/MAAGS_Vocalisation_Chemosensation/Genbank_VomVoc_annotation/Primate_Assemblies_03_Aug_21_GenBank_Rep_Genomes/Maker_predictions/";
+my $maker_pred_dir = $ARGV[0];
+chomp $maker_pred_dir;
+#my $maker_pred_dir = "/home/people/16386986/scratch/MAAGS_Vocalisation_Chemosensation/Genbank_VomVoc_annotation/Primate_Assemblies_03_Aug_21_GenBank_Rep_Genomes/Maker_predictions/";
+#my $maker_pred_dir = "/home/people/16386986/scratch/MAAGS_Vocalisation_Chemosensation/RefSeq_VomVoc_maker/Maker_Predictions/";
 
 my $file_extension = "master_datastore_index.log";
 my @logfile_array = (<*$file_extension>);
