@@ -34,21 +34,25 @@ foreach my $file(@file_array) {
 	   $head=">".$1."\n";
 	   $seq=$2;
 	}
+	my $Head1 = "";
 	if ($head =~ m/(\>.*?\s)/i) {
 	    $Head1 = $1;
 	    chop($Head1);
 #	    print $Head1."\n";
 	}
+	my $Genome= "";
 	if ($head =~ m/(GC.*?\_.*?\_)/i){
 	    $Genome = $1;
 	    chop($Genome);
 #	    print $Genome."\n";
 	}
+	my $LOC = "";
 	if ($head =~ m/(LOC.*?\])/) {
 	    $LOC = "_".$1;
 	    chop ($LOC);
 #	    print $LOC."\n";
 	}
+	my $Gene_ID = "";
 	if ($head =~ m/.*Macaca_fascicularis.*/i) { #Macaca Fas has no LOC IDs
 	    if ($head =~ m/(GENEID:.*?\])/i) {
 		$Gene_ID = "_".$1;
@@ -58,6 +62,7 @@ foreach my $file(@file_array) {
 	if ($head !~ m/.*Macaca_fascicularis.*/i) {
 	    $Gene_ID = "";
 	}
+	my $prot_desc = "";
 	if ($head =~ m/protein\=(.*?\])/i) {
 	    $prot_desc = $1;
 	    chop ($prot_desc);
