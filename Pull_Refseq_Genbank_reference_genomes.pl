@@ -93,6 +93,7 @@ foreach my $target(@target_species_array){
 			my $file =$1."_genomic.fna.gz"; #Append file extension
 			my $final_link = $link."/".$file; #Append file extension and link to ftp link
 			system("wget $final_link"); #wget link to download the genome
+			sleep(4);
 		    }
 		}
 	    }
@@ -277,6 +278,7 @@ foreach my $target2(@target_genbank_species_array){
 				my $file2 =$1. "_genomic.fna.gz"; #Append genome file extension
 				my $final_link2 = $link2."/".$file2; #Append genome file link to ftp link
 				system("wget $final_link2"); #wget link to download the genome
+				sleep(4);
 			    }
 			}
 		    }
@@ -457,6 +459,7 @@ foreach my $target3(@genbank_na_array){  #Loop over each element, $target, in @a
 				my $file3 =$1. "_genomic.fna.gz"; #Genome file extension
 				my $final_link3 = $link3."/".$file3; #Append genome file extension and link to FTP link
 				system("wget $final_link3"); #wget link to download the genome
+				sleep(4);
 			    } 
 		       	}
 		    }
