@@ -1,7 +1,7 @@
 my @alignments=(<*NT>);
 my $alt_ctlfile="alt_codeml_.ctl";
 my $null_ctlfile="null_codeml_.ctl";
-my $tree_file = (<*treefile>);
+my $tree_file = (<*tre>);
 
 my $outfile;
 
