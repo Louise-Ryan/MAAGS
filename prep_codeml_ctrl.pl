@@ -6,6 +6,8 @@ my $tree_file = (<*tre>);
 my $outfile;
 
 foreach $aln(@alignments){
+    system("rename_headers_species_only.pl $aln");
+    system("fasta2phy.pl $aln");
     my $gene = "";
     if ($aln =~ m/(.*?\_).*/i) {
         $gene = $1;

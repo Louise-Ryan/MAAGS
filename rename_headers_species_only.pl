@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-my $fasta_file_extension = "fa";
+my $fasta_file_extension = $ARGV[0];
 my @file_array = (<*$fasta_file_extension>);
 
 #my $outfile;
