@@ -1,8 +1,18 @@
-my @alignments=(<*NT>);
-my $alt_ctlfile="alt_codeml_.ctl";
-my $null_ctlfile="null_codeml_.ctl";
-my $tree_file = (<*tre>);
+#!/usr/bin/perl
 
+#my @alignments=(<*NT>); If you want to iterate this over many in one dir, uncomment this and comment next line
+#my $alt_ctlfile="alt_codeml_.ctl";
+#my $null_ctlfile="null_codeml_.ctl";
+#my $tree_file = (<*tre>);
+
+#Uncomment above if running in directory for more simple script
+
+#Below is for running remote
+use Cwd qw(cwd);
+my $wd = cwd;
+my $gene= $ARGV[0]; #This will let me to include a file path to the file
+my $aln_path = $wd."/".$gene."/\*NT"
+my @alignments = (<$aln_path>);
 my $outfile;
 
 foreach $aln(@alignments){
