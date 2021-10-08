@@ -11,7 +11,7 @@
 use Cwd qw(cwd);
 my $wd = cwd;
 my $gene= $ARGV[0]; #This will let me to include a file path to the file
-my $aln_path = $wd."/".$gene."/\*NT"
+my $aln_path = $wd."/".$gene."/\*NT";
 my @alignments = (<$aln_path>);
 my $outfile;
 
