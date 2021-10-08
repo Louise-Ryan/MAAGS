@@ -1,15 +1,27 @@
 #!/usr/bin/perl
 
-my @alignments=(<*NT>);
-my $alt_ctlfile="alt_codeml_.ctl";
-my $null_ctlfile="null_codeml_.ctl";
-my $tree_file = (<*tre>);
+#my @alignments=(<*NT>); If you want to iterate this over many in one dir, uncomment this and comment next line
+#my $alt_ctlfile="alt_codeml_.ctl";
+#my $null_ctlfile="null_codeml_.ctl";
+#my $tree_file = (<*tre>);
 
+#Uncomment above if running in directory for more simple script
+
+#Below is for running remote
+use Cwd qw(cwd);
+my $wd = cwd;
+my $gene= $ARGV[0]; #This will let me to include a file path to the file
+my $genepath = $wd."\/".$gene."\/";
+my $aln_path = $genepath."\*NT"; 
+my @alignments = (<$aln_path>);
 my $outfile;
+my $alt_ctlfile = $genepath."alt_codeml_.ctl";
+my $null_ctlfile = $genepath."null_codeml_.ctl";
 
 foreach $aln(@alignments){
-    system("rename_headers_species_only.pl $aln");
-    system("fasta2phy.pl $aln");
+    my $alnPATH = $genepath.$aln;
+    system("rename_headers_species_only.pl $alnPATH");
+    system("fasta2phy.pl $alnPATH");
     my $gene = "";
     if ($aln =~ m/(.*?\_).*/i) {
         $gene = $1;
@@ -23,7 +35,7 @@ foreach $aln(@alignments){
 	if ($line =~ m/(seqfile.*)(\*.*)/i){
 	    my $modline = $1;
 	    my $starline = $2;
-	    $modline = $modline.$aln.".phy ".$starline."\n";
+	    $modline = $modline.$alnPATH.".phy ".$starline."\n";
 	    $outfile = $outfile.$modline;
 	}
 	elsif ($line =~ m/(outfile.*)(\*.*)/i) {
@@ -32,13 +44,13 @@ foreach $aln(@alignments){
 	    my $out = $aln;
             $out =~ s/_NT//i;
             $out = $out.".M8.out";
-            $modline = $modline.$out." ".$starline."\n";
+            $modline = $modline.$genepath.$out." ".$starline."\n";
             $outfile = $outfile.$modline;
 	}
 	elsif ($line =~ m/(treefile.*)(\*.*)/i){
 	    my $modline = $1;
 	    my $starline = $2;
-	    $modline = $modline.$tree_file." ".$starline."\n";
+	    $modline = $modline.$genepath.$tree_file." ".$starline."\n";
 	    $outfile = $outfile.$modline;
 	}
 	else {
@@ -58,7 +70,7 @@ foreach $aln(@alignments){
         if ($line =~ m/(seqfile.*)(\*.*)/i){
             my $modline = $1;
             my $starline = $2;
-            $modline = $modline.$aln." ".$starline."\n";
+            $modline = $modline.$alnPATH." ".$starline."\n";
             $outfile = $outfile.$modline;
         }
         elsif ($line =~ m/(outfile.*)(\*.*)/i) {
@@ -67,13 +79,13 @@ foreach $aln(@alignments){
             my $out = $aln;
             $out =~ s/_NT//i;
             $out = $out.".M7.out";
-            $modline = $modline.$out." ".$starline."\n";
+            $modline = $modline.$genepath.$out." ".$starline."\n";
             $outfile = $outfile.$modline;
         }
         elsif ($line =~ m/(treefile.*)(\*.*)/i){
             my $modline = $1;
             my $starline = $2;
-            $modline = $modline.$tree_file." ".$starline."\n";
+            $modline = $modline.$genepath.$tree_file." ".$starline."\n";
             $outfile = $outfile.$modline;
         }
         else {
