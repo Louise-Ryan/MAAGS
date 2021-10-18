@@ -9,6 +9,9 @@ my $outfile;
 
 foreach $aln(@alignments){
     system("rename_headers_species_only.pl $aln");
+    system("java -jar macse_v2.05.jar -prog exportAlignment -align $aln -codonForFinalStop --- -codonForInternalStop NNN");
+    my $newaln = $aln."_NT";
+    system("mv $newaln $aln");
     system("fasta2phy.pl $aln");
     my $gene = "";
     if ($aln =~ m/(.*?\_).*/i) {
@@ -50,6 +53,7 @@ foreach $aln(@alignments){
 	open my $FILE, ">", $alt_out_ctl or die("Can't open file. $!");
 	print $FILE $outfile;
 	close $FILE;
+	#system("codeml $alt_out_ctl");
     }
     my $outfile ="";
     open(IN2, $null_ctlfile);
@@ -85,5 +89,8 @@ foreach $aln(@alignments){
         open my $FILE2, ">", $null_out_ctl or die("Can't open file. $!");
         print $FILE2 $outfile;
         close $FILE2;
-    }
+	#system("codeml $null_out_ctl");
+    } # Run CodeML
+    #system("codeml $alt_out_ctl");
+    #system("codeml $null_out_ctl");
 }
