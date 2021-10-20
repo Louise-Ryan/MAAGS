@@ -11,14 +11,17 @@ open(IN2, $file2);
 @array2 = <IN2>;
 close IN2;
 
-my $store;
-foreach my $element(@array1) {
-    $store = $store.$element."_";
-}
-print $store."\n";
+$array2 = join('', @array2);
 
-foreach my $entry(@array2) {
-    if ($store !~ m/.*$entry.*/i) {
+
+#my $store;
+#foreach my $element(@array1) {
+ #   $store = $store.$element."_";
+#}
+#print $store."\n";
+
+foreach my $entry(@array1) {
+    if ($array2 !~ m/.*$entry.*/i) {
 	print $entry;
     }
 }
