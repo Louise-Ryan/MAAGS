@@ -23,7 +23,7 @@ print $array2;
 #print $store."\n";
 
 foreach my $entry(@array1) {
-    print $entry;
+    $entry =~ s/\n//g;
     if ($array2 =~ m/.*\|$entry\|.*/i){
 	print ."\n\n".$entry;
     }
