@@ -12,7 +12,7 @@ open(IN2, $file2);
 close IN2;
 
 $array2 = join('', @array2);
-
+print $array2."\n";
 
 #my $store;
 #foreach my $element(@array1) {
