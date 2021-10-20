@@ -14,6 +14,7 @@ close IN2;
 $array2 = join('|', @array2);
 $array2 =~ s/\n//g;
 print $array2."\n";
+$array2 = "|".$array2;
 
 #my $store;
 #foreach my $element(@array1) {
@@ -22,7 +23,7 @@ print $array2."\n";
 #print $store."\n";
 
 foreach my $entry(@array1) {
-    if ($array2 !~ m/.*$entry.*/i) {
+    if ($array2 =~ m/.*\|*$entry\|.*/i){
 	print $entry;
     }
 }
