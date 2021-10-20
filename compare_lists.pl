@@ -10,6 +10,7 @@ my $store;
 foreach my $element(@array1) {
     $store = $store.$element."_";
 }
+print $store."\n";
 
 foreach my $entry(@array1) {
     if ($store !~ m/.*$entry.*/i) {
