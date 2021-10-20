@@ -14,7 +14,7 @@ close IN2;
 $array2 = join('|', @array2);
 $array2 =~ s/\n//g;
 $array2 = "|".$array2."|";
-print $array2;
+#print $array2;
 
 #my $store;
 #foreach my $element(@array1) {
@@ -24,6 +24,7 @@ print $array2;
 
 foreach my $entry(@array1) {
     $entry =~ s/\n//g;
+    print $entry;
     if ($array2 =~ m/.*\|$entry\|.*/i){
 	print ."\n\n".$entry;
     }
