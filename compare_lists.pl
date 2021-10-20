@@ -11,7 +11,7 @@ open(IN2, $file2);
 @array2 = <IN2>;
 close IN2;
 
-$array2 = join('', @array2);
+$array2 = join('|', @array2);
 $array2 =~ s/\n//g;
 print $array2."\n";
 
