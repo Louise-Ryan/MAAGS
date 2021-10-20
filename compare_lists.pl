@@ -29,7 +29,7 @@ foreach my $entry(@array1) {
     if ($array2 !~ m/$entry/i){
 	print "\n\n".$entry."neq";
     }elsif ($array2 =~ m/$entry/i) {
-	print "\n\n".$entry."eq";
+#	print "\n\n".$entry."eq";
     }else{
 	print "\nwtf is going on?\n";
     }
