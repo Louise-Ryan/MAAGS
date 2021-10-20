@@ -32,6 +32,7 @@ foreach my $entry(@array1) {
 	print "\n\n".$entry."eq";
     }else{
 	print "\nwtf is going on?\n";
+    }
 }
 
 exit;
