@@ -27,8 +27,11 @@ foreach my $entry(@array1) {
     $entry =~ s/\s//g;
     print $entry;
     if ($array2 !~ m/$entry/i){
-	print ."\n\n".$entry;
-    }
+	print "\n\n".$entry."neq";
+    }elsif ($array2 =~ m/$entry/i) {
+	print "\n\n".$entry."eq";
+    }else{
+	print "\nwtf is going on?\n";
 }
 
 exit;
