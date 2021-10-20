@@ -24,6 +24,8 @@ print $array2;
 
 foreach my $entry(@array1) {
     if ($array2 =~ m/.*\|$entry\|.*/i){
-	print $entry;
+	print ."\n\n".$entry;
     }
 }
+
+exit;
