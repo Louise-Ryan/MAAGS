@@ -26,7 +26,7 @@ foreach my $entry(@array1) {
     $entry =~ s/\n//g;
     $entry =~ s/\s//g;
     print $entry;
-    if ($array2 =~ m/$entry/i){
+    if ($array2 !~ m/$entry/i){
 	print ."\n\n".$entry;
     }
 }
