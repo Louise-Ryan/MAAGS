@@ -1,6 +1,5 @@
 #!/usr/bin/perl
-
-#my $tree = "MyTreeNoBoots.tre";
+#This script will grep species from alignment to txt file, compare this list with full species list (ARGV1) and remove missing species in alignment from the tree (ARGV2).
 
 my @alignments=(<*NT>);
 foreach my $aln(@alignments) {
