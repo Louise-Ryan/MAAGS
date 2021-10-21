@@ -4,9 +4,9 @@
 my @alignments=(<*NT>);
 foreach my $aln(@alignments) {
     system("rename_headers_species_only.pl $aln");
-    my $fasta = "\>";
+    my $grep_cmd = "grep \"\>\" $aln";
     my $out = "Alignment_Species.txt";
-    system("grep $fasta $aln >> $out");
+    system("$grep_cmd >> $out");
     my $sed_cmd = "sed -ie s/\>//g $out";
     ststem("$sed_cmd");
 }
