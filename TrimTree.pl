@@ -7,9 +7,18 @@ foreach my $aln(@alignments) {
     my $grep_cmd = "grep \"\>\" $aln";
     my $out = "Alignment_Species.txt";
     system("$grep_cmd >> $out");
-    my $sed_cmd = "sed -i";
-    my $s_cmd = "s/\>\/\/g";
-    system("$sed_cmd $s_cmd $out");
+    open(INFILE, $out);
+    my $sp = (<INFILE>);
+    close INFILE;
+    $sp =~ s/\>//g;
+    open my $INFILE2, ">", $out or die("Can't open file. $!");
+    print $INFILE2 $sp;
+    close $INFILE2;
+}
+  
+   # my $sed_cmd = "sed -i";
+   # my $s_cmd = "s/\>//g";
+    #system("$sed_cmd $s_cmd $out");
 }
 
 my $file1 = $ARGV[0]; #List to compare to --> i.e RefSeq primate list
