@@ -63,7 +63,7 @@ foreach my $species(@array3){ #Loop through remaining species and remove species
     $species =~ s/\n//g;
     system("Rscript removetip.R $trimtree $species");
     print "$species is not in gene alignment ...\n";
-    print "\nRemoving $species from tree ...\n";
+    print "Removing $species from tree ...\n";
 }
 
 exit;
