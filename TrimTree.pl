@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #This script will grep species from alignment to txt file, compare this list with full species list (ARGV1) and remove missing species in alignment from the tree (ARGV2).
-print "\nScanning alignment ...";
+print "\nScanning alignment ...\n";
     
 $out = "Alignment_Species.txt";
     
@@ -63,7 +63,7 @@ foreach my $species(@array3){ #Loop through remaining species and remove species
     $species =~ s/\n//g;
     system("Rscript removetip.R $trimtree $species");
     print "$species is not in gene alignment ...\n";
-    print "\nRemoving $species from tree ..";
+    print "\nRemoving $species from tree ...\n";
 }
 
 exit;
