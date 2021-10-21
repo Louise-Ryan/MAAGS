@@ -7,33 +7,31 @@ foreach my $aln(@alignments) {
     my $grep_cmd = "grep \"\>\" $aln";
     my $out = "Alignment_Species.txt";
     system("$grep_cmd >> $out");
-    open(INFILE, $out);
-    my $sp = <INFILE>;
-    close INFILE;
-    $sp =~ s/\>//g;
-    open my $INFILE2, ">", $out or die("Can't open file. $!");
-    print $INFILE2 $sp;
-    close $INFILE2;
+    #open(INFILE, $out);
+    #my $sp = <INFILE>;
+    #close INFILE;
+    #$sp =~ s/\>//g;
+    #open my $INFILE2, ">", $out or die("Can't open file. $!");
+    #print $INFILE2 $sp;
+    #close $INFILE2;
 }
-  
-   # my $sed_cmd = "sed -i";
-   # my $s_cmd = "s/\>//g";
-    #system("$sed_cmd $s_cmd $out");
 
 my $file1 = $ARGV[0]; #List to compare to --> i.e RefSeq primate list
 my $tree = $ARGV[1]; #Tree file name
-my $file2 = $out;
+#my $file2 = $out;
 
 open(IN, $file1);
 @array1 = <IN>;
 close IN;
 
-open(IN2, $file2);
+open(IN2, $out);
 @array2 = <IN2>;
 close IN2;
 
 $array2 = join('', @array2);
 $array2 =~ s/\n//g;
+$array2 =~ s/\>//g;
+print "\n\n$array2\n\n";
 
 my $store;
 
@@ -41,7 +39,7 @@ foreach my $entry(@array1) {
     $entry =~ s/\n//g;
     $entry =~ s/\s//g;
     if ($array2 !~ m/$entry/i){
-	print "\n".$entry."is not in gene alignment";
+	print "\n".$entry." is not in gene alignment";
 	$store = $store.$entry."\n";
     }elsif ($array2 =~ m/$entry/i) {
 #	print "\n\n".$entry."eq";
