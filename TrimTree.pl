@@ -66,4 +66,6 @@ foreach my $species(@array3){ #Loop through remaining species and remove species
     print "Removing $species from tree ...\n";
 }
 
+print "\nDone!\n";
+
 exit;
