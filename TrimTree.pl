@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #This script will grep species from alignment to txt file, compare this list with full species list (ARGV1) and remove missing species in alignment from the tree (ARGV2).
-Print "\nScanning alignment ..."
+print "\nScanning alignment ...";
     
 $out = "Alignment_Species.txt";
     
