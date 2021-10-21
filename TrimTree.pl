@@ -8,7 +8,7 @@ foreach my $aln(@alignments) {
     my $out = "Alignment_Species.txt";
     system("$grep_cmd >> $out");
     open(INFILE, $out);
-    my $sp = (<INFILE>);
+    my $sp = <INFILE>;
     close INFILE;
     $sp =~ s/\>//g;
     open my $INFILE2, ">", $out or die("Can't open file. $!");
@@ -19,7 +19,6 @@ foreach my $aln(@alignments) {
    # my $sed_cmd = "sed -i";
    # my $s_cmd = "s/\>//g";
     #system("$sed_cmd $s_cmd $out");
-}
 
 my $file1 = $ARGV[0]; #List to compare to --> i.e RefSeq primate list
 my $tree = $ARGV[1]; #Tree file name
