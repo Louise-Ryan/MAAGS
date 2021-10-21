@@ -1,19 +1,13 @@
 #!/usr/bin/perl
 #This script will grep species from alignment to txt file, compare this list with full species list (ARGV1) and remove missing species in alignment from the tree (ARGV2).
 
+$out = "Alignment_Species.txt";
+    
 my @alignments=(<*NT>);
 foreach my $aln(@alignments) {
     system("rename_headers_species_only.pl $aln");
     my $grep_cmd = "grep \"\>\" $aln";
-    my $out = "Alignment_Species.txt";
     system("$grep_cmd >> $out");
-    #open(INFILE, $out);
-    #my $sp = <INFILE>;
-    #close INFILE;
-    #$sp =~ s/\>//g;
-    #open my $INFILE2, ">", $out or die("Can't open file. $!");
-    #print $INFILE2 $sp;
-    #close $INFILE2;
 }
 
 my $file1 = $ARGV[0]; #List to compare to --> i.e RefSeq primate list
@@ -27,6 +21,10 @@ close IN;
 open(IN2, $out);
 @array2 = <IN2>;
 close IN2;
+
+foreach $e(@array2){
+    print "\n$e\n";
+}
 
 $array2 = join('', @array2);
 $array2 =~ s/\n//g;
