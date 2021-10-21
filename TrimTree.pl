@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 #This script will grep species from alignment to txt file, compare this list with full species list (ARGV1) and remove missing species in alignment from the tree (ARGV2).
-
+Print "\nScanning alignment ..."
+    
 $out = "Alignment_Species.txt";
     
 my @alignments=(<*NT>);
@@ -12,7 +13,6 @@ foreach my $aln(@alignments) {
 
 my $file1 = $ARGV[0]; #List to compare to --> i.e RefSeq primate list
 my $tree = $ARGV[1]; #Tree file name
-#my $file2 = $out;
 
 open(IN, $file1);
 @array1 = <IN>;
@@ -22,14 +22,9 @@ open(IN2, $out);
 @array2 = <IN2>;
 close IN2;
 
-foreach $e(@array2){
-    print "\n$e\n";
-}
-
 $array2 = join('', @array2);
 $array2 =~ s/\n//g;
 $array2 =~ s/\>//g;
-print "\n\n$array2\n\n";
 
 my $store;
 
@@ -37,7 +32,7 @@ foreach my $entry(@array1) {
     $entry =~ s/\n//g;
     $entry =~ s/\s//g;
     if ($array2 !~ m/$entry/i){
-	print "\n".$entry." is not in gene alignment";
+	#print "\n".$entry." is not in gene alignment";
 	$store = $store.$entry."\n";
     }elsif ($array2 =~ m/$entry/i) {
 #	print "\n\n".$entry."eq";
@@ -57,13 +52,18 @@ close IN3;
 
 
 my $first_species = shift @array3; #Run removetip.R on first species to generate the 'trimmed_tree.tre' treefile from R script. 
+$first_species =~ s/\n//g;
 system("Rscript removetip.R $tree $first_species");
-print "\nRemoved $first_species from tree ..";
+print "$first_species is not in gene alignment ...\n";
+print "Removing $first_species from tree ...\n";
+
 my $trimtree = "trimmed_tree.tre";
 
 foreach my $species(@array3){ #Loop through remaining species and remove species from tree sequentially, overwriting tree with each run.
+    $species =~ s/\n//g;
     system("Rscript removetip.R $trimtree $species");
-    print "\nRemoved $species from tree ..";
+    print "$species is not in gene alignment ...\n";
+    print "\nRemoving $species from tree ..";
 }
 
 exit;
