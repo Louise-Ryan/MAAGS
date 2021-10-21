@@ -7,7 +7,8 @@ foreach my $aln(@alignments) {
     my $fasta = ">";
     my $out = "Alignment_Species.txt";
     system("grep $fasta $aln >> $out");
-    ststem("sed -i s/\>//g $out");
+    my $sed_cmd = "sed -ie s/\>//g $out";
+    ststem("$sed_cmd");
 }
 
 my $file1 = $ARGV[0]; #List to compare to --> i.e RefSeq primate list
