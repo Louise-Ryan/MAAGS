@@ -6,7 +6,7 @@ $out = "Alignment_Species.txt";
     
 my @alignments=(<*NT>);
 foreach my $aln(@alignments) {
-    system("rename_headers_species_only.pl $aln");
+#    system("rename_headers_species_only.pl $aln");
     my $grep_cmd = "grep \"\>\" $aln";
     system("$grep_cmd >> $out");
 }
