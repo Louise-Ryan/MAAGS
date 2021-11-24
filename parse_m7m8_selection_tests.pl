@@ -70,3 +70,7 @@ foreach my $gene(@GENES){
 }
 print "\Done:\n";
 print $csv_table;
+my $outfile = "Site_model_selection_test_summary.csv";
+open my $FILE, ">", $outfile or die("Can't open file. $!");
+print $FILE $csv_table;
+close $FILE;
