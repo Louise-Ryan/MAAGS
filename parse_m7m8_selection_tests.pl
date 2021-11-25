@@ -93,6 +93,9 @@ foreach my $gene(@GENES){
 		    my $BEBs = $pos.", ".$AA.", ".$wpvalue.", ".$dnds."\n";
 		    $csv_table = $csv_table.$stats.$BEBs;
 		}
+	    } if ($csv_table !~ m/$gene/g){
+		my $BEBs = "n/a, n/a, n/a, n/a\n";
+		$csv_table = $csv_table.$stats.$BEBs;
 	    }
 	}
     }
