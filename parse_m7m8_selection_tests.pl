@@ -4,7 +4,7 @@ open(IN, "gene_list.txt");
 my @GENES = <IN>;
 close IN;
 
-my $csv_table = $csv_table."Gene, kappaM7, kappaM8, lnLM7, lnLM8, chivalue, pvalue\n";
+my $csv_table = $csv_table."Gene, kappaM7, kappaM8, npM7, npM8, df, lnLM7, lnLM8, chivalue, pvalue, position, aminoacid, pr(w>1), dNdS\n";
 foreach my $gene(@GENES){
     my $kappam7;
     my $kappam8;
@@ -49,22 +49,51 @@ foreach my $gene(@GENES){
 		    print "np: $npm8\n";
 		    $lnLm8 = $2;
 		    print "lNL: $lnLm8\n";
-		}
-		if ($line =~m/.*[0-9]+\s[A-Z]\s/){ #BEB scores position, amino acid, pr(w>1) ..
-		}#BEB SCORES
-		
+		}		
 	    }
-	    my $df = $npm8 - $npm7;
+	    my $df = $npm8 - $npm7; #Degrees of freedom
 	    print "df: $df\n";
-	    my $chivalue = 2*($lnLm8 - $lnLm7);
+	    my $chivalue = 2*($lnLm8 - $lnLm7); #ChiValues
 	    print "Chi: ".$chivalue."\n";
-	    system("Rscript get_chisquare_pvalue.R $chivalue"); #get p-value
+	    system("Rscript get_chisquare_pvalue.R $chivalue"); #get p-value with R script
 	    open(tmp, "tmp_chivalue.txt");
 	    my $pvalue = <tmp>;
+	    close tmp;
+	    system("rm tmp_chivalue.txt");
 	    $pvalue =~ s/\s//g;
 	    $pvalue =~ s/\n//g;
 	    print "pvalue: $pvalue\n";
-	    $csv_table = $csv_table.$gene.", ".$kappam7.", ".$kappam8.", ".$lnLm7.", ".$lnLm8.", ".$chivalue.", ".$pvalue."\n";
+	    my $stats = $gene.", ".$kappam7.", ".$kappam8.", ".$npm7.", ".$npm8.", ".$df.", ".$lnLm7.", ".$lnLm8.", ".$chivalue.", ".$pvalue.", ";
+	    #$csv_table = $csv_table.$gene.", ".$kappam7.", ".$kappam8.", ".$npm7.", ".$npm8.", ".$df.", ".$lnLm7.", ".$lnLm8.", ".$chivalue.", ".$pvalue;
+	    my $M8FILE;
+	    open(M8, $element);
+	    {
+		local $/; #changes delimiter to nothing. Allows entire file to be read in as one chunk
+		$M8FILE = <M8>; #Stores contents of BLAST file into a scalor
+	    }
+	    #print $M8FILE;
+	    my ($rm, $BEBelement);
+	    my ($BEBscores, $rm2);
+	    ($rm, $BEBelement) = split(/Bayes\sEmpirical\sBayes/, $M8FILE, 2); #For BEB score later in script
+	    ($BEBscores, $rm2) = split(/The\sgrid/, $BEBelement, 2); #BEBscores now in $BEBscores
+	    chomp($BEBscores);
+	    chomp($BEBscores);
+	    print $BEBscores;
+	    my $BEBsummary = $gene."_BEB_scores.txt";
+	    open my $OUT, ">", $BEBsummary or die("Can't open file. $!");
+	    print $OUT $BEBscores; #output BEB scores for gene to seperate file
+	    close $OUT;
+	    my @BEB_Array = split("\n",$BEBscores);
+	    foreach my $BEB(@BEB_Array){
+		if ($BEB =~ m/[\s]+([0-9]+)\s([A-Z])[\s]+([0-9]\.[0-9]+[\*]+)[\s]+([0-9]\.[0-9]+\s\+\-\s[0-9]\.[0-9]+)/){
+		    my $pos = $1;
+		    my $AA = $2;
+		    my $wpvalue = $3;
+		    my $dnds = $4;
+		    my $BEBs = $pos.", ".$AA.", ".$wpvalue.", ".$dnds."\n";
+		    $csv_table = $csv_table.$stats.$BEBs;
+		}
+	    }
 	}
     }
 }
