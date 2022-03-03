@@ -4,8 +4,7 @@ foreach my $f(@files){
     if ($f =~ m/(.*?_).*/i) {
 	my $gene = $1;
 	$gene =~ s/\_//;
-	system ("mkdir $gene");
-	system( "mv $f $gene");
-	system ("cp *ctl *tre *pl *sh *jar *list *R *treefile $gene");
+	$tree = $gene."_trimmed_tree.tre";
+	system("mv trimmed_tree.tre $tree");
     }
 }
