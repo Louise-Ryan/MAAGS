@@ -1,5 +1,5 @@
-library(ape)
-library(treeio)
+suppressMessages(library(ape))
+suppressMessages(library(treeio))
 
 subtree_run <- function() {
   args <- commandArgs(trailingOnly = TRUE)
@@ -11,4 +11,4 @@ ape::write.tree(sub_tree, file='subtree_tmp.txt')
   
 }
 
-subtree_run()
+invisible(subtree_run())

@@ -1,0 +1,115 @@
+ABL1, Branchiomotor Neuron Axon Guidance.   
+ADARB1, Hypoglossal Nerve Morphogenesis.   
+ASCL1, Tongue Morphogenesis. Tongue Development.
+AUTS2, Vocalization Behavior. Inate Vocalisation Behaviour.
+BDNF, Tongue Development. 
+BMP4, Tongue Morphogenesis. Tongue Development.
+BNC2, Tongue Development. 
+BRINP1, Vocalization Behavior.   
+CAD, Vegas Nerve Development. Vagus Nerve Morphogenesis. Glossopharyngeal Nerve Morphogenesis. Glossopharyngeal Nerve Development.  
+CAPN1, Branchiomotor Neuron Axon Guidance.   
+CELF6, Vocalization Behavior.   
+CNTNAP2, Vocalization Behavior. Vocal Learning. Learned Vocalization Behavior or Vocal Learning.  
+CREB1, Learned Vocalisation Behaviour. Learned Vocalization Behavior or Vocal Learning.
+CTNNB1, Tongue Morphogenesis. Tongue Development.
+CYP26B1, Tongue Morphogenesis. Tongue Development.
+DCANP1, Vocalization Behavior. Learned Vocalisation Behaviour. Learned Vocalization Behavior or Vocal Learning.  
+DLG4, Vocalization Behavior.   
+EGFR, Tongue Development. 
+ERBB2, Tongue Development. 
+ERBB3, Tongue Development. 
+EXT1, Vocalization Behavior.   
+FGF8, Larynx Morphogenesis. Larynx Morphogenesis. Tongue Morphogenesis. Tongue Development.  
+FOXP1, Vocalization Behavior. Inate Vocalisation Behaviour.
+FOXP2, Vocalization Behavior. Inate Vocalisation Behaviour. Learned Vocalization Behavior. Learned Vocalization Behavior or Vocal Learning. Vocal Learning. 
+FUZ, Larynx Morphogenesis. Tongue Morphogenesis. Tongue Development.  
+GLI1, Vegas Nerve Development.   
+GLI3, Vocalization Behavior. Larynx Morphogenesis. Larynx Development. Tongue Development.  
+GMDS, Glossopharyngeal Nerve Development.   
+HAND2, Tongue Development. 
+HDAC1, Tongue Morphogenesis. Tongue Development.
+HDAC2, Tongue Morphogenesis. Tongue Development.
+HOXA3, Glossopharyngeal Nerve Morphogenesis. Glossopharyngeal Nerve Development.
+HOXB3, Glossopharyngeal Nerve Morphogenesis. Glossopharyngeal Nerve Development.
+HOXC13, Tongue Morphogenesis. Tongue Development.
+HOXD3, Glossopharyngeal Nerve Morphogenesis. Glossopharyngeal Nerve Development.
+HTT, Learned Vocalisation Behaviour. Learned Vocalization Behavior or Vocal Learning.
+INTU, Tongue Development. 
+KCNE2, Tongue Development. 
+KIT, Tongue Development. 
+KRT13, Tongue Morphogenesis. Tongue Development.
+LEF1, Tongue Development. 
+MIB1, Tongue Morphogenesis. Tongue Development.
+MYCBP2, Branchiomotor Neuron Axon Guidance.   
+MYH14, Vocalization Behavior.   
+NAV2, Vegas Nerve Development. Glossopharyngeal Nerve Development.
+NEUROG1, Vocalization Behavior. Learned Vocalisation Behaviour. Learned Vocalization Behavior or Vocal Learning.  
+NKX2-5, Tongue Development. 
+NKX2-6, Tongue Development. 
+NLGN3, Vocalization Behavior.   
+NLGN4X, Vocalization Behavior.   
+NLGN4Y, Vocalization Behavior.   
+NRP1, Branchiomotor Neuron Axon Guidance.   
+NRXN1, Vocalization Behavior. Vocal Learning. Learned Vocalization Behavior or Vocal Learning.  
+NRXN2, Vocalization Behavior. Vocal Learning. Learned Vocalization Behavior or Vocal Learning.  
+NRXN3, Vocalization Behavior.   
+NTF4, Tongue Development.   
+PLXNA3, Branchiomotor Neuron Axon Guidance.   
+PLXNA4, Vegas Nerve Development. Vergas Nerve Morphogenesis. Glossopharyngeal Nerve Morphogenesis.  
+PRDM16, Tongue Development. 
+REST, Branchiomotor Neuron Axon Guidance.   
+SEMA3A, Branchiomotor Neuron Axon Guidance.   
+SEMA3F, Branchiomotor Neuron Axon Guidance.   
+SHANK1, Vocalization Behavior.   
+SHANK2, Vocalization Behavior.   
+SHANK3, Vocalization Behavior.   
+SHH, Tongue Morphogenesis. Tongue Development.
+SIX4, Tongue Morphogenesis. Tongue Development.
+SIX5, Tongue Morphogenesis. Tongue Development.
+SOX2, Tongue Development. 
+SRPX2, Vocalization Behavior.   
+STRA6, Learned Vocalisation Behaviour. Learned Vocalization Behavior or Vocal Learning.
+TBX1, Vegas Nerve Development. Vagus Nerve Morphogenesis. Glossopharyngeal Nerve Morphogenesis. Glossopharyngeal Nerve Development. Branchiomotor Neuron Axon Guidance. Chemorepulsion Of Branchiomotor Axon
+TIFAB, Vocalization Behavior. Learned Vocalisation Behaviour. Learned Vocalization Behavior or Vocal Learning.  
+WDPCP, Tongue Morphogenesis. Tongue Development.
+WNT10A, Tongue Morphogenesis.   
+WNT10B, Tongue Development.
+ADNP, 12 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+B3GNT2, Vomeronasal. 
+BAZ1B, Cellular Response To Pheromone. Negative Regulation Of Transcription By Pheromones. Regulation Of Transcription From Rna Polymerase Ii Promoter By Pheromones.
+BPTF, Cellular Response To Pheromone. Negative Regulation Of Transcription By Pheromones. Regulation Of Transcription From Rna Polymerase Ii Promoter By Pheromones.
+CUX1, 13 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+DLX3, 11 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+DLX4, 12 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+DLX5, 14 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+DLX6, 15 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+EMX2, 13 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+GFY, Vomeronasal. 
+GNAI2, Co-Expressed In Vno Nuerons With V1rs. 
+GNAO1, Co-Expressed In Vno Nuerons With V2rs. 
+GNG8, Response To Pheromone (Chang and Parilla et al 2016). Cellular Response To Pheromone. 
+GPR180, Response To Pheromone (Chang and Parilla et al 2016). 
+HOPX, 1 Homeobox Exclusively Expressed In Non-Sensory Epithelium Of Vno (Chang and Parilla et al 2016). 
+LCN9, Pheromone Binding (Chang and Parilla et al 2016). 
+LHX2, 14 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+MEIS1, 15 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+MEIS2, 16 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+PAX6, Learned Vocalization Behavior or Vocal Learning. 4 Homeobox Genes Expressed In All Non-Nueronal Cell Populations Of Vno (Chang and Parilla et al 2016). 
+PBX2, 17 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+Pbx3, 16 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+PKNOX1, 18 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+PKNOX2, 17 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+POU2F1, 19 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+POU6F1, 18 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+SATB1, 20 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+SIX1, Tongue Morphogenesis. Tongue Development. 5 Homeobox Genes Expressed In All Non-Nueronal Cell Populations Of Vno (Chang and Parilla et al 2016).
+TGIF1, 6 Homeobox Genes Expressed In All Non-Nueronal Cell Populations Of Vno (Chang and Parilla et al 2016). 
+TMEM145, Response To Pheromone. 
+TSHZ1, 21 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+TSHZ2, 19 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+TSHZ3, 22 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+ZFHX3, 7 Homeobox Genes Expressed In All Non-Nueronal Cell Populations Of Vno (Chang and Parilla et al 2016). 
+ZHX1, 20 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+ZHX2, 23 Homeobox Genes Expressed In Both Nueronal And Non-Nueral Cell Populations Of Vno (Chang and Parilla et al 2016). 
+ZHX3, 21 Homeobox Genes Expressed In Neurons In Vno (Chang and Parilla et al 2016). 
+ZSCAN4, Response To Pheromone.
